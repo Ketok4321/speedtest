@@ -1,0 +1,19 @@
+using Gtk 4.0;
+using Adw 1;
+
+template Gauge : Adw.Bin {
+    Overlay {      
+        DrawingArea drawing_area {
+            vexpand: true;
+            hexpand: true;
+        }
+
+        [overlay]
+        Label {
+            label: bind Gauge.label;
+            valign: end;
+            margin-bottom: 10;
+            styles [ "title-2" ]
+        }
+    }
+}

@@ -1,0 +1,6 @@
+data/xyz.ketok.Speedtest.desktop.in
+data/xyz.ketok.Speedtest.appdata.xml.in
+data/xyz.ketok.Speedtest.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
