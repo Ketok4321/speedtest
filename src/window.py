@@ -23,7 +23,7 @@ class SpeedtestWindow(Adw.ApplicationWindow):
         speedtest = Speedtest(secure=True)
         speedtest.get_best_server() # This measures ping
 
-        self.ping = str(speedtest.results.ping) + "ms"
+        self.ping = str(round(speedtest.results.ping)) + "ms"
         dl = speedtest.download(self.callback(self.download))
         up = speedtest.upload(self.callback(self.upload))
         self.callback(self.download)(0, 0, end=True, speed=dl)
