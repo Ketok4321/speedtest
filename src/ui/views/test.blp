@@ -1,0 +1,41 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $TestView : Box {
+    orientation: vertical;
+    
+    Box {
+        orientation: horizontal;
+        
+        $Gauge download {
+            vexpand: true;
+            hexpand: true;
+        }
+
+        Box {
+            orientation: vertical;
+            valign: end;
+            margin-bottom: 10;
+
+            Label {
+                label: "Ping:";
+                styles [ "title-2" ]
+            }
+
+            Label {
+                label: bind template.ping;
+                styles [ "title-3" ]
+            }
+        }
+
+        $Gauge upload {
+            vexpand: true;
+            hexpand: true;
+        }
+    }
+
+    Button cancel {
+      label: "Cancel";
+      action-name: "app.cancel";
+    }
+}

@@ -1,0 +1,12 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $StartView : Box {
+    orientation: vertical;
+    
+    Button {
+      label: "Start";
+      action-name: "app.start";
+      styles [ "pill", "suggested-action" ]
+    }
+}

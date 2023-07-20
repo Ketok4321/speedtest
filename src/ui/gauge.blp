@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template Gauge : Adw.Bin {
+template $Gauge : Adw.Bin {
     Overlay {      
         DrawingArea drawing_area {
             vexpand: true;
@@ -10,7 +10,7 @@ template Gauge : Adw.Bin {
 
         [overlay]
         Label {
-            label: bind Gauge.label;
+            label: bind template.label;
             valign: end;
             margin-bottom: 10;
             styles [ "title-2" ]

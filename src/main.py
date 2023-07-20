@@ -1,6 +1,5 @@
 import sys
 import gi
-import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -18,7 +17,6 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action)
-        self.create_action("start", self.on_start_action)
 
     def do_activate(self):
         win = self.props.active_window
@@ -38,11 +36,6 @@ class SpeedtestApplication(Adw.Application):
 
     def on_preferences_action(self, widget, _):
         print("app.preferences action activated")
-
-    def on_start_action(self, widget, _):
-        thread = threading.Thread(target=self.props.active_window.start)
-        thread.daemon = True
-        thread.start()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

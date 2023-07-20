@@ -18,40 +18,11 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
       }
     }
 
-    Box {
-      orientation: horizontal;
-      
-      $Gauge download {
-        vexpand: true;
-        hexpand: true;
-      }
+    Stack view_switcher {
+      transition-type: slide_up_down;
 
-      Box ping {
-        orientation: vertical;
-        valign: end;
-        margin-bottom: 10;
-
-        Label {
-          label: "Ping:";
-          styles [ "title-2" ]
-        }
-
-        Label value {
-          label: bind SpeedtestWindow.ping;
-          styles [ "title-3" ]
-        }
-      }
-
-      $Gauge upload {
-        vexpand: true;
-        hexpand: true;
-      }
-    }
-
-    Button {
-      label: "Start";
-      action-name: "app.start";
-      styles [ "suggested-action" ]
+      $StartView start_view { }
+      $TestView test_view { }
     }
   }
 }
