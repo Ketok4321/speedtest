@@ -11,6 +11,12 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
     orientation: vertical;
 
     HeaderBar header_bar {
+      Button back_button {
+        visible: false;
+        icon-name: "go-previous-symbolic";
+        action-name: "app.test_again";
+      }
+
       [end]
       MenuButton {
         icon-name: "open-menu-symbolic";
@@ -18,7 +24,7 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
       }
     }
 
-    Stack view_switcher {
+    Stack view_switcher { //TODO: Consider using Adw.Leaflet/Adw.NavigationView
       transition-type: slide_up_down;
 
       $StartView start_view { }

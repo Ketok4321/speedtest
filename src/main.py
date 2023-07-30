@@ -15,7 +15,6 @@ from .speedtest import Speedtest
 class SpeedtestApplication(Adw.Application):
     win = None
     speedtest = Speedtest(secure=True)
-    test_thread = None
 
     def __init__(self):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
@@ -24,7 +23,7 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action)
         self.create_action("start", self.on_start_action)
-        self.create_action("cancel", self.on_cancel_action)
+        self.test_again_action = self.create_action("test_again", self.on_test_again_action)
 
     def do_activate(self):
         self.win = self.props.active_window
@@ -47,10 +46,11 @@ class SpeedtestApplication(Adw.Application):
 
     def on_start_action(self, widget, _):
         self.win.view_switcher.set_visible_child(self.win.test_view)
+        self.win.back_button.set_visible(True)
 
-        test_thread = threading.Thread(target=self.do_start)
-        test_thread.daemon = True
-        test_thread.start()
+        self.test_again_action.set_enabled(False)
+        thread = threading.Thread(target=self.do_start, daemon=True)
+        thread.start()
     
     def do_start(self): # TODO: Try except
         view = self.win.test_view
@@ -62,11 +62,11 @@ class SpeedtestApplication(Adw.Application):
         up = self.speedtest.upload(lambda *args, speed=None, end=None, **kwargs: GLib.idle_add(lambda: view.updateUpload(speed)) if end else None)
         GLib.idle_add(lambda: view.updateDownload(dl))
         GLib.idle_add(lambda: view.updateUpload(up))
+        GLib.idle_add(lambda: self.test_again_action.set_enabled(True))
     
-    def on_cancel_action(self, widget, _):
-        # TODO: Abort the thread
-
+    def on_test_again_action(self, widget, _):
         self.win.view_switcher.set_visible_child(self.win.start_view)
+        self.win.back_button.set_visible(False)
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)
@@ -74,6 +74,8 @@ class SpeedtestApplication(Adw.Application):
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
+        
+        return action
 
 def main(version):
     app = SpeedtestApplication()

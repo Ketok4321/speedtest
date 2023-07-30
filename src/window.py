@@ -1,9 +1,4 @@
-import threading
-
-from gi.repository import GLib
-from gi.repository import GObject
-from gi.repository import Gtk
-from gi.repository import Adw
+from gi.repository import GObject, Gtk, Adw
 
 def toMb(speed):
     return round(speed / 1_000_000)
@@ -11,6 +6,8 @@ def toMb(speed):
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/window.ui")
 class SpeedtestWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SpeedtestWindow"
+
+    back_button = Gtk.Template.Child()
 
     view_switcher = Gtk.Template.Child()
 
