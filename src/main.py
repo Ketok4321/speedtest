@@ -31,6 +31,10 @@ class SpeedtestApplication(Adw.Application):
             self.win = SpeedtestWindow(application=self)
         self.win.present()
 
+        print(self.speedtest.get_servers())
+
+        self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda x: "{} ({}, {})".format(x["sponsor"], x["name"], x["country"]), self.speedtest.get_closest_servers(25))))) #TODO: Make it functional
+
     def on_about_action(self, widget, _): #TODO: Credit speedtest-cli and ookla
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name="Speedtest",
