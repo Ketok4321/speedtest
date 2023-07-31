@@ -54,6 +54,7 @@ class SpeedtestApplication(Adw.Application):
     
     def do_start(self): # TODO: Try except
         view = self.win.test_view
+        view.reset()
         
         self.speedtest.get_best_server() # This measures ping
 

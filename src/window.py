@@ -47,3 +47,9 @@ class TestView(Gtk.Box):
 
     def updateUpload(self, speed):
         self.updateGauge(self.upload, speed)
+    
+    def reset(self):
+        for obj in self.download, self.upload:
+            obj.label = "..."
+            obj.fill = 0.0
+        self.ping = "..."
