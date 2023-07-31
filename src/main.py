@@ -13,12 +13,12 @@ from .gauge import Gauge # This class isn't used there but it the widget needs t
 from .speedtest import Speedtest
 
 class SpeedtestApplication(Adw.Application):
-    win = None
-    speedtest = Speedtest(secure=True)
-
     def __init__(self):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
+        self.speedtest = Speedtest(secure=True)
+        self.win = None
+
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action)
