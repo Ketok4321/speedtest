@@ -2,31 +2,33 @@ using Gtk 4.0;
 using Adw 1;
 
 template $StartView : Box {
-    orientation: vertical;
+  orientation: vertical;
+
+  Adw.ToastOverlay {
+    Adw.StatusPage {
+      title: "Speedtest";
+      description: "Measure your internet connection speed";
     
-  Adw.StatusPage {
-    title: "Speedtest";
-    description: "Measure your internet connection speed";
-  
-    Box {
-      orientation: vertical;
-      halign: center;
-
-      DropDown server_selector {
-        model: StringList {
-          strings [ "Server 1", "Server 2", "Server 3" ]
-        };
-        
-        margin-bottom: 24;
-      }
-
-      Button {
+      Box {
+        orientation: vertical;
         halign: center;
-        width-request: 240;
 
-        label: "Start";
-        action-name: "app.start";
-        styles [ "pill", "suggested-action" ]
+        DropDown server_selector {
+          model: StringList {
+            strings [ "Server 1", "Server 2", "Server 3" ]
+          };
+          
+          margin-bottom: 24;
+        }
+
+        Button {
+          halign: center;
+          width-request: 240;
+
+          label: "Start";
+          action-name: "app.start";
+          styles [ "pill", "suggested-action" ]
+        }
       }
     }
   }
