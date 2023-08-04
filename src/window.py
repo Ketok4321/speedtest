@@ -46,4 +46,4 @@ class TestView(Gtk.Box):
             obj.value = "..."
             obj.fill = 0.0
         self.ping = "..."
-        self.progress.fraction = 0.0
+        self.progress.set_fraction(0.0)
