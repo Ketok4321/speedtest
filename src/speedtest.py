@@ -1,14 +1,25 @@
 import subprocess
 import json
+import socket
 
 CLI = "ookla-speedtest"
 
 class Speedtest:
-    def __init__(self):
-        pass
+    def check_internet_connection(self):
+        try:
+            host = socket.gethostbyname("speedtest.net")
+            socket.create_connection((host, 80), 2)
+            return True
+        except Exception as err: 
+            print(err)
+            return False
 
     def get_servers(self):
         process = subprocess.run([CLI, "--servers", "--format=json"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        if process.returncode != 0:
+            raise Exception("Failed to get servers")
+
         return json.loads(process.stdout)["servers"]
 
     def start(self, server_id, stop_event, callback):

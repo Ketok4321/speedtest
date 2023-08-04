@@ -10,6 +10,7 @@ class SpeedtestWindow(Adw.ApplicationWindow):
 
     start_view = Gtk.Template.Child()
     test_view = Gtk.Template.Child()
+    offline_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -47,3 +48,12 @@ class TestView(Gtk.Box):
             obj.fill = 0.0
         self.ping = "..."
         self.progress.set_fraction(0.0)
+
+@Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/offline.ui")
+class OfflineView(Gtk.Box):
+    __gtype_name__ = "OfflineView"
+
+    toast_overlay = Gtk.Template.Child()
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
