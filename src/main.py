@@ -17,6 +17,7 @@ class SpeedtestApplication(Adw.Application):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
         self.speedtest = Speedtest()
+        self.servers = self.speedtest.get_servers()
         self.win = None
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
@@ -31,9 +32,7 @@ class SpeedtestApplication(Adw.Application):
             self.win = SpeedtestWindow(application=self)
         self.win.present()
 
-        print(self.speedtest.get_servers())
-
-        self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda x: "{} ({}, {})".format(x["sponsor"], x["name"], x["country"]), self.speedtest.get_closest_servers(25))))) #TODO: Make it functional
+        self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda x: "{} ({}, {})".format(x["name"], x["location"], x["country"]), self.servers))))
 
     def on_about_action(self, widget, _): #TODO: Credit speedtest-cli and ookla
         about = Adw.AboutWindow(transient_for=self.props.active_window,
@@ -52,11 +51,13 @@ class SpeedtestApplication(Adw.Application):
         self.win.view_switcher.set_visible_child(self.win.test_view)
         self.win.back_button.set_visible(True)
 
+        server_id = self.servers[self.win.start_view.server_selector.get_selected()]["id"]
+
         self.test_again_action.set_enabled(False)
-        thread = threading.Thread(target=self.do_start, daemon=True)
+        thread = threading.Thread(target=self.do_start, args=[server_id], daemon=True)
         thread.start()
     
-    def do_start(self): # TODO: Try except
+    def do_start(self, server_id): # TODO: Try except
         view = self.win.test_view
         view.reset()
 
@@ -75,7 +76,7 @@ class SpeedtestApplication(Adw.Application):
                     view.progress.add_css_class("up")
                     view.progress.set_fraction(progress)
 
-        self.speedtest.start(lambda update: GLib.idle_add(callback, update))
+        self.speedtest.start(server_id, lambda update: GLib.idle_add(callback, update))
 
         GLib.idle_add(self.test_again_action.set_enabled, True)
     
