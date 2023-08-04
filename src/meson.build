@@ -5,7 +5,6 @@ gnome = import('gnome')
 blueprints = custom_target('blueprints',
   input: files(
     'ui/window.blp',
-	  'ui/help-overlay.blp',
     'ui/gauge.blp',
     'ui/views/start.blp',
     'ui/views/test.blp',

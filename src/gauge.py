@@ -1,10 +1,7 @@
 import cairo
 import math
 
-from gi.repository import GLib
-from gi.repository import GObject
-from gi.repository import Gtk
-from gi.repository import Adw
+from gi.repository import GObject, Gtk, Adw
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/gauge.ui")
 class Gauge(Adw.Bin):

@@ -23,7 +23,6 @@ class SpeedtestApplication(Adw.Application):
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
-        self.create_action("preferences", self.on_preferences_action)
         self.create_action("start", self.on_start_action)
         self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
@@ -58,9 +57,6 @@ class SpeedtestApplication(Adw.Application):
                                 developers=["Ketok"],
                                 copyright="© 2023 Ketok")
         about.present()
-
-    def on_preferences_action(self, widget, _):
-        print("app.preferences action activated")
 
     def on_start_action(self, widget, _):
         if not self.speedtest.check_internet_connection():
