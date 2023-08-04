@@ -1,8 +1,5 @@
 from gi.repository import GObject, Gtk, Adw
 
-def toMb(speed):
-    return round(speed / 125_000)
-
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/window.ui")
 class SpeedtestWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SpeedtestWindow"
@@ -40,9 +37,9 @@ class TestView(Gtk.Box):
         super().__init__(**kwargs)
 
     def updateGauge(self, object, speed):
-        speedMb = toMb(speed)
+        speedMb = round(speed / 125_000, 1)
         object.value = str(speedMb) + "Mbps"
-        object.fill = min(toMb(speed) / 100, 1.0)
+        object.fill = min(speedMb / 100, 1.0)
     
     def reset(self):
         for obj in self.download, self.upload:

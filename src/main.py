@@ -63,7 +63,7 @@ class SpeedtestApplication(Adw.Application):
         def callback(update):
             match update:
                 case { "type": "ping", "ping": { "latency": latency } }:
-                    view.ping = str(round(latency)) + "ms"
+                    view.ping = str(round(latency, 1)) + "ms"
                 case { "type": "download", "download": { "bandwidth": bandwidth, "progress": progress } }:
                     view.updateGauge(view.download, bandwidth)
                     view.progress.remove_css_class("up")
