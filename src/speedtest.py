@@ -11,11 +11,15 @@ class Speedtest:
         process = subprocess.run([CLI, "--servers", "--format=json"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return json.loads(process.stdout)["servers"]
 
-    def start(self, server_id, callback):
+    def start(self, server_id, stop_event, callback):
         process = subprocess.Popen([CLI, "--server-id=" + str(server_id), "--format=json", "--progress", "--progress-update-interval=100"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         while update := process.stdout.readline():
             if not update: break
+
+            if stop_event.is_set():
+                process.terminate()
+                break
             
             update = json.loads(update)
 
