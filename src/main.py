@@ -16,7 +16,7 @@ class SpeedtestApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
-        self.speedtest = Speedtest(secure=True)
+        self.speedtest = Speedtest()
         self.win = None
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
@@ -59,25 +59,17 @@ class SpeedtestApplication(Adw.Application):
     def do_start(self): # TODO: Try except
         view = self.win.test_view
         view.reset()
-        
-        self.speedtest.get_best_server() # This measures ping
 
-        def pre_test(gauge):
-            gauge.spinning = True
+        def callback(update):
+            match update:
+                case { "type": "ping", "ping": { "latency": latency } }:
+                    view.ping = str(round(latency)) + "ms"
+                case { "type": "download", "download": { "bandwidth": bandwidth } }:
+                    view.updateDownload(bandwidth)
+                case { "type": "upload", "upload": { "bandwidth": bandwidth } }:
+                    view.updateUpload(bandwidth)
 
-        def post_test(gauge, value):
-            view.updateGauge(gauge, value)
-            gauge.spinning = False
-
-        view.ping = str(round(self.speedtest.results.ping)) + "ms"
-         
-        GLib.idle_add(pre_test, view.download)
-        dl = self.speedtest.download(lambda *args, speed=None, end=None, **kwargs: GLib.idle_add(lambda: view.updateDownload(speed)) if end else None)
-        GLib.idle_add(post_test, view.download, dl)
-
-        GLib.idle_add(pre_test, view.upload)
-        up = self.speedtest.upload(lambda *args, speed=None, end=None, **kwargs: GLib.idle_add(lambda: view.updateUpload(speed)) if end else None)
-        GLib.idle_add(post_test, view.upload, dl)
+        self.speedtest.start(lambda update: GLib.idle_add(callback, update))
     
     def on_test_again_action(self, widget, _):
         self.win.view_switcher.set_visible_child(self.win.start_view)

@@ -1,7 +1,7 @@
 from gi.repository import GObject, Gtk, Adw
 
 def toMb(speed):
-    return round(speed / 1_000_000)
+    return round(speed / 125_000)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/window.ui")
 class SpeedtestWindow(Adw.ApplicationWindow):

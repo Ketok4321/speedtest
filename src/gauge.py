@@ -14,7 +14,6 @@ class Gauge(Adw.Bin):
 
     label = GObject.Property(type=str)
     value = GObject.Property(type=str, default="...")
-    spinning = GObject.Property(type=bool, default=False)
 
     @GObject.Property(type=float, minimum = 0.0, maximum = 1.0)
     def fill(self):
