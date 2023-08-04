@@ -34,6 +34,8 @@ class TestView(Gtk.Box):
     upload = Gtk.Template.Child()
     ping = GObject.Property(type=str, default="...")
 
+    progress = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -41,15 +43,10 @@ class TestView(Gtk.Box):
         speedMb = toMb(speed)
         object.value = str(speedMb) + "Mbps"
         object.fill = min(toMb(speed) / 100, 1.0)
-
-    def updateDownload(self, speed):
-        self.updateGauge(self.download, speed)
-
-    def updateUpload(self, speed):
-        self.updateGauge(self.upload, speed)
     
     def reset(self):
         for obj in self.download, self.upload:
             obj.value = "..."
             obj.fill = 0.0
         self.ping = "..."
+        self.progress.fraction = 0.0

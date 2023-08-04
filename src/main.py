@@ -64,12 +64,20 @@ class SpeedtestApplication(Adw.Application):
             match update:
                 case { "type": "ping", "ping": { "latency": latency } }:
                     view.ping = str(round(latency)) + "ms"
-                case { "type": "download", "download": { "bandwidth": bandwidth } }:
-                    view.updateDownload(bandwidth)
-                case { "type": "upload", "upload": { "bandwidth": bandwidth } }:
-                    view.updateUpload(bandwidth)
+                case { "type": "download", "download": { "bandwidth": bandwidth, "progress": progress } }:
+                    view.updateGauge(view.download, bandwidth)
+                    view.progress.remove_css_class("up")
+                    view.progress.add_css_class("dl")
+                    view.progress.set_fraction(progress)
+                case { "type": "upload", "upload": { "bandwidth": bandwidth, "progress": progress } }:
+                    view.updateGauge(view.upload, bandwidth)
+                    view.progress.remove_css_class("dl")
+                    view.progress.add_css_class("up")
+                    view.progress.set_fraction(progress)
 
         self.speedtest.start(lambda update: GLib.idle_add(callback, update))
+
+        GLib.idle_add(self.test_again_action.set_enabled, True)
     
     def on_test_again_action(self, widget, _):
         self.win.view_switcher.set_visible_child(self.win.start_view)

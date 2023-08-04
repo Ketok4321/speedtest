@@ -1,0 +1,7 @@
+progressbar.dl > trough > progress {
+    background: @blue_2;
+}
+
+progressbar.up > trough > progress {
+    background: @purple_2;
+}
