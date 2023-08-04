@@ -8,6 +8,8 @@ template $TestView : Box {
         orientation: horizontal;
         
         $Gauge download {
+            label: "Download:";
+
             vexpand: true;
             hexpand: true;
         }
@@ -15,7 +17,7 @@ template $TestView : Box {
         Box {
             orientation: vertical;
             valign: end;
-            margin-bottom: 10;
+            margin-bottom: 16;
 
             Label {
                 label: "Ping:";
@@ -29,6 +31,8 @@ template $TestView : Box {
         }
 
         $Gauge upload {
+            label: "Upload:";
+
             vexpand: true;
             hexpand: true;
         }

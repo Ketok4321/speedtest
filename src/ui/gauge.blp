@@ -9,11 +9,29 @@ template $Gauge : Adw.Bin {
         }
 
         [overlay]
-        Label {
-            label: bind template.label;
+        Box {
+            orientation: vertical;
             valign: end;
-            margin-bottom: 10;
-            styles [ "title-2" ]
+            halign: center;
+            margin-bottom: 16;
+
+            Spinner {
+                width-request: 16;
+                spinning: bind template.spinning;
+                margin-bottom: 4;
+            }
+
+            Label {
+                valign: center;
+                label: bind template.label;
+                styles [ "title-2" ]
+            }
+
+            Label {
+                valign: center;
+                label: bind template.value;
+                styles [ "title-3" ]
+            }
         }
     }
 }

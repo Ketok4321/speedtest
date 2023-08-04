@@ -39,7 +39,7 @@ class TestView(Gtk.Box):
 
     def updateGauge(self, object, speed):
         speedMb = toMb(speed)
-        object.label = str(speedMb) + "Mbps"
+        object.value = str(speedMb) + "Mbps"
         object.fill = min(toMb(speed) / 100, 1.0)
 
     def updateDownload(self, speed):
@@ -50,6 +50,6 @@ class TestView(Gtk.Box):
     
     def reset(self):
         for obj in self.download, self.upload:
-            obj.label = "..."
+            obj.value = "..."
             obj.fill = 0.0
         self.ping = "..."
