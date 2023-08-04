@@ -4,7 +4,6 @@
     <file alias="style.css">ui/style.css</file>
 
     <file preprocess="xml-stripblanks">ui/window.ui</file>
-    <file preprocess="xml-stripblanks">ui/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/gauge.ui</file>
     <file preprocess="xml-stripblanks">ui/views/start.ui</file>
     <file preprocess="xml-stripblanks">ui/views/test.ui</file>
