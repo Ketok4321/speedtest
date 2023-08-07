@@ -19,8 +19,3 @@ jobs:
         bundle: xyz.ketok.Speedtest.flatpak
         manifest-path: xyz.ketok.Speedtest.yml
         cache-key: flatpak-builder-${{ github.sha }}
-    - uses: flatpak/flatpak-github-actions/flat-manager@v4
-      with:
-        repository: ketok-nightly
-        flat-manager-url: https://flatpak-api.ketok.xyz
-        token: ${{ secrets.FLATPAK_TOKEN }}
