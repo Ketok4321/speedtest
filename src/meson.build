@@ -44,6 +44,7 @@ speedtest_sources = [
   'window.py',
   'speedtest.py',
   'gauge.py',
+  'speedtest_worker.py',
 ]
 
 install_data(speedtest_sources, install_dir: moduledir)
