@@ -1,6 +1,6 @@
 import sys
 import gi
-import threading
+import asyncio
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -9,7 +9,8 @@ gi.require_foreign("cairo")
 from gi.repository import GLib, Gio, Gtk, Adw
 
 from .window import SpeedtestWindow
-from .gauge import Gauge # This class isn't used there but it the widget needs to be registered 
+from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
+from .speedtest import get_servers
 from .speedtest_worker import SpeedtestWorker
 
 class SpeedtestApplication(Adw.Application):
@@ -38,12 +39,13 @@ class SpeedtestApplication(Adw.Application):
         #if not self.speedtest.check_internet_connection():
         #    return False
 
-        #try:
-        #    self.servers = self.speedtest.get_servers()
-        #except Exception as e:
-        #    return False
+        try:
+            self.servers = asyncio.get_event_loop().run_until_complete(get_servers())
+        except Exception as e:
+            print(e)
+            return False
 
-        #self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda x: "{} ({}, {})".format(x["name"], x["location"], x["country"]), self.servers))))
+        self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
         return True
 
     def on_about_action(self, widget, _): #TODO: Credit speedtest-cli and ookla
@@ -64,11 +66,11 @@ class SpeedtestApplication(Adw.Application):
         self.win.view_switcher.set_visible_child(self.win.test_view)
         self.win.back_button.set_visible(True)
 
-        server_id = 0#self.servers[self.win.start_view.server_selector.get_selected()]["id"]
+        server = self.servers[self.win.start_view.server_selector.get_selected()]
 
         self.win.test_view.reset()
 
-        self.worker = SpeedtestWorker(self.win.test_view)
+        self.worker = SpeedtestWorker(self.win.test_view, server)
         self.worker.start()
     
     def on_back_action(self, widget, _):
