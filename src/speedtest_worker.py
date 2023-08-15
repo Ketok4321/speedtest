@@ -22,17 +22,17 @@ class SpeedtestWorker(threading.Thread):
     async def do_start(self): # TODO: Try except
         GLib.idle_add(setattr, self.view, "ping", str(round(await ping(self.server), 1)) + "ms")
 
-        def dlCallback(speed):
+        def dlCallback(speed, progress):
             self.view.updateGauge(self.view.download, speed)
             self.view.progress.remove_css_class("up")
             self.view.progress.add_css_class("dl")
-            self.view.progress.set_fraction(0) # TODO
+            self.view.progress.set_fraction(progress)
         
-        def upCallback(speed):
+        def upCallback(speed, progress):
             self.view.updateGauge(self.view.upload, speed)
             self.view.progress.remove_css_class("dl")
             self.view.progress.add_css_class("up")
-            self.view.progress.set_fraction(0) # TODO
+            self.view.progress.set_fraction(progress)
 
-        await perform_test(download, self.server, lambda s: GLib.idle_add(dlCallback, s), 1 / 30)
-        await perform_test(upload, self.server, lambda s: GLib.idle_add(upCallback, s), 1 / 30)
+        await perform_test(download, self.server, lambda *args: GLib.idle_add(dlCallback, *args), 1 / 30)
+        await perform_test(upload, self.server, lambda *args: GLib.idle_add(upCallback, *args), 1 / 30)

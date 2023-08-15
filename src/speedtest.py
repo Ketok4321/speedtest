@@ -110,5 +110,5 @@ async def perform_test(test, server, callback, interval):
             break
 
         speed = total[0] / elapsed_time
-        callback(speed)
+        callback(speed, elapsed_time / DURATION)
         await asyncio.sleep(interval)
