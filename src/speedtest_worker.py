@@ -16,10 +16,21 @@ class SpeedtestWorker(threading.Thread):
 
     def run(self):
         event_loop = asyncio.new_event_loop()
-        event_loop.run_until_complete(self.do_start())
+
+        event_loop.run_until_complete(self.run_async())
         event_loop.close()
 
-    async def do_start(self): # TODO: Try except
+    async def run_async(self):
+        task = asyncio.create_task(self.do_run())
+
+        while not task.done():
+            if self.stop_event.is_set():
+                task.cancel()
+                break
+            
+            await asyncio.sleep(0)
+
+    async def do_run(self): # TODO: Try except
         GLib.idle_add(setattr, self.view, "ping", str(round(await ping(self.server), 1)) + "ms")
 
         def dlCallback(speed, progress):
