@@ -30,10 +30,19 @@ class Server:
         self.uploadURL = urljoin(server, ulURL)
 
 async def get_servers():
+    print("Fetching servers...")
     async with aiohttp.ClientSession() as session:
         async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
-            result = await response.json()
-            return list(map(lambda x: Server(**x), result))
+            servers = await response.json()
+            servers = list(map(lambda x: Server(**x), servers))    
+
+            await asyncio.gather(*[check_server(s) for s in servers])
+
+            servers = list(filter(lambda s: s.ping != -1, servers))
+            
+            servers.sort(key=lambda s: s.ping)
+            
+            return servers
 
 class GarbageReader(io.IOBase):
     def __init__(self, read_callback=None):
@@ -65,6 +74,26 @@ class GarbageReader(io.IOBase):
             self.__read_callback(size)
 
         return garbage[old_pos:self.pos]
+
+async def check_server(server):
+    async with aiohttp.ClientSession() as session:
+        try:
+            start = time.time()
+            task = asyncio.create_task(session.get(server.pingURL, headers=headers))
+
+            while not task.done():
+                if time.time() - start > 1:
+                    task.cancel()
+                    server.ping = -1
+                    return
+                await asyncio.sleep(0)
+            
+            task.result().close()
+            server.ping = time.time() - start
+            return
+        except aiohttp.ClientError:
+            server.ping = -1
+            return
 
 async def ping(server): #TODO: jitter and other stuff
     async with aiohttp.ClientSession() as session:
