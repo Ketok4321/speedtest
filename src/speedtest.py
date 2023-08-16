@@ -29,8 +29,7 @@ class Server:
         self.downloadURL = urljoin(server, dlURL)
         self.uploadURL = urljoin(server, ulURL)
 
-async def get_servers():
-    print("Fetching servers...")
+async def get_servers(): #TODO: do this in the background
     async with aiohttp.ClientSession() as session:
         async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
             servers = await response.json()
