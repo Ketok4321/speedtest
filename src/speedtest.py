@@ -37,11 +37,11 @@ async def get_servers(): #TODO: do this in the background
 
             await asyncio.gather(*[check_server(s) for s in servers])
 
-            result = list(filter(lambda s: s.ping != -1, servers))
+            servers = list(filter(lambda s: s.ping != -1, servers))
             
-            result.sort(key=lambda s: s.ping)
-            
-            return result
+            servers.sort(key=lambda s: s.ping)
+
+            return servers
 
 class GarbageReader(io.IOBase):
     def __init__(self, read_callback=None):
@@ -78,7 +78,7 @@ async def check_server(server):
     async with aiohttp.ClientSession() as session:
         try:
             start = time.time()
-            task = asyncio.create_task(session.get(server.pingURL, headers=headers))
+            task = asyncio.create_task(session.get(server.pingURL))
 
             while not task.done():
                 if time.time() - start > 1:

@@ -40,7 +40,8 @@ class SpeedtestApplication(Adw.Application):
         #    return False
 
         try:
-            self.servers = asyncio.get_event_loop().run_until_complete(get_servers())
+            while self.servers == None or len(self.servers) == 0: # A proper fix would probably be better but this works too
+                self.servers = asyncio.get_event_loop().run_until_complete(get_servers())
         except Exception as e:
             print(e)
             return False
