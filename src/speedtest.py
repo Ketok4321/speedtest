@@ -38,11 +38,11 @@ async def get_servers():
 
             await asyncio.gather(*[check_server(s) for s in servers])
 
-            servers = list(filter(lambda s: s.ping != -1, servers))
+            result = list(filter(lambda s: s.ping != -1, servers))
             
-            servers.sort(key=lambda s: s.ping)
+            result.sort(key=lambda s: s.ping)
             
-            return servers
+            return result
 
 class GarbageReader(io.IOBase):
     def __init__(self, read_callback=None):
