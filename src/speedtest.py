@@ -25,9 +25,9 @@ class Server:
         
         self.name = name
         self.server = server
-        self.pingURL = urljoin(server, pingURL)
-        self.downloadURL = urljoin(server, dlURL)
-        self.uploadURL = urljoin(server, ulURL)
+        self.pingURL = urljoin(server + "/", pingURL)
+        self.downloadURL = urljoin(server + "/", dlURL)
+        self.uploadURL = urljoin(server + "/", ulURL)
 
 async def get_servers(): #TODO: do this in the background
     async with aiohttp.ClientSession() as session:
@@ -104,6 +104,7 @@ async def ping(server): #TODO: jitter and other stuff
     return sum(pings) / len(pings) * 1000
 
 async def download(server, total):
+    print(server.downloadURL)
     async with aiohttp.ClientSession() as session:
         while True:
             async with session.get(server.downloadURL + "?ckSize=" + str(CHUNK_SIZE), headers=headers) as response:
