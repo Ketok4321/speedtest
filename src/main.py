@@ -36,9 +36,6 @@ class SpeedtestApplication(Adw.Application):
             self.win.view_switcher.set_visible_child(self.win.offline_view)
 
     def fetch_servers(self):
-        #if not self.speedtest.check_internet_connection():
-        #    return False
-
         try:
             while self.servers == None or len(self.servers) == 0: # A proper fix would probably be better but this works too
                 self.servers = asyncio.get_event_loop().run_until_complete(get_servers())
@@ -60,10 +57,6 @@ class SpeedtestApplication(Adw.Application):
         about.present()
 
     def on_start_action(self, widget, _):
-        #if not self.speedtest.check_internet_connection():
-        #    self.win.view_switcher.set_visible_child(self.win.offline_view)
-        #    return
-
         self.win.view_switcher.set_visible_child(self.win.test_view)
         self.win.back_button.set_visible(True)
 

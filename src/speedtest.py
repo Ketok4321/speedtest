@@ -6,17 +6,17 @@ import io
 
 from urllib.parse import urljoin
 
-CHUNK_SIZE = 100 # in mb?
+CHUNK_SIZE = 100 # in MB
 UPLOAD_SIZE = 1024 # in KiB
 REQUEST_COUNT = 3
 DURATION = 15
 
-garbage = os.urandom(UPLOAD_SIZE * 1024)
-
-headers = {
-    "User-Agent": "ketok-speedtest/dev",
+HEADERS = {
     "Accept-Encoding": "identity",
+    "User-Agent": "ketok-speedtest/dev",
 }
+
+garbage = os.urandom(UPLOAD_SIZE * 1024)
 
 class Server:
     def __init__(self, name, server, pingURL, dlURL, ulURL, **_):
@@ -99,7 +99,7 @@ async def ping(server): #TODO: jitter and other stuff
         pings = []
         for i in range(10):
             start = time.time()
-            async with session.get(server.pingURL, headers=headers) as response:
+            async with session.get(server.pingURL, headers=HEADERS) as response:
                 pings.append(time.time() - start)
     return sum(pings) / len(pings) * 1000
 
@@ -107,7 +107,7 @@ async def download(server, total):
     print(server.downloadURL)
     async with aiohttp.ClientSession() as session:
         while True:
-            async with session.get(server.downloadURL + "?ckSize=" + str(CHUNK_SIZE), headers=headers) as response:
+            async with session.get(server.downloadURL + "?ckSize=" + str(CHUNK_SIZE), headers=HEADERS) as response:
                 async for data in response.content.iter_any():
                     total[0] += len(data)
 
@@ -117,7 +117,7 @@ async def upload(server, total):
             def callback(size):
                 total[0] += size
             reader = GarbageReader(callback)
-            async with session.post(server.uploadURL, headers=headers, data=reader) as response:
+            async with session.post(server.uploadURL, headers=HEADERS, data=reader) as response:
                 while reader.tell() < reader.length - 1:
                     await asyncio.sleep(0)
 
@@ -130,9 +130,9 @@ async def perform_test(test, server, callback, interval):
 
     for i in range(REQUEST_COUNT):
         tasks.append(asyncio.create_task(test(server, total)))
-        await asyncio.sleep(0.3) # speedtest-go uses 200, the website uses 300
+        await asyncio.sleep(0.3)
 
-    while True: # if done, do it again until DURATION
+    while True:
         elapsed_time = time.time() - start_time
         if elapsed_time >= DURATION:
             for t in tasks: t.cancel()
