@@ -31,7 +31,7 @@ class SpeedtestWorker(threading.Thread):
             await asyncio.sleep(0)
 
     async def do_run(self): # TODO: Try except
-        GLib.idle_add(setattr, self.view, "ping", str(round(await ping(self.server), 1)) + "ms")
+        GLib.idle_add(setattr, self.view, "ping", str(round(await ping(self.server))) + "ms")
 
         def dlCallback(speed, progress):
             self.view.updateGauge(self.view.download, speed)
