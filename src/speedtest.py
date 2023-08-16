@@ -6,8 +6,8 @@ import io
 
 from urllib.parse import urljoin
 
-CHUNK_SIZE = 100 # in MB
-UPLOAD_SIZE = 1024 # in KiB
+DOWNLOAD_SIZE = 100
+UPLOAD_SIZE = 10
 REQUEST_COUNT = 3
 DURATION = 15
 
@@ -16,7 +16,7 @@ HEADERS = {
     "User-Agent": "ketok-speedtest/dev",
 }
 
-garbage = os.urandom(UPLOAD_SIZE * 1024)
+garbage = os.urandom(UPLOAD_SIZE * 1000 * 1000)
 
 class Server:
     def __init__(self, name, server, pingURL, dlURL, ulURL, **_):
@@ -104,10 +104,9 @@ async def ping(server): #TODO: jitter and other stuff
     return sum(pings) / len(pings) * 1000
 
 async def download(server, total):
-    print(server.downloadURL)
     async with aiohttp.ClientSession() as session:
         while True:
-            async with session.get(server.downloadURL + "?ckSize=" + str(CHUNK_SIZE), headers=HEADERS) as response:
+            async with session.get(server.downloadURL + "?ckSize=" + str(DOWNLOAD_SIZE), headers=HEADERS) as response:
                 async for data in response.content.iter_any():
                     total[0] += len(data)
 

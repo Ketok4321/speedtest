@@ -68,7 +68,7 @@ class SpeedtestApplication(Adw.Application):
         self.worker.start()
     
     def on_back_action(self, widget, _):
-        self.worker.stop_event.set() # TODO: wait for the thread to stop?
+        self.worker.stop_event.set()
 
         self.win.view_switcher.set_visible_child(self.win.start_view)
         self.win.back_button.set_visible(False)
