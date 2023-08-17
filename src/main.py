@@ -46,7 +46,7 @@ class SpeedtestApplication(Adw.Application):
         self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
         return True
 
-    def on_about_action(self, widget, _): #TODO: Credit speedtest-cli and ookla
+    def on_about_action(self, widget, _): #TODO: Credit librespeed
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name="Speedtest",
                                 application_icon="xyz.ketok.Speedtest",

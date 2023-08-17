@@ -31,7 +31,7 @@ class Gauge(Adw.Bin):
         
         self.drawing_area.set_draw_func(self.draw)
 
-    def draw(self, da, ctx, width, height): # TODO: Try blue-green color scheme, like in adwaita demo
+    def draw(self, da, ctx, width, height):
         IS_LIGHT = not Adw.StyleManager.get_default().get_dark()
         
         ARC_SIZE = min(width, height) * 0.85
