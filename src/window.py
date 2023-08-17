@@ -61,8 +61,6 @@ class TestView(Gtk.Box):
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/offline.ui")
 class OfflineView(Gtk.Box):
     __gtype_name__ = "OfflineView"
-
-    toast_overlay = Gtk.Template.Child()
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

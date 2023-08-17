@@ -42,7 +42,8 @@ class SpeedtestApplication(Adw.Application):
         try:
             event_loop = asyncio.new_event_loop()
 
-            while self.servers == None or len(self.servers) == 0: # A proper fix would probably be better but this works too
+            self.servers = []
+            while len(self.servers) == 0: # A proper fix would probably be better but this works too
                 self.servers = event_loop.run_until_complete(get_servers())
 
             event_loop.close()
@@ -71,7 +72,7 @@ class SpeedtestApplication(Adw.Application):
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.worker = SpeedtestWorker(self.win.test_view, server)
+        self.worker = SpeedtestWorker(self.win, server)
         self.worker.start()
     
     def on_back_action(self, widget, _):
@@ -82,7 +83,6 @@ class SpeedtestApplication(Adw.Application):
     def on_retry_connect_action(self, widget, _):
         thread = threading.Thread(target=self.fetch_servers, daemon=True)
         thread.start()
-        #self.win.offline_view.toast_overlay.add_toast(Adw.Toast.new("Couldn't reconnect"))
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

@@ -7,11 +7,11 @@ from gi.repository import GLib
 from .speedtest import ping, download, upload, perform_test
 
 class SpeedtestWorker(threading.Thread):
-    def __init__(self, view, server):
+    def __init__(self, win, server):
         super().__init__(name="SpeedtestWorker", daemon=True)
 
         self.stop_event = threading.Event()
-        self.view = view
+        self.win = win
         self.server = server
 
     def run(self):
@@ -30,20 +30,28 @@ class SpeedtestWorker(threading.Thread):
             
             await asyncio.sleep(0)
 
-    async def do_run(self): # TODO: Try except
-        GLib.idle_add(setattr, self.view, "ping", str(round(await ping(self.server))) + "ms")
+    async def do_run(self):
+        try:
+            view = self.win.test_view
 
-        def dlCallback(speed, progress):
-            self.view.updateGauge(self.view.download, speed)
-            self.view.progress.remove_css_class("up")
-            self.view.progress.add_css_class("dl")
-            self.view.progress.set_fraction(progress)
-        
-        def upCallback(speed, progress):
-            self.view.updateGauge(self.view.upload, speed)
-            self.view.progress.remove_css_class("dl")
-            self.view.progress.add_css_class("up")
-            self.view.progress.set_fraction(progress)
+            _ping = await ping(self.server)
 
-        await perform_test(download, self.server, lambda *args: GLib.idle_add(dlCallback, *args), 1 / 30)
-        await perform_test(upload, self.server, lambda *args: GLib.idle_add(upCallback, *args), 1 / 30)
+            GLib.idle_add(setattr, view, "ping", str(round(_ping)) + "ms")
+
+            def dlCallback(speed, progress):
+                view.updateGauge(view.download, speed)
+                view.progress.remove_css_class("up")
+                view.progress.add_css_class("dl")
+                view.progress.set_fraction(progress)
+            
+            def upCallback(speed, progress):
+                view.updateGauge(view.upload, speed)
+                view.progress.remove_css_class("dl")
+                view.progress.add_css_class("up")
+                view.progress.set_fraction(progress)
+
+            await perform_test(download, self.server, lambda *args: GLib.idle_add(dlCallback, *args), 1 / 30)
+            await perform_test(upload, self.server, lambda *args: GLib.idle_add(upCallback, *args), 1 / 30)
+        except Exception as e:
+            print(e)
+            GLib.idle_add(self.win.set_view, self.win.offline_view)
