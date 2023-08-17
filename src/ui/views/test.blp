@@ -2,8 +2,6 @@ using Gtk 4.0;
 using Adw 1;
 
 //TODO: Jitter?
-//TODO: Show name of the server
-//TODO: Change the scale of the gauge?
 
 template $TestView : Box {
     orientation: vertical;
@@ -11,12 +9,20 @@ template $TestView : Box {
     ProgressBar progress {
         styles [ "osd" ]
     }
+
+    Label title {
+        label: bind template.server;
+        margin-top: 8;
+        styles [ "title-2" ]
+    }
     
     Box {
         orientation: horizontal;
         
         $Gauge download {
             label: "Download:";
+            color1: "33d17a";
+            color2: "62a0ea";
 
             vexpand: true;
             hexpand: true;
@@ -41,6 +47,8 @@ template $TestView : Box {
 
         $Gauge upload {
             label: "Upload:";
+            color1: "c061cb";
+            color2: "1c71d8";
 
             vexpand: true;
             hexpand: true;

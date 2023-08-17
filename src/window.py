@@ -31,6 +31,7 @@ class TestView(Gtk.Box):
     download = Gtk.Template.Child()
     upload = Gtk.Template.Child()
     ping = GObject.Property(type=str, default="...")
+    server = GObject.Property(type=str)
 
     progress = Gtk.Template.Child()
 

@@ -63,6 +63,7 @@ class SpeedtestApplication(Adw.Application):
         server = self.servers[self.win.start_view.server_selector.get_selected()]
 
         self.win.test_view.reset()
+        self.win.test_view.server = server.name
 
         self.worker = SpeedtestWorker(self.win.test_view, server)
         self.worker.start()
