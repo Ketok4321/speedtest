@@ -8,12 +8,20 @@ class SpeedtestWindow(Adw.ApplicationWindow):
 
     view_switcher = Gtk.Template.Child()
 
+    loading_view = Gtk.Template.Child()
     start_view = Gtk.Template.Child()
     test_view = Gtk.Template.Child()
     offline_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+    
+    def set_view(self, view):
+        self.view_switcher.set_transition_type(Gtk.StackTransitionType.SLIDE_UP_DOWN if view == self.test_view or self.view_switcher.get_visible_child() == self.test_view else Gtk.StackTransitionType.CROSSFADE)
+
+        self.view_switcher.set_visible_child(view)
+
+        self.back_button.set_visible(view == self.test_view)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/start.ui")
 class StartView(Gtk.Box):

@@ -1,6 +1,7 @@
 import sys
 import gi
 import asyncio
+import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -32,19 +33,25 @@ class SpeedtestApplication(Adw.Application):
             self.win = SpeedtestWindow(application=self)
         self.win.present()
 
-        if not self.fetch_servers():
-            self.win.view_switcher.set_visible_child(self.win.offline_view)
+        thread = threading.Thread(target=self.fetch_servers, daemon=True)
+        thread.start()
 
     def fetch_servers(self):
+        GLib.idle_add(self.win.set_view, self.win.loading_view)
+
         try:
+            event_loop = asyncio.new_event_loop()
+
             while self.servers == None or len(self.servers) == 0: # A proper fix would probably be better but this works too
-                self.servers = asyncio.get_event_loop().run_until_complete(get_servers())
+                self.servers = event_loop.run_until_complete(get_servers())
+
+            event_loop.close()
+
+            GLib.idle_add(self.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
+            GLib.idle_add(self.win.set_view, self.win.start_view)
         except Exception as e:
             print(e)
-            return False
-
-        self.win.start_view.server_selector.set_model(Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
-        return True
+            GLib.idle_add(self.win.set_view, self.win.offline_view)
 
     def on_about_action(self, widget, _): #TODO: Credit librespeed
         about = Adw.AboutWindow(transient_for=self.props.active_window,
@@ -57,8 +64,7 @@ class SpeedtestApplication(Adw.Application):
         about.present()
 
     def on_start_action(self, widget, _):
-        self.win.view_switcher.set_visible_child(self.win.test_view)
-        self.win.back_button.set_visible(True)
+        self.win.set_view(self.win.test_view)
 
         server = self.servers[self.win.start_view.server_selector.get_selected()]
 
@@ -71,14 +77,12 @@ class SpeedtestApplication(Adw.Application):
     def on_back_action(self, widget, _):
         self.worker.stop_event.set()
 
-        self.win.view_switcher.set_visible_child(self.win.start_view)
-        self.win.back_button.set_visible(False)
+        self.win.set_view(self.win.start_view)
     
     def on_retry_connect_action(self, widget, _):
-        if self.fetch_servers():
-            self.win.view_switcher.set_visible_child(self.win.start_view)
-        else:
-            self.win.offline_view.toast_overlay.add_toast(Adw.Toast.new("Couldn't reconnect"))
+        thread = threading.Thread(target=self.fetch_servers, daemon=True)
+        thread.start()
+        #self.win.offline_view.toast_overlay.add_toast(Adw.Toast.new("Couldn't reconnect"))
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)
