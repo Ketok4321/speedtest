@@ -58,8 +58,12 @@ class SpeedtestWorker(threading.Thread):
                 view.progress.add_css_class("up")
                 view.progress.set_fraction(progress)
 
+            GLib.idle_add(view.progress.set_visible, True)
+
             await perform_test(download, self.server, lambda *args: GLib.idle_add(dlCallback, *args), 1 / 30)
             await perform_test(upload, self.server, lambda *args: GLib.idle_add(upCallback, *args), 1 / 30)
+
+            GLib.idle_add(view.progress.set_visible, False)
         except Exception as e:
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
