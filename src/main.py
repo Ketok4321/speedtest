@@ -44,6 +44,7 @@ class SpeedtestApplication(Adw.Application):
 
             self.servers = []
             while len(self.servers) == 0: # A proper fix would probably be better but this works too
+                print("Trying to fetch servers...")
                 self.servers = event_loop.run_until_complete(get_servers())
 
             event_loop.close()

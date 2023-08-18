@@ -81,7 +81,7 @@ async def check_server(server):
             task = asyncio.create_task(session.get(server.pingURL))
 
             while not task.done():
-                if time.time() - start > 1:
+                if time.time() - start > 0.75:
                     task.cancel()
                     server.ping = -1
                     return
