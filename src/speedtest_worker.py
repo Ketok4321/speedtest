@@ -18,6 +18,7 @@ class SpeedtestWorker(threading.Thread):
         event_loop = asyncio.new_event_loop()
 
         event_loop.run_until_complete(self.run_async())
+
         event_loop.close()
 
     async def run_async(self):
@@ -29,6 +30,13 @@ class SpeedtestWorker(threading.Thread):
                 break
             
             await asyncio.sleep(0)
+        
+        for task in asyncio.all_tasks():
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
 
     async def do_run(self):
         try:
