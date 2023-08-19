@@ -10,48 +10,51 @@ template $TestView : Box {
             styles [ "osd" ]
         }
 
-        Label title {
-            label: bind template.server;
-            margin-top: 8;
-            styles [ "title-3" ]
-        }
-        
         Box {
-            orientation: horizontal;
+            orientation: vertical;
+            Label title {
+                label: bind template.server;
+                margin-top: 8;
+                styles [ "title-3" ]
+            }
             
-            $Gauge download {
-                label: "Download:";
-                color1: "33d17a";
-                color2: "62a0ea";
-
-                vexpand: true;
-                hexpand: true;
-            }
-
             Box {
-                orientation: vertical;
-                valign: end;
-                width-request: 80;
-                margin-bottom: 16;
+                orientation: horizontal;
+                
+                $Gauge download {
+                    label: "Download:";
+                    color1: "33d17a";
+                    color2: "62a0ea";
 
-                Label {
-                    label: "Ping:";
-                    styles [ "title-2" ]
+                    vexpand: true;
+                    hexpand: true;
                 }
 
-                Label {
-                    label: bind template.ping;
-                    styles [ "title-3" ]
+                Box {
+                    orientation: vertical;
+                    valign: end;
+                    width-request: 80;
+                    margin-bottom: 16;
+
+                    Label {
+                        label: "Ping:";
+                        styles [ "title-2" ]
+                    }
+
+                    Label {
+                        label: bind template.ping;
+                        styles [ "title-3" ]
+                    }
                 }
-            }
 
-            $Gauge upload {
-                label: "Upload:";
-                color1: "c061cb";
-                color2: "1c71d8";
+                $Gauge upload {
+                    label: "Upload:";
+                    color1: "c061cb";
+                    color2: "1c71d8";
 
-                vexpand: true;
-                hexpand: true;
+                    vexpand: true;
+                    hexpand: true;
+                }
             }
         }
     }

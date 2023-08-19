@@ -8,8 +8,6 @@ from urllib.parse import urljoin
 
 DOWNLOAD_SIZE = 100
 UPLOAD_SIZE = 10
-REQUEST_COUNT = 3
-DURATION = 15
 
 HEADERS = {
     "Accept-Encoding": "identity",
@@ -119,24 +117,3 @@ async def upload(server, total):
             async with session.post(server.uploadURL, headers=HEADERS, data=reader) as response:
                 while reader.tell() < reader.length - 1:
                     await asyncio.sleep(0)
-
-async def perform_test(test, server, callback, interval):
-    total = [0]
-
-    start_time = time.time()
-
-    tasks = []
-
-    for i in range(REQUEST_COUNT):
-        tasks.append(asyncio.create_task(test(server, total)))
-        await asyncio.sleep(0.3)
-
-    while True:
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= DURATION:
-            for t in tasks: t.cancel()
-            break
-
-        speed = total[0] / elapsed_time
-        callback(speed, elapsed_time / DURATION)
-        await asyncio.sleep(interval)

@@ -1,10 +1,14 @@
 import threading
 import asyncio
 import gi
+import time
 
 from gi.repository import GLib
 
-from .speedtest import ping, download, upload, perform_test
+from .speedtest import ping, download, upload
+
+DURATION = 15
+REQUEST_COUNT = 3
 
 class SpeedtestWorker(threading.Thread):
     def __init__(self, win, server):
@@ -46,24 +50,53 @@ class SpeedtestWorker(threading.Thread):
 
             GLib.idle_add(setattr, view, "ping", str(round(_ping)) + "ms")
 
-            def dlCallback(speed, progress):
-                view.updateGauge(view.download, speed)
-                view.progress.remove_css_class("up")
-                view.progress.add_css_class("dl")
-                view.progress.set_fraction(progress)
-            
-            def upCallback(speed, progress):
-                view.updateGauge(view.upload, speed)
-                view.progress.remove_css_class("dl")
-                view.progress.add_css_class("up")
-                view.progress.set_fraction(progress)
-
             GLib.idle_add(view.progress.set_visible, True)
 
-            await perform_test(download, self.server, lambda *args: GLib.idle_add(dlCallback, *args), 1 / 30)
-            await perform_test(upload, self.server, lambda *args: GLib.idle_add(upCallback, *args), 1 / 30)
+            view.progress.remove_css_class("up")
+            view.progress.add_css_class("dl")
+            self.start_time = time.time()
+            self.total = [0]
+            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download))
+            await self.perform_test(download)
+            GLib.source_remove(timeout)
+
+            view.progress.remove_css_class("dl")
+            view.progress.add_css_class("up")
+            self.start_time = time.time()
+            self.total = [0]
+            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload))
+            await self.perform_test(upload)
+            GLib.source_remove(timeout)
 
             GLib.idle_add(view.progress.set_visible, False)
         except Exception as e:
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
+    
+    def update(self, gauge):
+        view = self.win.test_view
+
+        current_duration = time.time() - self.start_time
+        value = self.total[0] / current_duration
+
+        if current_duration <= 1:
+            return not self.stop_event.is_set()
+        
+        view.updateGauge(gauge, value)
+        view.progress.set_fraction(current_duration / DURATION)
+
+        return not self.stop_event.is_set()
+    
+    async def perform_test(self, test):
+        tasks = []
+
+        timeout = asyncio.create_task(asyncio.sleep(DURATION))
+
+        for _ in range(REQUEST_COUNT):
+            tasks.append(asyncio.create_task(test(self.server, self.total)))
+            await asyncio.sleep(0.3)
+
+        await timeout
+
+        for t in tasks:
+            t.cancel()
