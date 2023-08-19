@@ -51,19 +51,15 @@ class SpeedtestWorker(threading.Thread):
             GLib.idle_add(setattr, view, "ping", str(round(_ping)) + "ms")
 
             GLib.idle_add(view.progress.set_visible, True)
-
+            
             view.progress.remove_css_class("up")
             view.progress.add_css_class("dl")
-            self.start_time = time.time()
-            self.total = [0]
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download))
             await self.perform_test(download)
             GLib.source_remove(timeout)
 
             view.progress.remove_css_class("dl")
             view.progress.add_css_class("up")
-            self.start_time = time.time()
-            self.total = [0]
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload))
             await self.perform_test(upload)
             GLib.source_remove(timeout)
@@ -88,6 +84,9 @@ class SpeedtestWorker(threading.Thread):
         return not self.stop_event.is_set()
     
     async def perform_test(self, test):
+        self.start_time = time.time()
+        self.total = [0]
+
         tasks = []
 
         timeout = asyncio.create_task(asyncio.sleep(DURATION))
