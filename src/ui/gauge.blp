@@ -1,7 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $Gauge : Adw.Bin {
+template $Gauge : Box {
+    // A hack to make gradient colors stylable using css
+    Box gradient_1 { styles [ "gradient-1" ] }
+    Box gradient_2 { styles [ "gradient-2" ] }
+    
     Overlay {      
         DrawingArea drawing_area {
             vexpand: true;

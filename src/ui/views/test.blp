@@ -23,11 +23,9 @@ template $TestView : Box {
                 
                 $Gauge download {
                     label: "Download:";
-                    color1: "33d17a";
-                    color2: "62a0ea";
-
                     vexpand: true;
                     hexpand: true;
+                    styles [ "dl" ]
                 }
 
                 Box {
@@ -49,11 +47,9 @@ template $TestView : Box {
 
                 $Gauge upload {
                     label: "Upload:";
-                    color1: "c061cb";
-                    color2: "1c71d8";
-
                     vexpand: true;
                     hexpand: true;
+                    styles [ "up" ]
                 }
             }
         }

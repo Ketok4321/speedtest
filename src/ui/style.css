@@ -1,7 +1,23 @@
 progressbar.dl > trough > progress {
-    background: @blue_2;
+    background: @green_3;
 }
 
 progressbar.up > trough > progress {
     background: @purple_2;
+}
+
+gauge.dl > .gradient-1 {
+    color: @blue_3;
+}
+
+gauge.dl > .gradient-2 {
+    color: @green_2;
+}
+
+gauge.up > .gradient-1 {
+    color: @blue_5;
+}
+
+gauge.up > .gradient-2 {
+    color: @purple_1;
 }
