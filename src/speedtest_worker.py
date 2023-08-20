@@ -8,7 +8,8 @@ from gi.repository import GLib
 from .speedtest import ping, download, upload
 
 DURATION = 15
-REQUEST_COUNT = 3
+DL_STREAMS = 6
+UP_STREAMS = 3
 
 class SpeedtestWorker(threading.Thread):
     def __init__(self, win, server):
@@ -53,13 +54,13 @@ class SpeedtestWorker(threading.Thread):
             view.progress.remove_css_class("up")
             view.progress.add_css_class("dl")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, False))
-            await self.perform_test(download)
+            await self.perform_test(download, DL_STREAMS)
             GLib.source_remove(timeout)
 
             view.progress.remove_css_class("dl")
             view.progress.add_css_class("up")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, True))
-            await self.perform_test(upload)
+            await self.perform_test(upload, UP_STREAMS)
             GLib.source_remove(timeout)
         except Exception as e:
             print(e)
@@ -77,7 +78,7 @@ class SpeedtestWorker(threading.Thread):
 
         return not self.stop_event.is_set()
     
-    async def perform_test(self, test):
+    async def perform_test(self, test, streams):
         #GLib.idle_add(self.win.test_view.progress.set_fraction, 0)
         GLib.idle_add(self.win.test_view.progress.set_visible, True)
 
@@ -88,7 +89,7 @@ class SpeedtestWorker(threading.Thread):
 
         timeout = asyncio.create_task(asyncio.sleep(DURATION))
 
-        for _ in range(REQUEST_COUNT):
+        for _ in range(streams):
             tasks.append(asyncio.create_task(test(self.server, self.total)))
             await asyncio.sleep(0.3)
 

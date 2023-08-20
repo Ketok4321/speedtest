@@ -7,7 +7,7 @@ import io
 from urllib.parse import urljoin
 
 DOWNLOAD_SIZE = 100
-UPLOAD_SIZE = 10
+UPLOAD_SIZE = 20
 
 HEADERS = {
     "Accept-Encoding": "identity",
