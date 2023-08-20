@@ -52,20 +52,20 @@ class SpeedtestWorker(threading.Thread):
 
             view.progress.remove_css_class("up")
             view.progress.add_css_class("dl")
-            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download))
+            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, False))
             await self.perform_test(download)
             GLib.source_remove(timeout)
 
             view.progress.remove_css_class("dl")
             view.progress.add_css_class("up")
-            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload))
+            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, True))
             await self.perform_test(upload)
             GLib.source_remove(timeout)
         except Exception as e:
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
     
-    def update(self, gauge):
+    def update(self, gauge, part_two):
         view = self.win.test_view
 
         current_duration = time.time() - self.start_time
@@ -73,12 +73,12 @@ class SpeedtestWorker(threading.Thread):
 
         if current_duration > 1:
             view.updateGauge(gauge, value)
-            view.progress.set_fraction(current_duration / DURATION)
+        view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
 
         return not self.stop_event.is_set()
     
     async def perform_test(self, test):
-        GLib.idle_add(self.win.test_view.progress.set_fraction, 0)
+        #GLib.idle_add(self.win.test_view.progress.set_fraction, 0)
         GLib.idle_add(self.win.test_view.progress.set_visible, True)
 
         self.start_time = time.time()

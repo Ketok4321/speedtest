@@ -56,9 +56,9 @@ class Gauge(Gtk.Box):
         ctx.arc(width / 2, ARC_CENTER, ARC_SIZE / 2, ARC_START, ARC_START + ARC_LENGTH)
         ctx.stroke()
 
-        filled = cairo.LinearGradient(0.0, 0.0, width, 0.0)
-        filled.add_color_stop_rgba(0, *FILLED_COLOR_1)
-        filled.add_color_stop_rgba(width, *FILLED_COLOR_2)
+        filled = cairo.LinearGradient(0.0, 0.0, 0.0, height)
+        filled.add_color_stop_rgba(height, *FILLED_COLOR_1)
+        filled.add_color_stop_rgba(0, *FILLED_COLOR_2)
 
         ctx.set_source(filled)
         ctx.arc(width / 2, ARC_CENTER, ARC_SIZE / 2, ARC_START, ARC_START + ARC_LENGTH * self.fill)

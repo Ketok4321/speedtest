@@ -1,13 +1,14 @@
 progressbar.dl > trough > progress {
-    background: @green_3;
+    background: @green_1;
 }
 
 progressbar.up > trough > progress {
-    background: @purple_2;
+    transition: 1s;
+    background: @purple_1;
 }
 
 gauge.dl > .gradient-1 {
-    color: @blue_3;
+    color: @blue_4;
 }
 
 gauge.dl > .gradient-2 {
