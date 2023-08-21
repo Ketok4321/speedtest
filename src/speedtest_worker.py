@@ -50,16 +50,20 @@ class SpeedtestWorker(threading.Thread):
 
             GLib.idle_add(setattr, view, "ping", str(round(_ping)) + "ms")
 
-            view.progress.remove_css_class("up")
-            view.progress.add_css_class("dl")
+            GLib.idle_add(view.progress.remove_css_class, "up")
+            GLib.idle_add(view.progress.add_css_class, "dl")
+            GLib.idle_add(view.download.add_css_class, "active")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, False))
             await self.perform_test(download, DL_STREAMS)
+            GLib.idle_add(view.download.remove_css_class, "active")
             GLib.source_remove(timeout)
 
-            view.progress.remove_css_class("dl")
-            view.progress.add_css_class("up")
+            GLib.idle_add(view.progress.remove_css_class, "dl")
+            GLib.idle_add(view.progress.add_css_class, "up")
+            GLib.idle_add(view.upload.add_css_class, "active")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, True))
             await self.perform_test(upload, UP_STREAMS)
+            GLib.idle_add(view.upload.remove_css_class, "active")
             GLib.source_remove(timeout)
         except Exception as e:
             print(e)

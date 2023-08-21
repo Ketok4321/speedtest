@@ -7,9 +7,17 @@ template $Gauge : Box {
     Box gradient_2 { styles [ "gradient-2" ] }
     
     Overlay {      
-        DrawingArea drawing_area {
+        DrawingArea background {
             vexpand: true;
             hexpand: true;
+            styles ["background"]
+        }
+
+        [overlay]
+        DrawingArea filled {
+            vexpand: true;
+            hexpand: true;
+            styles ["filled"]
         }
 
         [overlay]

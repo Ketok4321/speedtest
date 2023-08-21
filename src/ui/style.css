@@ -22,3 +22,24 @@ gauge.up > .gradient-1 {
 gauge.up > .gradient-2 {
     color: @purple_1;
 }
+
+gauge .filled {
+    transition: 2s;
+    transition-timing-function: ease-in-out;
+}
+
+gauge.dl .filled {
+    filter: drop-shadow(0 0 7px alpha(@green_1, 0.25)) brightness(100%);
+}
+
+gauge.up .filled {
+    filter: drop-shadow(0 0 7px alpha(@purple_1, 0.25)) brightness(100%);
+}
+
+gauge.dl.active .filled {
+    filter: drop-shadow(0 0 10px alpha(@green_1, 0.5)) brightness(125%);
+}
+
+gauge.up.active .filled {
+    filter: drop-shadow(0 0 10px alpha(@purple_1, 0.5)) brightness(125%);
+}
