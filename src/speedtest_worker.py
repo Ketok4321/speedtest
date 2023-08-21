@@ -1,6 +1,5 @@
 import threading
 import asyncio
-import gi
 import time
 
 from gi.repository import GLib
@@ -79,7 +78,6 @@ class SpeedtestWorker(threading.Thread):
         return not self.stop_event.is_set()
     
     async def perform_test(self, test, streams):
-        #GLib.idle_add(self.win.test_view.progress.set_fraction, 0)
         GLib.idle_add(self.win.test_view.progress.set_visible, True)
 
         self.start_time = time.time()
