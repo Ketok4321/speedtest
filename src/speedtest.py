@@ -41,6 +41,15 @@ async def get_servers(): #TODO: do this in the background
 
             return servers
 
+async def check_server(server):
+    async with aiohttp.ClientSession() as session:
+        try:
+            start = time.time()
+            async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=1)) as _:
+                server.ping = time.time() - start
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            server.ping = -1
+
 class GarbageReader(io.IOBase):
     def __init__(self, read_callback=None):
         self.__read_callback = read_callback
@@ -72,32 +81,12 @@ class GarbageReader(io.IOBase):
 
         return garbage[old_pos:self.pos]
 
-async def check_server(server):
-    async with aiohttp.ClientSession() as session:
-        try:
-            start = time.time()
-            task = asyncio.create_task(session.get(server.pingURL))
-
-            while not task.done():
-                if time.time() - start > 0.75:
-                    task.cancel()
-                    server.ping = -1
-                    return
-                await asyncio.sleep(0)
-            
-            task.result().close()
-            server.ping = time.time() - start
-            return
-        except aiohttp.ClientError:
-            server.ping = -1
-            return
-
 async def ping(server): #TODO: jitter and other stuff
     async with aiohttp.ClientSession() as session:
         pings = []
-        for i in range(10):
+        for _ in range(10):
             start = time.time()
-            async with session.get(server.pingURL, headers=HEADERS) as response:
+            async with session.get(server.pingURL, headers=HEADERS) as _:
                 pings.append(time.time() - start)
     return sum(pings) / len(pings) * 1000
 
