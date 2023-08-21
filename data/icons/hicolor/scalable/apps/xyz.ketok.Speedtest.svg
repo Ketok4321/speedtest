@@ -3,51 +3,55 @@
     <filter id="a" height="100%" width="100%" x="0%" y="0%">
         <feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/>
     </filter>
-    <linearGradient id="b" gradientTransform="matrix(1.545532 -3.254181 -3.583539 -1.403976 411.059021 6792.870117)" gradientUnits="userSpaceOnUse" x1="1660.857056" x2="1662.990112" y1="806.29718" y2="812.882446">
+    <linearGradient id="b" gradientUnits="userSpaceOnUse" x1="66.460854" x2="66.460854" y1="11.199005" y2="117.057861">
+        <stop offset="0" stop-color="#424048"/>
+        <stop offset="1" stop-color="#424048" stop-opacity="0.501961"/>
+    </linearGradient>
+    <linearGradient id="c" gradientTransform="matrix(1.545532 -3.254181 -3.583539 -1.403976 411.059021 6792.870117)" gradientUnits="userSpaceOnUse" x1="1660.857056" x2="1662.990112" y1="806.29718" y2="812.882446">
         <stop offset="0" stop-color="#c061cb"/>
         <stop offset="1" stop-color="#3584e4"/>
     </linearGradient>
-    <mask id="c">
+    <mask id="d">
         <g filter="url(#a)">
             <rect fill-opacity="0.1" height="153.6" width="153.6" x="-12.8" y="-12.8"/>
         </g>
     </mask>
-    <clipPath id="d">
+    <clipPath id="e">
         <rect height="152" width="192"/>
     </clipPath>
-    <mask id="e">
+    <mask id="f">
         <g filter="url(#a)">
             <rect fill-opacity="0.25" height="153.6" width="153.6" x="-12.8" y="-12.8"/>
         </g>
     </mask>
-    <linearGradient id="f" gradientUnits="userSpaceOnUse">
+    <linearGradient id="g" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#c061cb" stop-opacity="0"/>
         <stop offset="1" stop-color="#c061cb"/>
     </linearGradient>
-    <linearGradient id="g" x1="41.99073" x2="110.819588" xlink:href="#f" y1="228.414398" y2="228.414398"/>
-    <clipPath id="h">
+    <linearGradient id="h" x1="41.99073" x2="110.819588" xlink:href="#g" y1="228.414398" y2="228.414398"/>
+    <clipPath id="i">
         <rect height="152" width="192"/>
     </clipPath>
-    <mask id="i">
+    <mask id="j">
         <g filter="url(#a)">
             <rect fill-opacity="0.25" height="153.6" width="153.6" x="-12.8" y="-12.8"/>
         </g>
     </mask>
-    <linearGradient id="j" gradientTransform="matrix(1.066739 0 0 1.066738 -3.508744 -14.865814)" x1="64.34687" x2="94.388145" xlink:href="#f" y1="230.745483" y2="230.745483"/>
-    <clipPath id="k">
+    <linearGradient id="k" gradientTransform="matrix(1.066739 0 0 1.066738 -3.508744 -14.865814)" x1="64.34687" x2="94.388145" xlink:href="#g" y1="230.745483" y2="230.745483"/>
+    <clipPath id="l">
         <rect height="152" width="192"/>
     </clipPath>
-    <path d="m 124 66 c 0 33.136719 -26.863281 60 -60 60 s -60 -26.863281 -60 -60 s 26.863281 -60 60 -60 s 60 26.863281 60 60 z m 0 0"/>
+    <path d="m 124 67 c 0 33.136719 -26.863281 60 -60 60 s -60 -26.863281 -60 -60 s 26.863281 -60 60 -60 s 60 26.863281 60 60 z m 0 0"/>
     <path d="m 64 8 c 30.929688 0 56 25.070312 56 56 v 2 c 0 30.929688 -25.070312 56 -56 56 s -56 -25.070312 -56 -56 v -2 c 0 -30.929688 25.070312 -56 56 -56 z m 0 0" fill="#d5d3cf"/>
     <path d="m 124 64 c 0 33.136719 -26.863281 60 -60 60 s -60 -26.863281 -60 -60 s 26.863281 -60 60 -60 s 60 26.863281 60 60 z m 0 0" fill="#211c2c"/>
-    <path d="m 118 64 c 0 29.824219 -24.175781 54 -54 54 s -54 -24.175781 -54 -54 s 24.175781 -54 54 -54 s 54 24.175781 54 54 z m 0 0" fill="#424048"/>
+    <path d="m 118 64 c 0 29.824219 -24.175781 54 -54 54 s -54 -24.175781 -54 -54 s 24.175781 -54 54 -54 s 54 24.175781 54 54 z m 0 0" fill="url(#b)"/>
     <path d="m 13.982396 237.318743 l 10.488317 0.002235" fill="#363636" stroke="#656565" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="matrix(-0.866025 -0.5 0.5 -0.866025 1.227083 300.84729)"/>
-    <path d="m 58.65625 232.269531 l 39.394531 31.410157" fill="#613583" fill-rule="evenodd" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.99999" transform="matrix(1 0 0 1 0 -172)"/>
+    <path d="m 58.65625 232.269531 l 39.394531 31.410157" fill="#613583" fill-rule="evenodd" stroke="url(#c)" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.99999" transform="matrix(1 0 0 1 0 -172)"/>
     <path d="m 69.480469 61.554688 c 1.347656 3.027343 -0.011719 6.574218 -3.035157 7.925781 c -3.027343 1.347656 -6.574218 -0.011719 -7.925781 -3.035157 c -1.347656 -3.027343 0.011719 -6.574218 3.035157 -7.925781 c 3.027343 -1.347656 6.574218 0.011719 7.925781 3.035157 z m 0 0" fill="#d5d3cf"/>
     <path d="m 66.03125 64 c 0 1.105469 -0.894531 2.003906 -2.003906 2.003906 c -1.105469 0 -2 -0.898437 -2 -2.003906 s 0.894531 -2.003906 2 -2.003906 c 1.109375 0 2.003906 0.898437 2.003906 2.003906 z m 0 0" fill="#131c1a"/>
     <path d="m 66.027344 64 c 0 1.105469 -0.894532 2 -2 2 c -1.101563 0 -2 -0.894531 -2 -2 s 0.898437 -2 2 -2 c 1.105468 0 2 0.894531 2 2 z m 0 0" fill="#131c1a"/>
-    <g mask="url(#c)">
-        <g clip-path="url(#d)" transform="matrix(1 0 0 1 -8 -16)">
+    <g mask="url(#d)">
+        <g clip-path="url(#e)" transform="matrix(1 0 0 1 -8 -16)">
             <path d="m 72 26 c -29.824219 0 -54 24.175781 -54 54 c 0.007812 0.390625 0.023438 0.78125 0.042969 1.171875 c 0.453125 -29.484375 24.472656 -53.152344 53.957031 -53.171875 c 29.355469 0.015625 53.320312 23.480469 53.957031 52.828125 c 0.015625 -0.277344 0.03125 -0.550781 0.042969 -0.828125 c 0 -29.824219 -24.175781 -54 -54 -54 z m 0 0"/>
         </g>
     </g>
@@ -61,14 +65,14 @@
         <path d="m 13.980408 237.319611 h 10.488281" fill="none" transform="matrix(0 1 -1 0 301.776642 -0.683533)"/>
         <path d="m 13.981171 237.31958 h 10.488281" fill="none" transform="matrix(-1 0 -0 -1 128.461639 300.639893)"/>
     </g>
-    <g mask="url(#e)">
-        <g clip-path="url(#h)" transform="matrix(1 0 0 1 -8 -16)">
-            <path d="m 41.875 200.078125 c 17.671875 -10.523437 40.304688 -7.15625 54.152344 8.054687 c 13.851562 15.210938 15.105468 38.070313 3 54.707032" fill="none" stroke="url(#g)" stroke-linecap="round" stroke-linejoin="round" stroke-width="7" transform="matrix(1 0 0 1 8 -156)"/>
+    <g mask="url(#f)">
+        <g clip-path="url(#i)" transform="matrix(1 0 0 1 -8 -16)">
+            <path d="m 41.875 200.078125 c 17.671875 -10.523437 40.304688 -7.15625 54.152344 8.054687 c 13.851562 15.210938 15.105468 38.070313 3 54.707032" fill="none" stroke="url(#h)" stroke-linecap="round" stroke-linejoin="round" stroke-width="7" transform="matrix(1 0 0 1 8 -156)"/>
         </g>
     </g>
-    <g mask="url(#i)">
-        <g clip-path="url(#k)" transform="matrix(1 0 0 1 -8 -16)">
-            <path d="m 41.617188 216.394531 c 11.171874 -11.894531 29.671874 -13.050781 42.238281 -2.636719 c 12.570312 10.410157 14.875 28.796876 5.269531 41.992188" fill="none" stroke="url(#j)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" transform="matrix(1 0 0 1 8 -156)"/>
+    <g mask="url(#j)">
+        <g clip-path="url(#l)" transform="matrix(1 0 0 1 -8 -16)">
+            <path d="m 41.617188 216.394531 c 11.171874 -11.894531 29.671874 -13.050781 42.238281 -2.636719 c 12.570312 10.410157 14.875 28.796876 5.269531 41.992188" fill="none" stroke="url(#k)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" transform="matrix(1 0 0 1 8 -156)"/>
         </g>
     </g>
 </svg>
