@@ -57,14 +57,19 @@ class SpeedtestApplication(Adw.Application):
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
 
-    def on_about_action(self, widget, _): #TODO: Credit librespeed
+    def on_about_action(self, widget, _):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name="Speedtest",
                                 application_icon="xyz.ketok.Speedtest",
                                 developer_name="Ketok",
                                 version="0.1.0",
+                                issue_url="https://github.com/Ketok4321/speedtest/issues",
                                 developers=["Ketok"],
-                                copyright="© 2023 Ketok")
+                                copyright="© 2023 Ketok",
+                                license_type=Gtk.License.GPL_3_0)
+        
+        about.add_credit_section("Backend by", ["Librespeed"])
+
         about.present()
 
     def on_start_action(self, widget, _):
