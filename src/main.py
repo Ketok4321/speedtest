@@ -28,6 +28,8 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("retry_connect", self.on_retry_connect_action)
 
     def do_activate(self):
+        Adw.StyleManager.get_default().set_color_scheme(Adw.ColorScheme.PREFER_DARK) # TODO: Should i prefer or force dark? or maybe just use the system settings?
+
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
