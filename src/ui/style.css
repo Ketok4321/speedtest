@@ -24,7 +24,7 @@ gauge.up > .gradient-2 {
 }
 
 gauge .filled {
-    transition: 2s;
+    transition: 1s;
     transition-timing-function: ease-in-out;
 }
 
