@@ -39,14 +39,19 @@ class TestView(Gtk.Box):
     download = Gtk.Template.Child()
     upload = Gtk.Template.Child()
     ping = GObject.Property(type=str, default="...")
+    jitter = GObject.Property(type=str, default="...")
     server = GObject.Property(type=str)
 
     progress = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+    
+    def update_ping(self, ping, jitter):
+        self.ping = str(round(ping)) + "ms"
+        self.jitter = str(round(jitter)) + "ms"
 
-    def updateGauge(self, object, speed):
+    def update_gauge(self, object, speed):
         speedMb = round(speed / 125_000, 1)
         object.value = str(speedMb) + "Mbps"
         object.fill = min(speedMb / 100, 1.0)
@@ -56,6 +61,7 @@ class TestView(Gtk.Box):
             obj.value = "..."
             obj.fill = 0.0
         self.ping = "..."
+        self.jitter = "..."
         self.progress.set_fraction(0.0)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/offline.ui")

@@ -84,11 +84,15 @@ async def check_server(server):
 async def ping(server): #TODO: jitter and other stuff
     async with aiohttp.ClientSession() as session:
         pings = []
-        for _ in range(10):
+        jitters = []
+        for i in range(10):
             start = time.time()
             async with session.get(server.pingURL, headers=HEADERS) as _:
                 pings.append(time.time() - start)
-    return sum(pings) / len(pings) * 1000
+            
+            if i != 0:
+                jitters.append(abs(pings[i] - pings[i - 1]))
+    return sum(pings) / len(pings) * 1000, sum(jitters) / len(jitters) * 1000
 
 async def download(server, total):
     async with aiohttp.ClientSession() as session:

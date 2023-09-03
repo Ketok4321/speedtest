@@ -46,9 +46,9 @@ class SpeedtestWorker(threading.Thread):
         try:
             view = self.win.test_view
 
-            _ping = await ping(self.server)
+            _ping, jitter = await ping(self.server)
 
-            GLib.idle_add(setattr, view, "ping", str(round(_ping)) + "ms")
+            GLib.idle_add(view.update_ping, _ping, jitter)
 
             GLib.idle_add(view.progress.remove_css_class, "up")
             GLib.idle_add(view.progress.add_css_class, "dl")
@@ -76,7 +76,7 @@ class SpeedtestWorker(threading.Thread):
         value = self.total[0] / current_duration
 
         if current_duration > 1:
-            view.updateGauge(gauge, value)
+            view.update_gauge(gauge, value)
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
 
         return not self.stop_event.is_set()

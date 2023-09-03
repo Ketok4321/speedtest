@@ -10,39 +10,62 @@ template $TestView : Box {
             styles [ "osd" ]
         }
 
+        [overlay]
         Box {
             orientation: vertical;
+            spacing: 16;
+            halign: center;
+            valign: end;
+            margin-bottom: 16;
+
+            Box {
+                orientation: vertical;
+
+                Label {
+                    label: "Ping:";
+                    styles [ "title-2" ]
+                }
+
+                Label {
+                    label: bind template.ping;
+                    styles [ "title-3" ]
+                }
+            }
+
+            Box {
+                orientation: vertical;
+
+                Label {
+                    label: "Jitter:";
+                    styles [ "title-2" ]
+                }
+
+                Label {
+                    label: bind template.jitter;
+                    styles [ "title-3" ]
+                }
+            }
+        }
+
+        Box {
+            orientation: vertical;
+
             Label title {
                 label: bind template.server;
                 margin-top: 8;
                 styles [ "title-3" ]
             }
-            
+
             Box {
                 orientation: horizontal;
+                spacing: 64;
+                margin-bottom: 16;
                 
                 $Gauge download {
                     label: "Download:";
                     vexpand: true;
                     hexpand: true;
                     styles [ "dl" ]
-                }
-
-                Box {
-                    orientation: vertical;
-                    valign: end;
-                    width-request: 80;
-                    margin-bottom: 16;
-
-                    Label {
-                        label: "Ping:";
-                        styles [ "title-2" ]
-                    }
-
-                    Label {
-                        label: bind template.ping;
-                        styles [ "title-3" ]
-                    }
                 }
 
                 $Gauge upload {
