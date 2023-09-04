@@ -81,7 +81,7 @@ async def check_server(server):
         except (aiohttp.ClientError, asyncio.TimeoutError):
             server.ping = -1
 
-async def ping(server): #TODO: jitter and other stuff
+async def ping(server):
     async with aiohttp.ClientSession() as session:
         pings = []
         jitters = []
