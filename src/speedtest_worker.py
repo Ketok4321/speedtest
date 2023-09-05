@@ -9,6 +9,7 @@ from .speedtest import ping, download, upload
 DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
+OVERHEAD_COMPENSATION = 1.06
 
 class SpeedtestWorker(threading.Thread):
     def __init__(self, win, server):
@@ -73,7 +74,7 @@ class SpeedtestWorker(threading.Thread):
         view = self.win.test_view
 
         current_duration = time.time() - self.start_time
-        value = self.total[0] / current_duration
+        value = self.total[0] * OVERHEAD_COMPENSATION / current_duration
 
         if current_duration > 1:
             view.update_gauge(gauge, value)
