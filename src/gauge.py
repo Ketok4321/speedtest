@@ -36,7 +36,7 @@ class Gauge(Gtk.Box):
     def draw_background(self, da, ctx, width, height):
         IS_LIGHT = not Adw.StyleManager.get_default().get_dark()
         
-        ARC_SIZE = min(width, height) * 0.85
+        ARC_SIZE = min(width, height) * 0.9
 
         ARC_START = 0.75 * math.pi
         ARC_LENGTH = 1.5 * math.pi
@@ -54,7 +54,7 @@ class Gauge(Gtk.Box):
         ctx.stroke()
 
     def draw_filled(self, da, ctx, width, height):
-        ARC_SIZE = min(width, height) * 0.85
+        ARC_SIZE = min(width, height) * 0.9
 
         ARC_START = 0.75 * math.pi
         ARC_LENGTH = 1.5 * math.pi
