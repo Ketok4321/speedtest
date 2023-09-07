@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
-	<id>xyz.ketok.Speedtest.desktop</id>
+<component type="desktop-application">
+	<id>xyz.ketok.Speedtest</id>
+
+	<name>Speedtest</name>
+	<summary>Measure your internet connection speed</summary>
+
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
+
 	<description>
-	  <p>No description</p>
+	<p>
+		Desktop client for librespeed using gtk4+libadwaita
+	</p>
 	</description>
+
+	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
 </component>
