@@ -76,7 +76,7 @@ async def check_server(server):
     async with aiohttp.ClientSession() as session:
         try:
             start = time.time()
-            async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=0.5)) as _:
+            async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=0.75)) as _:
                 server.ping = time.time() - start
         except (aiohttp.ClientError, asyncio.TimeoutError):
             server.ping = -1
