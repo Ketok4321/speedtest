@@ -15,11 +15,12 @@ from .speedtest import get_servers
 from .speedtest_worker import SpeedtestWorker
 
 class SpeedtestApplication(Adw.Application):
-    def __init__(self):
+    def __init__(self, version):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
         self.servers = None
         self.win = None
+        self.version = version
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q", "<primary>w"])
         self.create_action("about", self.on_about_action)
@@ -60,7 +61,7 @@ class SpeedtestApplication(Adw.Application):
                                 application_name="Speedtest",
                                 application_icon="xyz.ketok.Speedtest",
                                 developer_name="Ketok",
-                                version="0.1.0",
+                                version=self.version,
                                 issue_url="https://github.com/Ketok4321/speedtest/issues",
                                 developers=["Ketok"],
                                 copyright="© 2023 Ketok",
@@ -100,5 +101,5 @@ class SpeedtestApplication(Adw.Application):
         return action
 
 def main(version):
-    app = SpeedtestApplication()
+    app = SpeedtestApplication(version)
     return app.run(sys.argv)
