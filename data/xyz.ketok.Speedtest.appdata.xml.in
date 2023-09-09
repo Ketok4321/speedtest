@@ -5,6 +5,8 @@
 	<name>Speedtest</name>
 	<summary>Measure your internet connection speed</summary>
 
+    <url type="homepage">https://github.com/Ketok4321/speedtest</url>
+
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
 
@@ -22,6 +24,16 @@
 		Desktop client for librespeed using gtk4+libadwaita
 	</p>
 	</description>
-
+    
+    <content_rating type="oars-1.1" />
+    
 	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
+
+    <releases>
+        <release version="1.0.0" date="2023-09-09">
+            <description>
+                <p>Initial release</p>
+            </description>
+        </release>
+    </releases>
 </component>
