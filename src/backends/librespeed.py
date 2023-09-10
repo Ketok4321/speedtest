@@ -61,25 +61,24 @@ class LibrespeedBackend:
         }
 
     async def get_servers(self):
-        async def check_server(server):
-            async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session:
+            async def check_server(server):
                 try:
                     start = time.time()
                     async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=0.75)) as _:
-                        server.ping = time.time() - start # TODO: Don't mutate.
+                        return time.time() - start
                 except (aiohttp.ClientError, asyncio.TimeoutError):
-                    server.ping = -1
-
-        async with aiohttp.ClientSession() as session:
+                    return -1
+        
             async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
                 servers = await response.json()
                 servers = list(map(lambda x: LibrespeedServer(**x), servers))    
 
-                await asyncio.gather(*[check_server(s) for s in servers])
-
-                servers = list(filter(lambda s: s.ping != -1, servers))
+                pings = await asyncio.gather(*[check_server(s) for s in servers])
                 
-                servers.sort(key=lambda s: s.ping)
+                servers = list(zip(pings, servers))
+                servers.sort(key=lambda t: t[0])
+                servers = [s for p, s in servers if p != -1]
 
                 return servers
 
