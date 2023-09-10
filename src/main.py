@@ -11,13 +11,14 @@ from gi.repository import GLib, Gio, Gtk, Adw
 
 from .window import SpeedtestWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
-from .speedtest import get_servers
+from .backends.librespeed import LibrespeedBackend
 from .speedtest_worker import SpeedtestWorker
 
 class SpeedtestApplication(Adw.Application):
     def __init__(self, version):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
+        self.backend = LibrespeedBackend(f"KetokSpeedtest/{version}")
         self.servers = None
         self.win = None
         self.version = version
@@ -46,7 +47,7 @@ class SpeedtestApplication(Adw.Application):
             self.servers = []
             while len(self.servers) == 0: # A proper fix would probably be better but this works too
                 print("Trying to fetch servers...")
-                self.servers = event_loop.run_until_complete(get_servers())
+                self.servers = event_loop.run_until_complete(self.backend.get_servers())
 
             event_loop.close()
 
@@ -79,7 +80,7 @@ class SpeedtestApplication(Adw.Application):
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.worker = SpeedtestWorker(self.win, server)
+        self.worker = SpeedtestWorker(self.backend, self.win, server)
         self.worker.start()
     
     def on_back_action(self, widget, _):

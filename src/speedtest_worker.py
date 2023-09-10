@@ -4,18 +4,17 @@ import time
 
 from gi.repository import GLib
 
-from .speedtest import ping, download, upload
-
 DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
 OVERHEAD_COMPENSATION = 1.06
 
 class SpeedtestWorker(threading.Thread):
-    def __init__(self, win, server):
+    def __init__(self, backend, win, server):
         super().__init__(name="SpeedtestWorker", daemon=True)
 
         self.stop_event = threading.Event()
+        self.backend = backend
         self.win = win
         self.server = server
 
@@ -47,15 +46,15 @@ class SpeedtestWorker(threading.Thread):
         try:
             view = self.win.test_view
 
-            _ping, jitter = await ping(self.server)
+            ping, jitter = await self.backend.ping(self.server)
 
-            GLib.idle_add(view.update_ping, _ping, jitter)
+            GLib.idle_add(view.update_ping, ping, jitter)
 
             GLib.idle_add(view.progress.remove_css_class, "up")
             GLib.idle_add(view.progress.add_css_class, "dl")
             GLib.idle_add(view.download.add_css_class, "active")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, False))
-            await self.perform_test(download, DL_STREAMS)
+            await self.perform_test(self.backend.download, DL_STREAMS)
             GLib.idle_add(view.download.remove_css_class, "active")
             GLib.source_remove(timeout)
 
@@ -63,7 +62,7 @@ class SpeedtestWorker(threading.Thread):
             GLib.idle_add(view.progress.add_css_class, "up")
             GLib.idle_add(view.upload.add_css_class, "active")
             timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, True))
-            await self.perform_test(upload, UP_STREAMS)
+            await self.perform_test(self.backend.upload, UP_STREAMS)
             GLib.idle_add(view.upload.remove_css_class, "active")
             GLib.source_remove(timeout)
         except Exception as e:

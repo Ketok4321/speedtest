@@ -42,9 +42,13 @@ configure_file(
 speedtest_sources = [
   'main.py',
   'window.py',
-  'speedtest.py',
   'gauge.py',
   'speedtest_worker.py',
 ]
 
+backends_sources = [
+  'backends/librespeed.py',
+]
+
 install_data(speedtest_sources, install_dir: moduledir)
+install_data(backends_sources, install_dir: join_paths(moduledir, 'backends'))
