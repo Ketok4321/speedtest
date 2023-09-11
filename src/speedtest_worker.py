@@ -2,12 +2,19 @@ import threading
 import asyncio
 import time
 
+from dataclasses import dataclass
+
 from gi.repository import GLib
 
-DURATION = 15
-DL_STREAMS = 6
-UP_STREAMS = 3
+DURATION = 15 #TODO: This constant is in two places now
 OVERHEAD_COMPENSATION = 1.06
+
+@dataclass
+class SpeedtestResults:
+    ping: float = 0
+    jitter: float = 0
+    total_dl: int = 0
+    total_up: int = 0
 
 class SpeedtestWorker(threading.Thread):
     def __init__(self, backend, win, server):
@@ -46,34 +53,49 @@ class SpeedtestWorker(threading.Thread):
         try:
             view = self.win.test_view
 
-            ping, jitter = await self.backend.ping(self.server)
+            timeout = None
 
-            GLib.idle_add(view.update_ping, ping, jitter)
+            def on_event(type):
+                nonlocal timeout
 
-            GLib.idle_add(view.progress.remove_css_class, "up")
-            GLib.idle_add(view.progress.add_css_class, "dl")
-            GLib.idle_add(view.download.add_css_class, "active")
-            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, False))
-            await self.perform_test(self.backend.download, DL_STREAMS)
-            GLib.idle_add(view.download.remove_css_class, "active")
-            GLib.source_remove(timeout)
+                if type == "ping":
+                    view.update_ping(self.results.ping, self.results.jitter)
+                elif type == "download_start":
+                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, self.results.total_dl, False))
+                    
+                    view.progress.remove_css_class("up")
+                    view.progress.add_css_class("dl")
+                    view.download.add_css_class("active")
+                    
+                    self.start_time = time.time()
+                    self.win.test_view.progress.set_visible(True)
+                elif type == "download_end":
+                    GLib.source_remove(timeout)
+                    view.download.remove_css_class("active")
+                elif type == "upload_start":
+                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, self.results.total_up, True))
+                    
+                    view.progress.remove_css_class("dl")
+                    view.progress.add_css_class("up")
+                    view.upload.add_css_class("active")
+                    
+                    self.start_time = time.time()
+                    self.win.test_view.progress.set_visible(True)
+                elif type == "upload_end":
+                    GLib.source_remove(timeout)
+                    view.upload.remove_css_class("active")
 
-            GLib.idle_add(view.progress.remove_css_class, "dl")
-            GLib.idle_add(view.progress.add_css_class, "up")
-            GLib.idle_add(view.upload.add_css_class, "active")
-            timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, True))
-            await self.perform_test(self.backend.upload, UP_STREAMS)
-            GLib.idle_add(view.upload.remove_css_class, "active")
-            GLib.source_remove(timeout)
+            self.results = SpeedtestResults()
+            await self.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
         except Exception as e:
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
     
-    def update(self, gauge, part_two):
+    def update(self, gauge, total, part_two):
         view = self.win.test_view
 
         current_duration = time.time() - self.start_time
-        value = self.total[0] * OVERHEAD_COMPENSATION / current_duration
+        value = total * OVERHEAD_COMPENSATION / current_duration
 
         if current_duration > 1:
             view.update_gauge(gauge, value)
@@ -85,19 +107,5 @@ class SpeedtestWorker(threading.Thread):
         GLib.idle_add(self.win.test_view.progress.set_visible, True)
 
         self.start_time = time.time()
-        self.total = [0]
-
-        tasks = []
-
-        timeout = asyncio.create_task(asyncio.sleep(DURATION))
-
-        for _ in range(streams):
-            tasks.append(asyncio.create_task(test(self.server, self.total)))
-            await asyncio.sleep(0.3)
-
-        await timeout
 
         GLib.idle_add(self.win.test_view.progress.set_visible, False)
-
-        for t in tasks:
-            t.cancel()

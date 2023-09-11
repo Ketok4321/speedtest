@@ -9,6 +9,10 @@ from urllib.parse import urljoin
 DOWNLOAD_SIZE = 100
 UPLOAD_SIZE = 20
 
+DURATION = 15
+DL_STREAMS = 6
+UP_STREAMS = 3
+
 garbage = os.urandom(UPLOAD_SIZE * 1000 * 1000)
 
 class GarbageReader(io.IOBase):
@@ -81,6 +85,32 @@ class LibrespeedBackend:
                 servers = [s for p, s in servers if p != -1]
 
                 return servers
+    
+    async def start(self, server, res, notify):
+        async def perform_test(test, streams, res):
+            tasks = []
+
+            timeout = asyncio.create_task(asyncio.sleep(DURATION))
+
+            for _ in range(streams):
+                tasks.append(asyncio.create_task(test(server, res)))
+                await asyncio.sleep(0.3)
+
+            await timeout
+
+            for t in tasks:
+                t.cancel()
+
+        res.ping, res.jitter = await self.ping(server)
+        notify("ping")
+
+        notify("download_start")
+        await perform_test(self.download, DL_STREAMS, res)
+        notify("download_end")
+
+        notify("upload_start")
+        await perform_test(self.upload, DL_STREAMS, res)
+        notify("upload_end")
 
     async def ping(self, server):
         async with aiohttp.ClientSession() as session:
@@ -95,16 +125,16 @@ class LibrespeedBackend:
                     jitters.append(abs(pings[i] - pings[i - 1]))
         return sum(pings) / len(pings) * 1000, sum(jitters) / len(jitters) * 1000
     
-    async def download(self, server, total):
+    async def download(self, server, res):
         async with aiohttp.ClientSession() as session:
             while True:
                 async with session.get(server.downloadURL + "?ckSize=" + str(DOWNLOAD_SIZE), headers=self.headers) as response:
                     async for data in response.content.iter_any():
-                        total[0] += len(data)
+                        res.total_dl += len(data)
 
-    async def upload(self, server, total):
+    async def upload(self, server, res):
         def callback(size):
-            total[0] += size
+            res.total_up += size
         
         async with aiohttp.ClientSession() as session:
             while True:
