@@ -60,7 +60,7 @@ class LibrespeedBackend:
             "User-Agent": user_agent,
         }
 
-    async def get_servers(self):
+    async def get_servers(self): #TODO: Change how this works to take more time on worse connections and less on better ones, while returning the same amount of servers in both cases
         async with aiohttp.ClientSession() as session:
             async def check_server(server):
                 try:
