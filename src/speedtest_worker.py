@@ -68,7 +68,6 @@ class SpeedtestWorker(threading.Thread):
                     view.download.add_css_class("active")
                     
                     self.start_time = time.time()
-                    self.win.test_view.progress.set_visible(True)
                 elif type == "download_end":
                     GLib.source_remove(timeout)
                     view.download.remove_css_class("active")
@@ -80,13 +79,14 @@ class SpeedtestWorker(threading.Thread):
                     view.upload.add_css_class("active")
                     
                     self.start_time = time.time()
-                    self.win.test_view.progress.set_visible(True)
                 elif type == "upload_end":
                     GLib.source_remove(timeout)
                     view.upload.remove_css_class("active")
 
+            GLib.idle_add(self.win.test_view.progress.set_visible, True)
             self.results = SpeedtestResults()
             await self.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
+            GLib.idle_add(self.win.test_view.progress.set_visible, False)
         except Exception as e:
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
