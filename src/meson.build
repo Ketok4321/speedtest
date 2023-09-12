@@ -40,6 +40,7 @@ configure_file(
 )
 
 speedtest_sources = [
+  '__init__.py',
   'main.py',
   'window.py',
   'gauge.py',
