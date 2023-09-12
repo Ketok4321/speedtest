@@ -13,8 +13,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: 'xyz.ketok.Speedtest.appdata.xml.in',
-       output: 'xyz.ketok.Speedtest.appdata.xml',
+        input: 'xyz.ketok.Speedtest.metainfo.xml.in',
+       output: 'xyz.ketok.Speedtest.metainfo.xml',
        po_dir: '../po',
       install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo')

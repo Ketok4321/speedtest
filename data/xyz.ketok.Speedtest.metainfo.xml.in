@@ -6,6 +6,7 @@
 	<summary>Measure your internet connection speed</summary>
 
     <url type="homepage">https://github.com/Ketok4321/speedtest</url>
+    <url type="bugtracker">https://github.com/Ketok4321/speedtest/issues</url>
 
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
@@ -30,7 +31,16 @@
 	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
 
     <releases>
-        <release version="1.0.0" date="2023-09-09">
+		<release version="1.0.1" date="2023-09-12">
+            <description>
+				<ul>
+					<li>Improve the icon's contrast with the flathub website</li>
+					<li>Internal improvements</li>
+				</ul>
+            </description>
+        </release>
+
+		<release version="1.0.0" date="2023-09-09">
             <description>
                 <p>Initial release</p>
             </description>
