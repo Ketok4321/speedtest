@@ -109,7 +109,7 @@ class LibrespeedBackend:
         notify("download_end")
 
         notify("upload_start")
-        await perform_test(self.upload, DL_STREAMS, res)
+        await perform_test(self.upload, UP_STREAMS, res)
         notify("upload_end")
 
     async def ping(self, server):
