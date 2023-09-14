@@ -11,14 +11,14 @@ from gi.repository import GLib, Gio, Gtk, Adw
 
 from .window import SpeedtestWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
-from .backends.librespeed import LibrespeedBackend
+from .backends.ookla import OoklaBackend
 from .speedtest_worker import SpeedtestWorker
 
 class SpeedtestApplication(Adw.Application):
     def __init__(self, version):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
-        self.backend = LibrespeedBackend(f"KetokSpeedtest/{version}")
+        self.backend = OoklaBackend(f"KetokSpeedtest/{version}")
         self.servers = None
         self.win = None
         self.version = version

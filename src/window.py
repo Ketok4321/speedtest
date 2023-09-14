@@ -48,8 +48,8 @@ class TestView(Gtk.Box):
         super().__init__(**kwargs)
     
     def update_ping(self, ping, jitter):
-        self.ping = str(round(ping)) + "ms"
-        self.jitter = str(round(jitter)) + "ms"
+        self.ping = f"{ping:.1f}ms"
+        self.jitter = f"{jitter:.1f}ms"
 
     def update_gauge(self, object, speed):
         speedMb = round(speed / 125_000, 1)
