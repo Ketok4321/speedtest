@@ -6,13 +6,14 @@ template $OfflineView : Box {
     valign: center;
     
     Adw.StatusPage {
-        title: "Couldn't connect to the speedtest servers";
-        description: "Make sure you are connected to the internet";
+        title: "Can't Connect to Speedtest Servers";
+        description: "Make sure you are have an internet connection.";
         icon-name: "network-offline-symbolic";
         styles [ "compact" ]
 
         Button {
             halign: center;
+            margin-bottom: 32;
 
             label: "Retry";
             action-name: "app.retry_connect";

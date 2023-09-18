@@ -64,11 +64,11 @@ class SpeedtestApplication(Adw.Application):
                                 developer_name="Ketok",
                                 version=self.version,
                                 issue_url="https://github.com/Ketok4321/speedtest/issues",
-                                developers=["Ketok"],
+                                developers=["Ketok https://github.com/Ketok4321"],
                                 copyright="© 2023 Ketok",
                                 license_type=Gtk.License.GPL_3_0)
         
-        about.add_credit_section("Backend by", ["Librespeed"])
+        about.add_credit_section("Backend by", ["LibreSpeed https://librespeed.org/"])
 
         about.present()
 
