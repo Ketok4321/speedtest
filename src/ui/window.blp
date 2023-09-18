@@ -5,7 +5,7 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
   width-request: 600;
   height-request: 300;
   resizable: false;
-  title: "Speedtest";
+  title: _("Speedtest");
 
   Box {
     orientation: vertical;
@@ -47,7 +47,7 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
 
 menu primary_menu {
   item {
-    label: "About Speedtest";
+    label: _("About Speedtest");
     action: "app.about";
   }
 }

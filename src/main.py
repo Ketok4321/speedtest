@@ -8,6 +8,7 @@ gi.require_version("Adw", "1")
 gi.require_foreign("cairo")
 
 from gi.repository import GLib, Gio, Gtk, Adw
+from gettext import gettext as _
 
 from .window import SpeedtestWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
@@ -59,7 +60,7 @@ class SpeedtestApplication(Adw.Application):
 
     def on_about_action(self, widget, _):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name="Speedtest",
+                                application_name=_("Speedtest"),
                                 application_icon="xyz.ketok.Speedtest",
                                 developer_name="Ketok",
                                 version=self.version,
@@ -68,7 +69,7 @@ class SpeedtestApplication(Adw.Application):
                                 copyright="© 2023 Ketok",
                                 license_type=Gtk.License.GPL_3_0)
         
-        about.add_credit_section("Backend by", ["Librespeed"])
+        about.add_credit_section(_("Backend by"), ["Librespeed"])
 
         about.present()
 
