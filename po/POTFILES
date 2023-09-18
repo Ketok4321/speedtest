@@ -1,6 +1,8 @@
 data/xyz.ketok.Speedtest.desktop.in
 data/xyz.ketok.Speedtest.metainfo.xml.in
 data/xyz.ketok.Speedtest.gschema.xml
+src/ui/views/offline.blp
+src/ui/views/start.blp
+src/ui/views/test.blp
+src/ui/window.blp
 src/main.py
-src/window.py
-src/window.ui

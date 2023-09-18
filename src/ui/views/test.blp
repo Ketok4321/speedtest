@@ -22,7 +22,7 @@ template $TestView : Box {
                 orientation: vertical;
 
                 Label {
-                    label: "Ping:";
+                    label: _("Ping:");
                     styles [ "title-2" ]
                 }
 
@@ -37,7 +37,7 @@ template $TestView : Box {
                 orientation: vertical;
 
                 Label {
-                    label: "Jitter:";
+                    label: _("Jitter:");
                     styles [ "title-2" ]
                 }
 
@@ -65,14 +65,14 @@ template $TestView : Box {
                 margin-end: 48;
                 
                 $Gauge download {
-                    label: "Download:";
+                    label: _("Download:");
                     vexpand: true;
                     hexpand: true;
                     styles [ "dl" ]
                 }
 
                 $Gauge upload {
-                    label: "Upload:";
+                    label: _("Upload:");
                     vexpand: true;
                     hexpand: true;
                     styles [ "up" ]
