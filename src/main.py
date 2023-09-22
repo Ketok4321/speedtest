@@ -58,7 +58,7 @@ class SpeedtestApplication(Adw.Application):
             print(e)
             GLib.idle_add(self.win.set_view, self.win.offline_view)
 
-    def on_about_action(self, widget, _):
+    def on_about_action(self, widget, __):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name=_("Speedtest"),
                                 application_icon="xyz.ketok.Speedtest",
