@@ -36,30 +36,34 @@ class Gauge(Gtk.Box):
     def draw_background(self, da, ctx, width, height):
         IS_LIGHT = not Adw.StyleManager.get_default().get_dark()
         
-        ARC_SIZE = min(width, height) * 0.9
+        ARC_SIZE = min(width, height) * 0.89
 
-        ARC_START = 0.75 * math.pi
-        ARC_LENGTH = 1.5 * math.pi
+        ARC_START = 0.8 * math.pi
+        ARC_LENGTH = 1.4 * math.pi
 
-        ARC_THICKNESS = ARC_SIZE * 0.125
+        ARC_THICKNESS = ARC_SIZE * 0.115
 
         ARC_CENTER = height / 2 + ARC_THICKNESS / 2
 
         UNFILLED_COLOR = 0, 0, 0, 0.1 if IS_LIGHT else 0.3
 
         ctx.set_line_width(ARC_THICKNESS)
+        ctx.set_line_cap(cairo.LINE_CAP_ROUND)
 
         ctx.set_source_rgba(*UNFILLED_COLOR)
         ctx.arc(width / 2, ARC_CENTER, ARC_SIZE / 2, ARC_START, ARC_START + ARC_LENGTH)
         ctx.stroke()
 
     def draw_filled(self, da, ctx, width, height):
-        ARC_SIZE = min(width, height) * 0.9
+        if self.fill <= 0.01:
+            return
 
-        ARC_START = 0.75 * math.pi
-        ARC_LENGTH = 1.5 * math.pi
+        ARC_SIZE = min(width, height) * 0.89
 
-        ARC_THICKNESS = ARC_SIZE * 0.125
+        ARC_START = 0.8 * math.pi
+        ARC_LENGTH = 1.4 * math.pi
+
+        ARC_THICKNESS = ARC_SIZE * 0.115
 
         ARC_CENTER = height / 2 + ARC_THICKNESS / 2
 
@@ -70,6 +74,7 @@ class Gauge(Gtk.Box):
         FILLED_COLOR_2 = gdk_color_to_tuple(self.gradient_2.get_style_context().get_color())
 
         ctx.set_line_width(ARC_THICKNESS)
+        ctx.set_line_cap(cairo.LINE_CAP_ROUND)
 
         filled = cairo.LinearGradient(0.0, 0.0, 0.0, height)
         filled.add_color_stop_rgba(height, *FILLED_COLOR_1)

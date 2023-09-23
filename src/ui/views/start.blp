@@ -6,8 +6,8 @@ template $StartView : Box {
 
     Adw.ToastOverlay {
         Adw.StatusPage {
-            title: "Speedtest";
-            description: "Measure your internet connection speed";
+            title: _("Speedtest");
+            description: _("Measure your internet connection speed");
         
             Box {
                 orientation: vertical;
@@ -15,7 +15,7 @@ template $StartView : Box {
 
                 DropDown server_selector {
                     model: StringList {
-                        strings [ "Server 1", "Server 2", "Server 3" ]
+                        strings [ ]
                     };
                     
                     margin-bottom: 24;
@@ -25,7 +25,7 @@ template $StartView : Box {
                     halign: center;
                     width-request: 240;
 
-                    label: "Start";
+                    label: _("Start");
                     action-name: "app.start";
                     styles [ "pill", "suggested-action" ]
                 }

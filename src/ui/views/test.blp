@@ -16,13 +16,13 @@ template $TestView : Box {
             spacing: 16;
             halign: center;
             valign: end;
-            margin-bottom: 16;
+            margin-bottom: 24;
 
             Box {
                 orientation: vertical;
 
                 Label {
-                    label: "Ping:";
+                    label: _("Ping:");
                     styles [ "title-2" ]
                 }
 
@@ -36,7 +36,7 @@ template $TestView : Box {
                 orientation: vertical;
 
                 Label {
-                    label: "Jitter:";
+                    label: _("Jitter:");
                     styles [ "title-2" ]
                 }
 
@@ -58,18 +58,19 @@ template $TestView : Box {
 
             Box {
                 orientation: horizontal;
-                spacing: 64;
-                margin-bottom: 16;
+                spacing: 80;
+                margin-start: 8;
+                margin-end: 8;
                 
                 $Gauge download {
-                    label: "Download:";
+                    label: _("Download:");
                     vexpand: true;
                     hexpand: true;
                     styles [ "dl" ]
                 }
 
                 $Gauge upload {
-                    label: "Upload:";
+                    label: _("Upload:");
                     vexpand: true;
                     hexpand: true;
                     styles [ "up" ]
