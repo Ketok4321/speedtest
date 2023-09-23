@@ -64,13 +64,13 @@ class LibrespeedBackend:
             "User-Agent": user_agent,
         }
 
-    async def get_servers(self):
+    async def get_servers(self): #TODO: Change how this works to take more time on worse connections and less on better ones, while returning the same amount of servers in both cases
         async with aiohttp.ClientSession() as session:
             async def check_server(server, results):
                 try:
                     start = time.time()
-                    async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=2.0)) as _:
-                        results.append((server, time.time() - start))
+                    async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=1.0)) as _:
+                        results.append((time.time() - start, server))
                 except (aiohttp.ClientError, asyncio.TimeoutError):
                     pass
         
@@ -82,12 +82,12 @@ class LibrespeedBackend:
 
                 task = asyncio.gather(*[check_server(s, results) for s in servers])
                 
-                while len(results) < 15 and not task.done():
+                while len(results) < 20 and not task.done():
                     await asyncio.sleep(0)
 
-                results.sort(key=lambda t: t[1])
+                results.sort(key=lambda t: t[0])
 
-                return [s for s, _ in results]
+                return [s for _, s in results]
     
     async def start(self, server, res, notify):
         async def perform_test(test, streams, res):
