@@ -68,9 +68,8 @@ class LibrespeedBackend:
         async with aiohttp.ClientSession() as session:
             async def check_server(server, results):
                 try:
-                    start = time.time()
                     async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=2.0)) as _:
-                        results.append((server, time.time() - start))
+                        results.append(server)
                 except (aiohttp.ClientError, asyncio.TimeoutError):
                     pass
         
@@ -85,9 +84,7 @@ class LibrespeedBackend:
                 while len(results) < 15 and not task.done():
                     await asyncio.sleep(0)
 
-                results.sort(key=lambda t: t[1])
-
-                return [s for s, _ in results]
+                return results
     
     async def start(self, server, res, notify):
         async def perform_test(test, streams, res):
