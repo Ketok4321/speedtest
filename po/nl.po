@@ -69,11 +69,11 @@ msgstr "Ruis:"
 
 #: src/ui/views/test.blp:66
 msgid "Download:"
-msgstr "Downloadsnelheid:"
+msgstr "Download:"
 
 #: src/ui/views/test.blp:73
 msgid "Upload:"
-msgstr "Uploadsnelheid:"
+msgstr "Upload:"
 
 #: src/ui/window.blp:50
 msgid "About Speedtest"
