@@ -32,6 +32,18 @@ msgid "Desktop client for librespeed using gtk4+libadwaita"
 msgstr "Klient do librespeed używający gtk4+libadwaita"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:37
+msgid "User interface changes"
+msgstr "Zmiany interfejsu użytkownika"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
+msgid "Improve the code for gathering the server list"
+msgstr "Poprawiono kod do zbierania listy serwerów"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
+msgid "Dutch and Polish translations"
+msgstr "Holandzka i polska tranzlacja"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
 msgid "Improve the icon's contrast with the flathub website"
 msgstr "Poprawiono kontrast ikonki na ciemnych tłach"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 18:20+0200\n"
+"POT-Creation-Date: 2023-09-26 21:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:63
+#: src/ui/window.blp:8 src/main.py:62
 msgid "Speedtest"
 msgstr ""
 
@@ -32,14 +32,26 @@ msgid "Desktop client for librespeed using gtk4+libadwaita"
 msgstr ""
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:37
-msgid "Improve the icon's contrast with the flathub website"
+msgid "User interface changes"
 msgstr ""
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:38
+msgid "Improve the code for gathering the server list"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
+msgid "Dutch and Polish translations"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:47
+msgid "Improve the icon's contrast with the flathub website"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:48
 msgid "Internal improvements"
 msgstr ""
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:45
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:55
 msgid "Initial release"
 msgstr ""
 
@@ -79,6 +91,6 @@ msgstr ""
 msgid "About Speedtest"
 msgstr ""
 
-#: src/main.py:72
+#: src/main.py:71
 msgid "Backend by"
 msgstr ""
