@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the speedtest package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: speedtest\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-26 21:47+0200\n"
+"PO-Revision-Date: 2023-10-01 01:25+0300\n"
+"Last-Translator: Ulvican Kahya (ulville)\n"
+"Language-Team: Turkish <takim@gnome.org.tr\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: data/xyz.ketok.Speedtest.desktop.in:3
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
+#: src/ui/window.blp:8 src/main.py:62
+msgid "Speedtest"
+msgstr "Hız Testi"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
+msgid "Measure your internet connection speed"
+msgstr "İnternet bağlantı hızınızı ölçün"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:24
+msgid "Desktop client for librespeed using gtk4+libadwaita"
+msgstr "Librespeed için GTK4 ve libadwaita kullanan masaüstü istemcisi"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
+msgid "User interface changes"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
+msgid "Improve the code for gathering the server list"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
+msgid "Dutch and Polish translations"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:47
+msgid "Improve the icon's contrast with the flathub website"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:48
+msgid "Internal improvements"
+msgstr ""
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:55
+msgid "Initial release"
+msgstr ""
+
+#: src/ui/views/offline.blp:9
+msgid "Couldn't connect to the speedtest servers"
+msgstr "Hız testi sunucularına bağlanılamıyor"
+
+#: src/ui/views/offline.blp:10
+msgid "Make sure you are connected to the internet"
+msgstr "İnternet'e bağlı olduğunuzdan emin olun"
+
+#: src/ui/views/offline.blp:17
+msgid "Retry"
+msgstr "Terar Dene"
+
+#: src/ui/views/start.blp:28
+msgid "Start"
+msgstr "Başlat"
+
+#: src/ui/views/test.blp:25
+msgid "Ping:"
+msgstr "Ping:"
+
+#: src/ui/views/test.blp:39
+msgid "Jitter:"
+msgstr "Sapma:"
+
+#: src/ui/views/test.blp:66
+msgid "Download:"
+msgstr "İndirme:"
+
+#: src/ui/views/test.blp:73
+msgid "Upload:"
+msgstr "Karşıya Yükleme:"
+
+#: src/ui/window.blp:50
+msgid "About Speedtest"
+msgstr "Hız Testi Hakkında"
+
+#: src/main.py:71
+msgid "Backend by"
+msgstr "Arka Uç"
