@@ -3,94 +3,82 @@
 # This file is distributed under the same license as the speedtest package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 21:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2023-09-20 11:54+0200\n"
+"PO-Revision-Date: 2023-09-20 11:57+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:62
+#: src/ui/window.blp:8 src/main.py:63
 msgid "Speedtest"
-msgstr ""
+msgstr "Snelheidstest"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
 msgid "Measure your internet connection speed"
-msgstr ""
+msgstr "Meet de snelheid van uw internetverbinding"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:24
 msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr ""
+msgstr "Een toepassing rond librespeed op basis van GTK4 en Libadwaita"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:37
-msgid "User interface changes"
-msgstr ""
+msgid "Improve the icon's contrast with the flathub website"
+msgstr "Verbeterd: pictogramcontrast i.v.m. de Flathub-website"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:38
-msgid "Improve the code for gathering the server list"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
-msgid "Dutch and Polish translations"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:47
-msgid "Improve the icon's contrast with the flathub website"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:48
 msgid "Internal improvements"
-msgstr ""
+msgstr "Interne verbeteringen"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:55
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:45
 msgid "Initial release"
-msgstr ""
+msgstr "Eerste versie"
 
 #: src/ui/views/offline.blp:9
 msgid "Couldn't connect to the speedtest servers"
-msgstr ""
+msgstr "Er kan geen verbinding worden gemaakt"
 
 #: src/ui/views/offline.blp:10
 msgid "Make sure you are connected to the internet"
-msgstr ""
+msgstr "Zorg dat u verbonden bent met het internet"
 
 #: src/ui/views/offline.blp:17
 msgid "Retry"
-msgstr ""
+msgstr "Opnieuw proberen"
 
 #: src/ui/views/start.blp:28
 msgid "Start"
-msgstr ""
+msgstr "Starten"
 
 #: src/ui/views/test.blp:25
 msgid "Ping:"
-msgstr ""
+msgstr "Ping:"
 
 #: src/ui/views/test.blp:39
 msgid "Jitter:"
-msgstr ""
+msgstr "Ruis:"
 
 #: src/ui/views/test.blp:66
 msgid "Download:"
-msgstr ""
+msgstr "Download:"
 
 #: src/ui/views/test.blp:73
 msgid "Upload:"
-msgstr ""
+msgstr "Upload:"
 
 #: src/ui/window.blp:50
 msgid "About Speedtest"
-msgstr ""
+msgstr "Over Snelheidstest"
 
-#: src/main.py:71
+#: src/main.py:72
 msgid "Backend by"
-msgstr ""
+msgstr "Backend van"

@@ -8,7 +8,6 @@ gi.require_version("Adw", "1")
 gi.require_foreign("cairo")
 
 from gi.repository import GLib, Gio, Gtk, Adw
-from gettext import gettext as _
 
 from .window import SpeedtestWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered

@@ -8,89 +8,89 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 21:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2023-09-22 18:20+0200\n"
+"PO-Revision-Date: 2023-09-26 17:24+0200\n"
+"Last-Translator: Ketok <ketok@ketok.xyz>\n"
+"Language-Team: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:62
+#: src/ui/window.blp:8 src/main.py:63
 msgid "Speedtest"
-msgstr ""
+msgstr "Speedtest"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
 msgid "Measure your internet connection speed"
-msgstr ""
+msgstr "Zmierz swoją prędkość internetu"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:24
 msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr ""
+msgstr "Klient do librespeed używający gtk4+libadwaita"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:37
 msgid "User interface changes"
-msgstr ""
+msgstr "Zmiany interfejsu użytkownika"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:38
 msgid "Improve the code for gathering the server list"
-msgstr ""
+msgstr "Poprawiono kod do zbierania listy serwerów"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:39
 msgid "Dutch and Polish translations"
-msgstr ""
+msgstr "Holandzka i polska tranzlacja"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:47
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
 msgid "Improve the icon's contrast with the flathub website"
-msgstr ""
+msgstr "Poprawiono kontrast ikonki na ciemnych tłach"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:48
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
 msgid "Internal improvements"
-msgstr ""
+msgstr "Wewnętrzne poprawki"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:55
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:45
 msgid "Initial release"
-msgstr ""
+msgstr "Pierwsze wydanie"
 
 #: src/ui/views/offline.blp:9
 msgid "Couldn't connect to the speedtest servers"
-msgstr ""
+msgstr "Nie można połączyć się z serwerami"
 
 #: src/ui/views/offline.blp:10
 msgid "Make sure you are connected to the internet"
-msgstr ""
+msgstr "Upewnij się, że masz połączenie z internetem"
 
 #: src/ui/views/offline.blp:17
 msgid "Retry"
-msgstr ""
+msgstr "Spróbuj ponownie"
 
 #: src/ui/views/start.blp:28
 msgid "Start"
-msgstr ""
+msgstr "Rozpocznij"
 
 #: src/ui/views/test.blp:25
 msgid "Ping:"
-msgstr ""
+msgstr "Ping:"
 
 #: src/ui/views/test.blp:39
 msgid "Jitter:"
-msgstr ""
+msgstr "Jitter:"
 
 #: src/ui/views/test.blp:66
 msgid "Download:"
-msgstr ""
+msgstr "Pobieranie:"
 
 #: src/ui/views/test.blp:73
 msgid "Upload:"
-msgstr ""
+msgstr "Wysyłanie:"
 
 #: src/ui/window.blp:50
 msgid "About Speedtest"
-msgstr ""
+msgstr "O Speedtest"
 
-#: src/main.py:71
+#: src/main.py:72
 msgid "Backend by"
-msgstr ""
+msgstr "Backend"

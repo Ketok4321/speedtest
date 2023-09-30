@@ -21,9 +21,9 @@
 	</screenshots>
 
 	<description>
-	<p>
-		Desktop client for librespeed using gtk4+libadwaita
-	</p>
+        <p>
+            Desktop client for librespeed using gtk4+libadwaita
+        </p>
 	</description>
     
     <content_rating type="oars-1.1" />
@@ -31,6 +31,16 @@
 	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
 
     <releases>
+		<release version="1.1.0" date="2023-09-27">
+            <description>
+				<ul>
+					<li>User interface changes</li>
+					<li>Improve the code for gathering the server list</li>
+					<li>Dutch and Polish translations</li>
+				</ul>
+            </description>
+        </release>
+
 		<release version="1.0.1" date="2023-09-12">
             <description>
 				<ul>
