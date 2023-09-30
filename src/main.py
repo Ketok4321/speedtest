@@ -9,7 +9,7 @@ gi.require_foreign("cairo")
 
 from gi.repository import GLib, Gio, Gtk, Adw
 
-from .window import SpeedtestWindow
+from .window import SpeedtestWindow, SpeedtestPreferencesWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
 from .backends.librespeed import LibrespeedBackend
 from .speedtest_worker import SpeedtestWorker
@@ -22,9 +22,11 @@ class SpeedtestApplication(Adw.Application):
         self.servers = None
         self.win = None
         self.version = version
+        self.settings = Gio.Settings("xyz.ketok.Speedtest")
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q", "<primary>w"])
         self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action, ["<primary>comma"])
         self.create_action("start", self.on_start_action)
         self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
@@ -71,6 +73,9 @@ class SpeedtestApplication(Adw.Application):
         about.add_credit_section(_("Backend by"), ["Librespeed"])
 
         about.present()
+    
+    def on_preferences_action(self, widget, _):
+        SpeedtestPreferencesWindow(self.settings, transient_for=self.props.active_window).present()
 
     def on_start_action(self, widget, _):
         self.win.set_view(self.win.test_view)

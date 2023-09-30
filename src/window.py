@@ -1,10 +1,11 @@
-from gi.repository import GObject, Gtk, Adw
+from gi.repository import GObject, Gio, Gtk, Adw
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/window.ui")
 class SpeedtestWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SpeedtestWindow"
 
     back_button = Gtk.Template.Child()
+    menu_button = Gtk.Template.Child()
 
     view_switcher = Gtk.Template.Child()
 
@@ -22,6 +23,20 @@ class SpeedtestWindow(Adw.ApplicationWindow):
         self.view_switcher.set_visible_child(view)
 
         self.back_button.set_visible(view == self.test_view)
+        self.menu_button.set_visible(view != self.test_view)
+
+@Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/preferences.ui")
+class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
+    __gtype_name__ = "SpeedtestPreferencesWindow"
+
+    gauge_scale = Gtk.Template.Child() #TODO: Use Adw.ComboRow.expression?
+    backend = Gtk.Template.Child()
+
+    def __init__(self, settings, **kwargs):
+        super().__init__(**kwargs)
+
+        settings.bind("gauge-scale", self.gauge_scale, "selected", Gio.SettingsBindFlags.DEFAULT)
+        settings.bind("backend", self.backend, "selected", Gio.SettingsBindFlags.DEFAULT)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/start.ui")
 class StartView(Gtk.Box):

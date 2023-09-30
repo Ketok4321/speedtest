@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="speedtest">
 	<schema id="xyz.ketok.Speedtest" path="/xyz/ketok/Speedtest/">
-	</schema>
+        <key name="gauge-scale" type="i">
+            <default>0</default>
+        </key>
+        <key name="backend" type="i">
+            <default>0</default>
+        </key>
+    </schema>
 </schemalist>
