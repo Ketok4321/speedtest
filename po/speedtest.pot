@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 21:47+0200\n"
+"POT-Creation-Date: 2023-10-01 03:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,30 +29,6 @@ msgstr ""
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:24
 msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
-msgid "User interface changes"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
-msgid "Improve the code for gathering the server list"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
-msgid "Dutch and Polish translations"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:47
-msgid "Improve the icon's contrast with the flathub website"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:48
-msgid "Internal improvements"
-msgstr ""
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:55
-msgid "Initial release"
 msgstr ""
 
 #: src/ui/views/offline.blp:9
