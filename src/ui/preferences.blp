@@ -12,9 +12,6 @@ template $SpeedtestPreferencesWindow : Adw.PreferencesWindow {
 
             Adw.ComboRow gauge_scale {
                 title: "Gauge scale";
-                model: StringList {
-                    strings [ "100mbps", "1000mbps" ]
-                };
             }
         }
 
@@ -23,9 +20,6 @@ template $SpeedtestPreferencesWindow : Adw.PreferencesWindow {
 
             Adw.ComboRow backend {
                 title: "Backend"; //TODO: Explanation
-                model: StringList {
-                    strings [ "librespeed.org", "speedtest.net" ]
-                };
             }
         }
     }

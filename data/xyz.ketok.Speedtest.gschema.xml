@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="speedtest">
+    <enum id="xyz.ketok.Speedtest.Backend">
+        <value nick="librespeed.org" value="0"/>
+        <value nick="speedtest.net" value="1"/>
+    </enum>
 	<schema id="xyz.ketok.Speedtest" path="/xyz/ketok/Speedtest/">
         <key name="gauge-scale" type="i">
-            <default>0</default>
+            <range min="1"/>
+            <default>100</default>
         </key>
-        <key name="backend" type="i">
-            <default>0</default>
+        <key name="backend" enum="xyz.ketok.Speedtest.Backend">
+            <default>'librespeed.org'</default>
         </key>
     </schema>
 </schemalist>
