@@ -85,7 +85,7 @@ class SpeedtestApplication(Adw.Application):
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.worker = SpeedtestWorker(self.backend, self.win, server)
+        self.worker = SpeedtestWorker(self.backend, self.win, server, self.settings)
         self.worker.start()
     
     def on_back_action(self, widget, _):

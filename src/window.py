@@ -104,15 +104,6 @@ class TestView(Gtk.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-    def update_ping(self, ping, jitter):
-        self.ping = str(round(ping)) + "ms"
-        self.jitter = str(round(jitter)) + "ms"
-
-    def update_gauge(self, object, speed):
-        speedMb = round(speed / 125_000, 1)
-        object.value = str(speedMb) + "Mbps"
-        object.fill = min(speedMb / 100, 1.0)
-    
     def reset(self):
         for obj in self.download, self.upload:
             obj.value = "..."
