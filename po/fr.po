@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the speedtest package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: speedtest\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-01 03:37+0300\n"
+"PO-Revision-Date: 2023-10-01 23:07+0200\n"
+"Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: data/xyz.ketok.Speedtest.desktop.in:3
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
+#: src/ui/window.blp:8 src/main.py:62
+msgid "Speedtest"
+msgstr "Rapidomètre"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
+msgid "Measure your internet connection speed"
+msgstr "Mesurez la vitesse de votre connexion internet"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:24
+msgid "Desktop client for librespeed using gtk4+libadwaita"
+msgstr "Client pour bureau de librespeed, utilisant gtk4+libadwaita"
+
+#: src/ui/views/offline.blp:9
+msgid "Couldn't connect to the speedtest servers"
+msgstr "Impossible de se connecter aux serveurs de test de vitesse"
+
+#: src/ui/views/offline.blp:10
+msgid "Make sure you are connected to the internet"
+msgstr "Assurez-vous d’être connecté⋅e à internet"
+
+#: src/ui/views/offline.blp:17
+msgid "Retry"
+msgstr "Réessayer"
+
+#: src/ui/views/start.blp:28
+msgid "Start"
+msgstr "Commencer"
+
+#: src/ui/views/test.blp:25
+msgid "Ping:"
+msgstr "Ping :"
+
+#: src/ui/views/test.blp:39
+msgid "Jitter:"
+msgstr "Décalage :"
+
+#: src/ui/views/test.blp:66
+msgid "Download:"
+msgstr "Téléchargement :"
+
+#: src/ui/views/test.blp:73
+msgid "Upload:"
+msgstr "Téléversement :"
+
+#: src/ui/window.blp:50
+msgid "About Speedtest"
+msgstr "À propos de Rapidomètre"
+
+#: src/main.py:71
+msgid "Backend by"
+msgstr "Backend par"
