@@ -11,14 +11,14 @@ from gi.repository import GLib, Gio, Gtk, Adw
 
 from .window import SpeedtestWindow, SpeedtestPreferencesWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
-from .backends.ookla import OoklaBackend
 from .speedtest_worker import SpeedtestWorker
+from .backends.librespeed import LibrespeedBackend
+from .backends.ookla import OoklaBackend
 
 class SpeedtestApplication(Adw.Application):
     def __init__(self, version):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
-        self.backend = OoklaBackend(f"KetokSpeedtest/{version}")
         self.servers = None
         self.win = None
         self.version = version
@@ -43,11 +43,13 @@ class SpeedtestApplication(Adw.Application):
     def fetch_servers(self):
         GLib.idle_add(self.win.set_view, self.win.loading_view)
 
+        self.backend = (OoklaBackend if self.settings.get_string("backend") == "speedtest.net" else LibrespeedBackend)(f"KetokSpeedtest/{self.version}")
+
         try:
             event_loop = asyncio.new_event_loop()
 
             self.servers = []
-            while len(self.servers) == 0: # A proper fix would probably be better but this works too
+            while len(self.servers) == 0:
                 print("Trying to fetch servers...")
                 self.servers = event_loop.run_until_complete(self.backend.get_servers())
 
@@ -75,7 +77,7 @@ class SpeedtestApplication(Adw.Application):
         about.present()
     
     def on_preferences_action(self, widget, _):
-        SpeedtestPreferencesWindow(self.settings, transient_for=self.props.active_window).present()
+        SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
 
     def on_start_action(self, widget, _):
         self.win.set_view(self.win.test_view)

@@ -71,14 +71,16 @@ class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
     SCALES = [100, 1000]
     BACKENDS = ["librespeed.org", "speedtest.net"]
 
-    def __init__(self, settings, **kwargs):
+    def __init__(self, app, **kwargs):
         super().__init__(**kwargs)
 
         self.gauge_scale.set_model(Gtk.StringList.new(list(map(lambda s: f"{s}Mbps", self.SCALES))))
         self.backend.set_model(Gtk.StringList.new(self.BACKENDS))
 
-        bind_with_mapping(settings, "gauge-scale", self.gauge_scale, "selected", Gio.SettingsBindFlags.DEFAULT, self.SCALES.index, self.SCALES.__getitem__)
-        bind_with_mapping(settings, "backend", self.backend, "selected", Gio.SettingsBindFlags.DEFAULT, self.BACKENDS.index, self.BACKENDS.__getitem__)
+        bind_with_mapping(app.settings, "gauge-scale", self.gauge_scale, "selected", Gio.SettingsBindFlags.DEFAULT, self.SCALES.index, self.SCALES.__getitem__)
+        bind_with_mapping(app.settings, "backend", self.backend, "selected", Gio.SettingsBindFlags.DEFAULT, self.BACKENDS.index, self.BACKENDS.__getitem__)
+
+        self.backend.connect("notify::selected", lambda *_: app.fetch_servers())
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/start.ui")
 class StartView(Gtk.Box):
