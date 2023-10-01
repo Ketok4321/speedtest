@@ -103,7 +103,7 @@ class TestView(Gtk.Box):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+
     def reset(self):
         for obj in self.download, self.upload:
             obj.value = "..."

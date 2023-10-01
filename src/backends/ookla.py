@@ -1,6 +1,7 @@
 import time
 import asyncio
 import aiohttp
+import websockets
 
 from urllib.parse import urljoin
 
@@ -12,18 +13,14 @@ DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
 
-class LibrespeedServer:
-    def __init__(self, name, server, pingURL, dlURL, ulURL, **_):
-        if not (server.startswith("https:") or server.startswith("http:")):
-            server = "https:" + server
-        
-        self.name = name
-        self.server = server
-        self.pingURL = urljoin(server + "/", pingURL)
-        self.downloadURL = urljoin(server + "/", dlURL)
-        self.uploadURL = urljoin(server + "/", ulURL)
+class OoklaServer:
+    def __init__(self, country, name, sponsor, url, host, **_):
+        self.name = f"{country}, {name} ({sponsor})"
+        self.host = host
+        self.uploadURL = url
+        self.downloadURL = urljoin(url, "download")
 
-class LibrespeedBackend:
+class OoklaBackend:
     def __init__(self, user_agent):
         self.headers = {
             "Accept-Encoding": "identity",
@@ -32,25 +29,11 @@ class LibrespeedBackend:
 
     async def get_servers(self):
         async with aiohttp.ClientSession() as session:
-            async def check_server(server, results):
-                try:
-                    async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=2.0)) as _:
-                        results.append(server)
-                except (aiohttp.ClientError, asyncio.TimeoutError):
-                    pass
-        
-            async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
+            async with session.get("https://www.speedtest.net/api/js/servers?limit=20&https_functional=true") as response:
                 servers = await response.json()
-                servers = list(map(lambda x: LibrespeedServer(**x), servers))    
+                servers = list(map(lambda x: OoklaServer(**x), servers))
 
-                results = []
-
-                task = asyncio.gather(*[check_server(s, results) for s in servers])
-                
-                while len(results) < 15 and not task.done():
-                    await asyncio.sleep(0)
-
-                return results
+                return servers
     
     async def start(self, server, res, notify):
         async def perform_test(test, streams, res):
@@ -79,22 +62,33 @@ class LibrespeedBackend:
         notify("upload_end")
 
     async def ping(self, server):
-        async with aiohttp.ClientSession() as session:
+        def parse(response):
+            response = response.split(" ")
+            return int(response[1])
+
+        async with websockets.connect('wss://' + server.host + "/ws?") as websocket:
             pings = []
             jitters = []
+            
+            await websocket.send("PING ")
+            response = await websocket.recv()
+            start = time.time()
+            offset = parse(response)
+
             for i in range(10):
-                start = time.time()
-                async with session.get(server.pingURL, headers=self.headers) as _:
-                    pings.append(time.time() - start)
-                
+                await websocket.send(f"PING {round((time.time() - start) * 1000)}")
+                response = await websocket.recv()
+                pings.append(parse(response) - offset)
+                offset = parse(response)
                 if i != 0:
                     jitters.append(abs(pings[i] - pings[i - 1]))
-        return sum(pings) / len(pings) * 1000, sum(jitters) / len(jitters) * 1000
+            
+            return sum(pings) / len(pings), sum(jitters) / len(jitters)
     
     async def download(self, server, res):
         async with aiohttp.ClientSession() as session:
             while True:
-                async with session.get(server.downloadURL + "?ckSize=" + str(DOWNLOAD_SIZE), headers=self.headers) as response:
+                async with session.get(server.downloadURL + "?size=" + str(DOWNLOAD_SIZE * 1_000_000), headers=self.headers) as response:
                     async for data in response.content.iter_any():
                         res.total_dl += len(data)
 

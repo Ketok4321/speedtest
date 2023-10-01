@@ -60,8 +60,8 @@ class SpeedtestWorker(threading.Thread):
                 nonlocal timeout
 
                 if type == "ping":
-                    view.ping = f"{self.results.ping:.0f}ms"
-                    view.jitter = f"{self.results.jitter:.0f}ms"
+                    view.ping = f"{self.results.ping:.1f}ms"
+                    view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
                     timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, self.results.total_dl, False))
                     

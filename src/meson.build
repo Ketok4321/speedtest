@@ -46,10 +46,12 @@ speedtest_sources = [
   'window.py',
   'gauge.py',
   'speedtest_worker.py',
+  'garbage.py',
 ]
 
 backends_sources = [
   'backends/librespeed.py',
+  'backends/ookla.py',
 ]
 
 install_data(speedtest_sources, install_dir: moduledir)
