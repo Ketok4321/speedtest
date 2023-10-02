@@ -10,13 +10,13 @@ DURATION = 15 #TODO: This constant is in two places now
 OVERHEAD_COMPENSATION = 1.06
 
 @dataclass
-class SpeedtestResults:
+class TestResults:
     ping: float = 0
     jitter: float = 0
     total_dl: int = 0
     total_up: int = 0
 
-class SpeedtestWorker(threading.Thread):
+class TestWorker(threading.Thread):
     def __init__(self, backend, win, server, settings):
         super().__init__(name="SpeedtestWorker", daemon=True)
 
@@ -86,7 +86,7 @@ class SpeedtestWorker(threading.Thread):
                     view.upload.remove_css_class("active")
 
             GLib.idle_add(self.win.test_view.progress.set_visible, True)
-            self.results = SpeedtestResults()
+            self.results = TestResults()
             await self.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
             GLib.idle_add(self.win.test_view.progress.set_visible, False)
         except Exception as e:

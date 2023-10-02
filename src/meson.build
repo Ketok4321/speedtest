@@ -45,7 +45,8 @@ speedtest_sources = [
   'main.py',
   'window.py',
   'gauge.py',
-  'speedtest_worker.py',
+  'fetch_worker.py',
+  'test_worker.py',
   'garbage.py',
   'util.py',
 ]

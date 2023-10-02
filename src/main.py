@@ -1,7 +1,5 @@
 import sys
 import gi
-import asyncio
-import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -11,7 +9,9 @@ from gi.repository import GLib, Gio, Gtk, Adw
 
 from .window import SpeedtestWindow, SpeedtestPreferencesWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
-from .speedtest_worker import SpeedtestWorker
+from .fetch_worker import FetchWorker
+from .test_worker import TestWorker
+
 from .backends.librespeed import LibrespeedBackend
 from .backends.ookla import OoklaBackend
 
@@ -23,6 +23,8 @@ class SpeedtestApplication(Adw.Application):
         self.win = None
         self.version = version
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
+        self.fetch_worker = None
+        self.test_worker = None
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q", "<primary>w"])
         self.create_action("about", self.on_about_action)
@@ -32,40 +34,28 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("retry_connect", self.on_retry_connect_action)
 
     def do_activate(self):
-        self.set_theme()
+        self.load_theme()
 
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
         self.win.present()
 
-        thread = threading.Thread(target=self.fetch_servers, daemon=True)
-        thread.start()
+        self.load_backend()
 
-    def set_theme(self):
+    def load_theme(self):
         THEMES = [Adw.ColorScheme.DEFAULT, Adw.ColorScheme.FORCE_LIGHT, Adw.ColorScheme.FORCE_DARK]
         Adw.StyleManager.get_default().set_color_scheme(THEMES[self.settings.get_int("theme")])
 
-    def fetch_servers(self):
-        GLib.idle_add(self.win.set_view, self.win.loading_view)
+    def load_backend(self):
+        if self.fetch_worker:
+            self.fetch_worker.stop_event.set()
+            self.fetch_worker.join()
 
         self.backend = (OoklaBackend if self.settings.get_string("backend") == "speedtest.net" else LibrespeedBackend)(f"KetokSpeedtest/{self.version}")
 
-        try:
-            event_loop = asyncio.new_event_loop()
-
-            self.servers = []
-            while len(self.servers) == 0:
-                print("Trying to fetch servers...")
-                self.servers = event_loop.run_until_complete(self.backend.get_servers())
-
-            event_loop.close()
-
-            GLib.idle_add(self.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
-            GLib.idle_add(self.win.set_view, self.win.start_view)
-        except Exception as e:
-            print(e)
-            GLib.idle_add(self.win.set_view, self.win.offline_view)
+        self.fetch_worker = FetchWorker(self)
+        self.fetch_worker.start()
 
     def on_about_action(self, widget, __):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
@@ -93,17 +83,16 @@ class SpeedtestApplication(Adw.Application):
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.worker = SpeedtestWorker(self.backend, self.win, server, self.settings)
-        self.worker.start()
+        self.test_worker = TestWorker(self.backend, self.win, server, self.settings)
+        self.test_worker.start()
     
     def on_back_action(self, widget, _):
-        self.worker.stop_event.set()
+        self.test_worker.stop_event.set()
 
         self.win.set_view(self.win.start_view)
     
     def on_retry_connect_action(self, widget, _):
-        thread = threading.Thread(target=self.fetch_servers, daemon=True)
-        thread.start()
+        self.load_backend()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)
