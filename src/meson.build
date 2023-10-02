@@ -47,6 +47,7 @@ speedtest_sources = [
   'gauge.py',
   'speedtest_worker.py',
   'garbage.py',
+  'util.py',
 ]
 
 backends_sources = [

@@ -10,6 +10,13 @@ template $SpeedtestPreferencesWindow : Adw.PreferencesWindow {
         Adw.PreferencesGroup {
             title: _("Visual");
 
+            Adw.ComboRow theme {
+                title: _("Theme");
+                model: StringList {
+                    strings [_("System"), _("Light"), _("Dark")]
+                };
+            }
+
             Adw.ComboRow gauge_scale {
                 title: _("Gauge scale");
             }

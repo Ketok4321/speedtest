@@ -32,6 +32,8 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("retry_connect", self.on_retry_connect_action)
 
     def do_activate(self):
+        self.set_theme()
+
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
@@ -39,6 +41,10 @@ class SpeedtestApplication(Adw.Application):
 
         thread = threading.Thread(target=self.fetch_servers, daemon=True)
         thread.start()
+
+    def set_theme(self):
+        THEMES = [Adw.ColorScheme.DEFAULT, Adw.ColorScheme.FORCE_LIGHT, Adw.ColorScheme.FORCE_DARK]
+        Adw.StyleManager.get_default().set_color_scheme(THEMES[self.settings.get_int("theme")])
 
     def fetch_servers(self):
         GLib.idle_add(self.win.set_view, self.win.loading_view)
