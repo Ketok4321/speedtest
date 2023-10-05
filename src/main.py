@@ -73,6 +73,8 @@ class SpeedtestApplication(Adw.Application):
         about.present()
     
     def on_preferences_action(self, widget, _):
+        if self.win.view_switcher.get_visible_child() == self.win.test_view:
+            return
         SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
 
     def on_start_action(self, widget, _):
