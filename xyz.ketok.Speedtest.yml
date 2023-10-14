@@ -26,7 +26,6 @@ cleanup:
 
 modules:
   - python3-aiohttp.json
-  - python3-websockets.json
 
   - name: blueprint-compiler
     buildsystem: meson

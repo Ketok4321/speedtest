@@ -13,7 +13,6 @@ from .fetch_worker import FetchWorker
 from .test_worker import TestWorker
 
 from .backends.librespeed import LibrespeedBackend
-from .backends.ookla import OoklaBackend
 
 class SpeedtestApplication(Adw.Application):
     def __init__(self, version):
@@ -52,7 +51,7 @@ class SpeedtestApplication(Adw.Application):
             self.fetch_worker.stop_event.set()
             self.fetch_worker.join()
 
-        self.backend = (OoklaBackend if self.settings.get_string("backend") == "speedtest.net" else LibrespeedBackend)(f"KetokSpeedtest/{self.version}")
+        self.backend = LibrespeedBackend(f"KetokSpeedtest/{self.version}")
 
         self.fetch_worker = FetchWorker(self)
         self.fetch_worker.start()
