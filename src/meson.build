@@ -53,6 +53,7 @@ speedtest_sources = [
 
 backends_sources = [
   'backends/librespeed.py',
+  'backends/ookla.py',
 ]
 
 install_data(speedtest_sources, install_dir: moduledir)

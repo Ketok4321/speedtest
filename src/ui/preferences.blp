@@ -21,5 +21,13 @@ template $SpeedtestPreferencesWindow : Adw.PreferencesWindow {
                 title: _("Gauge scale");
             }
         }
+
+        Adw.PreferencesGroup {
+            title: _("Advanced");
+
+            Adw.ComboRow backend {
+                title: _("Backend"); //TODO: Explanation
+            }
+        }
     }
 }
