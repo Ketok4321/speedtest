@@ -1,6 +1,6 @@
 app-id: xyz.ketok.Speedtest
 runtime: org.gnome.Platform
-runtime-version: '44'
+runtime-version: '45'
 sdk: org.gnome.Sdk
 command: speedtest
 
@@ -21,7 +21,7 @@ cleanup:
   - /share/pkgconfig
   - '*.la'
   - '*.a'
-  - /lib/python3.10/site-packages/blueprintcompiler
+  - /lib/python3.*/site-packages/blueprintcompiler
   - /bin/blueprint-compiler
 
 modules:

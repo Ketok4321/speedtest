@@ -1,50 +1,16 @@
 import time
-import io
-import os
 import asyncio
 import aiohttp
 
 from urllib.parse import urljoin
 
+from ..garbage import GarbageReader
+
 DOWNLOAD_SIZE = 100
-UPLOAD_SIZE = 20
 
 DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
-
-garbage = os.urandom(UPLOAD_SIZE * 1000 * 1000)
-
-class GarbageReader(io.IOBase):
-    def __init__(self, read_callback=None):
-        self.__read_callback = read_callback
-        super().__init__()
-        self.length = len(garbage)
-        self.pos = 0
-
-    def seekable(self):
-        return True
-
-    def writable(self):
-        return False
-
-    def readable(self):
-        return True
-
-    def tell(self):
-        return self.pos
-
-    def read(self, size=None):
-        if not size:
-            size = self.length - self.tell()
-
-        old_pos = self.tell()
-        self.pos = old_pos + size
-
-        if self.__read_callback:
-            self.__read_callback(size)
-
-        return garbage[old_pos:self.pos]
 
 class LibrespeedServer:
     def __init__(self, name, server, pingURL, dlURL, ulURL, **_):
@@ -64,27 +30,27 @@ class LibrespeedBackend:
             "User-Agent": user_agent,
         }
 
-    async def get_servers(self): #TODO: Change how this works to take more time on worse connections and less on better ones, while returning the same amount of servers in both cases
+    async def get_servers(self):
         async with aiohttp.ClientSession() as session:
-            async def check_server(server):
+            async def check_server(server, results):
                 try:
-                    start = time.time()
-                    async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=0.75)) as _:
-                        return time.time() - start
+                    async with session.get(server.pingURL, timeout=aiohttp.ClientTimeout(total=2.0)) as _:
+                        results.append(server)
                 except (aiohttp.ClientError, asyncio.TimeoutError):
-                    return -1
+                    pass
         
             async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
                 servers = await response.json()
                 servers = list(map(lambda x: LibrespeedServer(**x), servers))    
 
-                pings = await asyncio.gather(*[check_server(s) for s in servers])
-                
-                servers = list(zip(pings, servers))
-                servers.sort(key=lambda t: t[0])
-                servers = [s for p, s in servers if p != -1]
+                results = []
 
-                return servers
+                task = asyncio.gather(*[check_server(s, results) for s in servers])
+                
+                while len(results) < 15 and not task.done():
+                    await asyncio.sleep(0)
+
+                return results
     
     async def start(self, server, res, notify):
         async def perform_test(test, streams, res):

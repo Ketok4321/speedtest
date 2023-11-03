@@ -21,9 +21,9 @@
 	</screenshots>
 
 	<description>
-	<p>
-		Speedtest is a beautiful desktop client for LibreSpeed. It lets you measure your upload and download speeds against a wide variaty of servers around the globe.
-	</p>
+    <p>
+      Speedtest is a beautiful desktop client for LibreSpeed. It lets you measure your upload and download speeds against a wide variaty of servers around the globe.
+    </p>
 	</description>
     
     <content_rating type="oars-1.1" />
@@ -31,8 +31,36 @@
 	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
 
     <releases>
+        <release version="1.1.2" date="2023-10-05">
+            <description translatable="no">
+                <ul>
+                    <li>French translation</li>
+                    <li>Russian translation</li>
+                </ul>
+            </description>
+        </release>
+
+		<release version="1.1.1" date="2023-10-01">
+            <description translatable="no">
+				<ul>
+					<li>Turkish translation</li>
+					<li>Fix the version displayed in the about window being outdated</li>
+				</ul>
+            </description>
+        </release>
+
+		<release version="1.1.0" date="2023-09-27">
+            <description translatable="no">
+				<ul>
+					<li>User interface changes</li>
+					<li>Improve the code for gathering the server list</li>
+					<li>Dutch and Polish translations</li>
+				</ul>
+            </description>
+        </release>
+
 		<release version="1.0.1" date="2023-09-12">
-            <description>
+            <description translatable="no">
 				<ul>
 					<li>Improve the icon's contrast with the flathub website</li>
 					<li>Internal improvements</li>
@@ -41,7 +69,7 @@
         </release>
 
 		<release version="1.0.0" date="2023-09-09">
-            <description>
+            <description translatable="no">
                 <p>Initial release</p>
             </description>
         </release>

@@ -1,4 +1,6 @@
-from gi.repository import GObject, Gtk, Adw
+from gi.repository import GObject, Gio, Gtk, Adw
+
+from .util import bind_with_mapping
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/window.ui")
 class SpeedtestWindow(Adw.ApplicationWindow):
@@ -6,6 +8,7 @@ class SpeedtestWindow(Adw.ApplicationWindow):
 
     header_bar = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    menu_button = Gtk.Template.Child()
 
     view_switcher = Gtk.Template.Child()
 
@@ -31,6 +34,28 @@ class SpeedtestWindow(Adw.ApplicationWindow):
             self.header_bar.add_css_class("flat")
 
         self.back_button.set_visible(view == self.test_view)
+        self.menu_button.set_visible(view != self.test_view)
+
+@Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/preferences.ui")
+class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
+    __gtype_name__ = "SpeedtestPreferencesWindow"
+
+    theme = Gtk.Template.Child()
+    gauge_scale = Gtk.Template.Child()
+
+    SCALES = [100, 250, 500, 1000]
+
+    def __init__(self, app, **kwargs):
+        super().__init__(**kwargs)
+
+        self.app = app
+
+        self.gauge_scale.set_model(Gtk.StringList.new(list(map(lambda s: f"{s}Mbps", self.SCALES))))
+
+        app.settings.bind("theme", self.theme, "selected", Gio.SettingsBindFlags.DEFAULT)
+        bind_with_mapping(app.settings, "gauge-scale", self.gauge_scale, "selected", Gio.SettingsBindFlags.DEFAULT, self.SCALES.index, self.SCALES.__getitem__)
+
+        self.theme.connect("notify::selected", lambda *_: app.load_theme())
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/start.ui")
 class StartView(Gtk.Box):
@@ -55,16 +80,7 @@ class TestView(Gtk.Box):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
-    def update_ping(self, ping, jitter):
-        self.ping = str(round(ping)) + "ms"
-        self.jitter = str(round(jitter)) + "ms"
 
-    def update_gauge(self, object, speed):
-        speedMb = round(speed / 125_000, 1)
-        object.value = str(speedMb) + "Mbps"
-        object.fill = min(speedMb / 100, 1.0)
-    
     def reset(self):
         for obj in self.download, self.upload:
             obj.value = "..."

@@ -6,6 +6,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'ui/window.blp',
     'ui/gauge.blp',
+    'ui/preferences.blp',
     'ui/views/start.blp',
     'ui/views/test.blp',
     'ui/views/offline.blp',
@@ -36,7 +37,7 @@ configure_file(
   configuration: conf,
   install: true,
   install_dir: get_option('bindir'),
-  install_mode: 'r-xr-xr-x'
+  install_mode: 'rwxr-xr-x'
 )
 
 speedtest_sources = [
@@ -44,7 +45,10 @@ speedtest_sources = [
   'main.py',
   'window.py',
   'gauge.py',
-  'speedtest_worker.py',
+  'fetch_worker.py',
+  'test_worker.py',
+  'garbage.py',
+  'util.py',
 ]
 
 backends_sources = [

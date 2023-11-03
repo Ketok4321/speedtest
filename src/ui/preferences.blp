@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SpeedtestPreferencesWindow : Adw.PreferencesWindow {
+    search-enabled: false;
+    default-width: 360;
+    default-height: 480;
+
+    Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+            title: _("Visual");
+
+            Adw.ComboRow theme {
+                title: _("Theme");
+                model: StringList {
+                    strings [_("System"), _("Light"), _("Dark")]
+                };
+            }
+
+            Adw.ComboRow gauge_scale {
+                title: _("Gauge scale");
+            }
+        }
+    }
+}

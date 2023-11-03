@@ -10,20 +10,21 @@ DURATION = 15 #TODO: This constant is in two places now
 OVERHEAD_COMPENSATION = 1.06
 
 @dataclass
-class SpeedtestResults:
+class TestResults:
     ping: float = 0
     jitter: float = 0
     total_dl: int = 0
     total_up: int = 0
 
-class SpeedtestWorker(threading.Thread):
-    def __init__(self, backend, win, server):
+class TestWorker(threading.Thread):
+    def __init__(self, backend, win, server, settings):
         super().__init__(name="SpeedtestWorker", daemon=True)
 
         self.stop_event = threading.Event()
         self.backend = backend
         self.win = win
         self.server = server
+        self.settings = settings
 
     def run(self):
         event_loop = asyncio.new_event_loop()
@@ -59,7 +60,8 @@ class SpeedtestWorker(threading.Thread):
                 nonlocal timeout
 
                 if type == "ping":
-                    view.update_ping(self.results.ping, self.results.jitter)
+                    view.ping = f"{self.results.ping:.1f}ms"
+                    view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
                     timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, self.results.total_dl, False))
                     
@@ -84,7 +86,7 @@ class SpeedtestWorker(threading.Thread):
                     view.upload.remove_css_class("active")
 
             GLib.idle_add(self.win.test_view.progress.set_visible, True)
-            self.results = SpeedtestResults()
+            self.results = TestResults()
             await self.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
             GLib.idle_add(self.win.test_view.progress.set_visible, False)
         except Exception as e:
@@ -98,7 +100,10 @@ class SpeedtestWorker(threading.Thread):
         value = total * OVERHEAD_COMPENSATION / current_duration
 
         if current_duration > 1:
-            view.update_gauge(gauge, value)
+            speedMb = round(value / 125_000, 1)
+            gauge.value = str(speedMb) + "Mbps"
+            gauge.fill = min(speedMb / self.settings.get_int("gauge-scale"), 1.0)
+
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
 
         return not self.stop_event.is_set()
