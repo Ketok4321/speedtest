@@ -5,4 +5,11 @@ src/ui/views/offline.blp
 src/ui/views/start.blp
 src/ui/views/test.blp
 src/ui/window.blp
+src/ui/preferences.blp
+src/backends/librespeed.py
+src/gauge.py
+src/fetch_worker.py
+src/garbage.py
+src/test_worker.py
 src/main.py
+src/window.py

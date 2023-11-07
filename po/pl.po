@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 18:20+0200\n"
-"PO-Revision-Date: 2023-09-26 17:24+0200\n"
+"POT-Creation-Date: 2023-11-07 20:38+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ketok <ketok@ketok.xyz>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:63
+#: src/ui/window.blp:8 src/main.py:61
 msgid "Speedtest"
 msgstr "Speedtest"
 
@@ -30,30 +30,6 @@ msgstr "Zmierz swoją prędkość internetu"
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:24
 msgid "Desktop client for librespeed using gtk4+libadwaita"
 msgstr "Klient do librespeed używający gtk4+libadwaita"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
-msgid "User interface changes"
-msgstr "Zmiany interfejsu użytkownika"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
-msgid "Improve the code for gathering the server list"
-msgstr "Poprawiono kod do zbierania listy serwerów"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:39
-msgid "Dutch and Polish translations"
-msgstr "Holandzka i polska tranzlacja"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:37
-msgid "Improve the icon's contrast with the flathub website"
-msgstr "Poprawiono kontrast ikonki na ciemnych tłach"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:38
-msgid "Internal improvements"
-msgstr "Wewnętrzne poprawki"
-
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:45
-msgid "Initial release"
-msgstr "Pierwsze wydanie"
 
 #: src/ui/views/offline.blp:9
 msgid "Couldn't connect to the speedtest servers"
@@ -87,10 +63,38 @@ msgstr "Pobieranie:"
 msgid "Upload:"
 msgstr "Wysyłanie:"
 
-#: src/ui/window.blp:50
+#: src/ui/window.blp:51
+msgid "Preferences"
+msgstr "Preferencje"
+
+#: src/ui/window.blp:55
 msgid "About Speedtest"
 msgstr "O Speedtest"
 
-#: src/main.py:72
+#: src/ui/preferences.blp:11
+msgid "Visual"
+msgstr "Wizualne"
+
+#: src/ui/preferences.blp:14
+msgid "Theme"
+msgstr "Motyw"
+
+#: src/ui/preferences.blp:16
+msgid "System"
+msgstr "System"
+
+#: src/ui/preferences.blp:16
+msgid "Light"
+msgstr "Jasny"
+
+#: src/ui/preferences.blp:16
+msgid "Dark"
+msgstr "Ciemny"
+
+#: src/ui/preferences.blp:21
+msgid "Gauge scale"
+msgstr "Skala wskaźników"
+
+#: src/main.py:70
 msgid "Backend by"
 msgstr "Backend"
