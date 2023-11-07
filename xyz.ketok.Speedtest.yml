@@ -21,8 +21,6 @@ cleanup:
   - /share/pkgconfig
   - '*.la'
   - '*.a'
-  - /lib/python3.*/site-packages/blueprintcompiler
-  - /bin/blueprint-compiler
 
 modules:
   - python3-aiohttp.json
@@ -33,6 +31,8 @@ modules:
       - type: git
         url: https://gitlab.gnome.org/jwestman/blueprint-compiler
         tag: v0.10.0
+    cleanup:
+      - '*'
 
   - name: speedtest
     builddir: true
