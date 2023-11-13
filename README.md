@@ -3,7 +3,6 @@
 # Speedtest
 A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita
 
-<img src="https://gowno.ketok.xyz/screenshots/speedtest/1.png?" width="722">
 <img src="https://gowno.ketok.xyz/screenshots/speedtest/2.png?" width="722">
 
 ## Instalation
@@ -11,9 +10,6 @@ A graphical [librespeed](https://librespeed.org) client written using gtk4 + lib
 <a href='https://flathub.org/apps/xyz.ketok.Speedtest'><img width='200' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
 ## Building
-### GNOME Builder
-TODO
-
 ### Command-line
 1. Install flatpak builder
 `flatpak install flathub org.flatpak.Builder -y`
