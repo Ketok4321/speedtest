@@ -1,5 +1,5 @@
 # Speedtest
-A graphical librespeed client written using gtk4 + libadwaita.
+A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita.
 
 ## Screenshots
 <img src="https://gowno.ketok.xyz/screenshots/speedtest/1.png" width="802">
