@@ -13,10 +13,8 @@
 
 	<screenshots>
 		<screenshot type="default">
-			<image>https://gowno.ketok.xyz/screenshots/speedtest/1.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://gowno.ketok.xyz/screenshots/speedtest/2.png</image>
+			<image>https://raw.githubusercontent.com/Ketok4321/speedtest/main/screenshots/speedtest.png</image>
+			<description>The main UI of Speedtest</description>
 		</screenshot>
 	</screenshots>
 
