@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $SpeedtestWindow : Adw.ApplicationWindow {
-  width-request: 600;
-  height-request: 300;
+  width-request: 700;
+  height-request: 400;
   resizable: false;
   title: _("Speedtest");
 
@@ -11,6 +11,9 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
     orientation: vertical;
 
     HeaderBar header_bar {
+      [title] // This should be replaced with `show-title` after Libadwiata 1.4
+      Box {}
+
       Button back_button {
         visible: false;
         icon-name: "go-previous-symbolic";
@@ -22,12 +25,18 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
         icon-name: "open-menu-symbolic";
         menu-model: primary_menu;
       }
+
+      styles [
+        "flat",
+      ]
     }
 
     Stack view_switcher { //TODO: Consider using Adw.Leaflet/Adw.NavigationView
       //transition-type: slide_up_down;
 
       Box loading_view {
+        margin-bottom: 32;
+
         Spinner {
           spinning: true;
           width-request: 32;

@@ -25,7 +25,7 @@ template $Gauge : Box {
             orientation: vertical;
             valign: end;
             halign: center;
-            margin-bottom: 24;
+            margin-bottom: 120;
             
             Label {
                 valign: center;
@@ -35,8 +35,9 @@ template $Gauge : Box {
 
             Label {
                 valign: center;
+                margin-top: 6;
                 label: bind template.value;
-                styles [ "title-3" ]
+                styles [ "title-4" ]
             }
         }
     }

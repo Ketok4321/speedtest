@@ -6,6 +6,7 @@ from .util import bind_with_mapping
 class SpeedtestWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SpeedtestWindow"
 
+    header_bar = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
     menu_button = Gtk.Template.Child()
 
@@ -23,6 +24,14 @@ class SpeedtestWindow(Adw.ApplicationWindow):
         self.view_switcher.set_transition_type(Gtk.StackTransitionType.SLIDE_UP_DOWN if view == self.test_view or self.view_switcher.get_visible_child() == self.test_view else Gtk.StackTransitionType.CROSSFADE)
 
         self.view_switcher.set_visible_child(view)
+
+        if view == self.test_view:
+            self.header_bar.set_title_widget(None)
+            self.header_bar.remove_css_class("flat")
+        else:
+            # This should be replaced with the `show-title` property after Libadwiata 1.4
+            self.header_bar.set_title_widget(Gtk.Box())
+            self.header_bar.add_css_class("flat")
 
         self.back_button.set_visible(view == self.test_view)
         self.menu_button.set_visible(view != self.test_view)
