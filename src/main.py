@@ -29,10 +29,10 @@ class SpeedtestApplication(Adw.Application):
         self.fetch_worker = None
         self.test_worker = None
 
-        self.create_action("quit", lambda *_: self.quit(), ["<primary>q", "<primary>w"])
+        self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action, ["<primary>comma"])
-        self.create_action("start", self.on_start_action)
+        self.create_action("start", self.on_start_action, ["<Primary>Return"])
         self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
 
@@ -86,16 +86,23 @@ class SpeedtestApplication(Adw.Application):
         about.present()
     
     def on_preferences_action(self, widget, _):
-        if self.win.view_switcher.get_visible_child() == self.win.test_view:
-            return
         SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
 
     def on_start_action(self, widget, _1):
+        if self.win.test_view.in_progress and self.win.nav_view.get_visible_page().get_tag() == "test_page":
+            toast = Adw.Toast.new(_("Session already in progress"))
+            self.win.new_toast_overlay.add_toast(toast)
+            return
+
+        if self.win.nav_view.get_visible_page().get_tag() == "test_page" or self.win.view_switcher.get_visible_child() == self.win.offline_view:
+            toast = Adw.Toast.new(_("Cannot start new session"))
+            self.win.new_toast_overlay.add_toast(toast)
+            return
+
         self.win.set_view(self.win.test_view)
 
         if self.win.test_view.in_progress:
-            stri = _("Session already in progress")
-            toast = Adw.Toast.new(stri)
+            toast = Adw.Toast.new(_("Session already in progress"))
             self.win.new_toast_overlay.add_toast(toast)
             return
 

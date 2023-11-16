@@ -49,7 +49,6 @@ class LibrespeedBackend:
         
             async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
                 servers = await response.json()
-                print(servers)
                 servers = list(map(lambda x: LibrespeedServer(**x), servers))
 
                 s = 0
@@ -65,7 +64,6 @@ class LibrespeedBackend:
                 while len(results) < 15 and not task.done():
                     await asyncio.sleep(0)
 
-                button_sensitive.sensitive = True
                 return results
     
     async def start(self, server, res, notify):

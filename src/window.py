@@ -80,6 +80,8 @@ class StartView(Gtk.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.server_selector,connect("notify::model", lambda: self.start_button.set_sensitive(True))
+
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/test.ui")
 class TestView(Adw.BreakpointBin):
     __gtype_name__ = "TestView"

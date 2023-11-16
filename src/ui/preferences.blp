@@ -7,11 +7,26 @@ template $SpeedtestPreferencesWindow: Adw.PreferencesWindow {
   default-height: 480;
 
   Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      title: _("Visual");
+    Box {
+      orientation: vertical;
+      margin-start: 12;
+      margin-top: 12;
+      margin-end: 12;
+      spacing: 12;
 
-      Adw.ComboRow gauge_scale {
-        title: _("Gauge Scale");
+      Label {
+        wrap: true;
+        label: _("This option controls the maximum visible point on the gauge scales. Adjust this if the bar consistently reaches full.");
+
+        styles [
+          "dim-label"
+        ]
+      }
+
+      Adw.PreferencesGroup {
+        Adw.ComboRow gauge_scale {
+          title: _("Gauge Scale");
+        }
       }
     }
   }
