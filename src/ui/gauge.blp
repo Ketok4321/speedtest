@@ -1,43 +1,65 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $Gauge : Box {
-    // A hack to make gradient colors stylable using css
-    Box gradient_1 { styles [ "gradient-1" ] }
-    Box gradient_2 { styles [ "gradient-2" ] }
-    
-    Overlay {      
-        DrawingArea background {
-            vexpand: true;
-            hexpand: true;
-            styles ["background"]
-        }
+template $Gauge: Box {
+  // A hack to make gradient colors stylable using css
+  Box gradient_1 {
+    styles [
+      "gradient-1"
+    ]
+  }
 
-        [overlay]
-        DrawingArea filled {
-            vexpand: true;
-            hexpand: true;
-            styles ["filled"]
-        }
+  Box gradient_2 {
+    styles [
+      "gradient-2"
+    ]
+  }
 
-        [overlay]
-        Box {
-            orientation: vertical;
-            valign: end;
-            halign: center;
-            margin-bottom: 24;
-            
-            Label {
-                valign: center;
-                label: bind template.label;
-                styles [ "title-2" ]
-            }
+  Overlay {
+    DrawingArea background {
+      vexpand: true;
+      hexpand: true;
 
-            Label {
-                valign: center;
-                label: bind template.value;
-                styles [ "title-3" ]
-            }
-        }
+      styles [
+        "background"
+      ]
     }
+
+    [overlay]
+    DrawingArea filled {
+      vexpand: true;
+      hexpand: true;
+
+      styles [
+        "filled"
+      ]
+    }
+
+    [overlay]
+    Box {
+      orientation: vertical;
+      valign: end;
+      halign: center;
+      margin-bottom: bind template.marginb;
+
+      Label {
+        valign: center;
+        label: bind template.label;
+
+        styles [
+          "title-2"
+        ]
+      }
+
+      Label {
+        valign: center;
+        label: bind template.value;
+
+        styles [
+          "title-3",
+          "numeric"
+        ]
+      }
+    }
+  }
 }

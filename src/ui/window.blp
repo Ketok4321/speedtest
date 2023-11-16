@@ -1,46 +1,57 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $SpeedtestWindow : Adw.ApplicationWindow {
-  width-request: 600;
-  height-request: 300;
-  resizable: false;
+template $SpeedtestWindow: Adw.ApplicationWindow {
+  width-request: 390;
+  height-request: 425;
+  default-height: 425;
+  default-width: 600;
   title: _("Speedtest");
 
-  Box {
-    orientation: vertical;
+  Adw.ToastOverlay new_toast_overlay {
+    Adw.NavigationView nav_view {
+      hexpand: true;
 
-    HeaderBar header_bar {
-      Button back_button {
-        visible: false;
-        icon-name: "go-previous-symbolic";
-        action-name: "app.back";
-      }
+      Adw.NavigationPage start_page {
+        title: _("Speedtest");
+        tag: "start_page";
 
-      [end]
-      MenuButton menu_button {
-        icon-name: "open-menu-symbolic";
-        menu-model: primary_menu;
-      }
-    }
+        Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            show-title: false;
 
-    Stack view_switcher { //TODO: Consider using Adw.Leaflet/Adw.NavigationView
-      //transition-type: slide_up_down;
+            [end]
+            MenuButton menu_button {
+              icon-name: "open-menu-symbolic";
+              menu-model: primary_menu;
+            }
+          }
 
-      Box loading_view {
-        Spinner {
-          spinning: true;
-          width-request: 32;
-          height-request: 32;
-          valign: center;
-          halign: center;
-          vexpand: true;
-          hexpand: true;
+          Stack view_switcher {
+            vexpand: true;
+            hexpand: true;
+
+            $StartView start_view {}
+
+            $OfflineView offline_view {}
+          }
         }
       }
-      $StartView start_view { }
-      $TestView test_view { }
-      $OfflineView offline_view { }
+
+      Adw.NavigationPage test_page {
+        title: bind test_view.server;
+        tag: "test_page";
+
+        Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {}
+
+          ScrolledWindow {
+            $TestView test_view {}
+          }
+        }
+      }
     }
   }
 }
@@ -51,9 +62,15 @@ menu primary_menu {
       label: _("Preferences");
       action: "app.preferences";
     }
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
     item {
       label: _("About Speedtest");
       action: "app.about";
-    }  
+    }
   }
 }

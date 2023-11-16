@@ -5,6 +5,7 @@ import aiohttp
 from urllib.parse import urljoin
 
 from ..garbage import GarbageReader
+import re as RegEx
 
 DOWNLOAD_SIZE = 100
 
@@ -30,7 +31,14 @@ class LibrespeedBackend:
             "User-Agent": user_agent,
         }
 
-    async def get_servers(self):
+    def format_string(self, string):
+        string = RegEx.sub(" \([\w\s]*\)", "", string)  # Remove parentheses
+        string = RegEx.sub(", OVH", "", string)         # Remove OVH trailer
+        string = RegEx.sub("urem", "ürem", string)      # Format “Nüremberg"
+        string = RegEx.sub("oznan", "oznań", string)    # Format “Poznań”
+        return string
+
+    async def get_servers(self, button_sensitive):
         async with aiohttp.ClientSession() as session:
             async def check_server(server, results):
                 try:
@@ -41,7 +49,14 @@ class LibrespeedBackend:
         
             async with session.get("https://librespeed.org/backend-servers/servers.php") as response:
                 servers = await response.json()
-                servers = list(map(lambda x: LibrespeedServer(**x), servers))    
+                print(servers)
+                servers = list(map(lambda x: LibrespeedServer(**x), servers))
+
+                s = 0
+                while s < len(servers):
+                    servers[s].name = self.format_string(servers[s].name)
+                    s += 1
+
 
                 results = []
 
@@ -50,6 +65,7 @@ class LibrespeedBackend:
                 while len(results) < 15 and not task.done():
                     await asyncio.sleep(0)
 
+                button_sensitive.sensitive = True
                 return results
     
     async def start(self, server, res, notify):

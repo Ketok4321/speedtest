@@ -27,7 +27,14 @@ python = import('python')
 
 conf = configuration_data()
 conf.set('PYTHON', python.find_installation('python3').path())
-conf.set('VERSION', meson.project_version())
+if get_option('profile') == 'development'
+  vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
+  conf.set('DEVEL', 'Development')
+  conf.set('VERSION', meson.project_version() + '.dev-' + vcs_tag)
+else
+  conf.set('DEVEL', 'Default')
+  conf.set('VERSION', meson.project_version())
+endif
 conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
 
@@ -50,6 +57,12 @@ speedtest_sources = [
   'garbage.py',
   'util.py',
 ]
+
+speedtest_sources += configure_file(
+  input: 'const.py.in',
+  output: 'const.py',
+  configuration: conf
+)
 
 backends_sources = [
   'backends/librespeed.py',

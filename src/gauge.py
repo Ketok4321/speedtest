@@ -15,6 +15,7 @@ class Gauge(Gtk.Box):
 
     label = GObject.Property(type=str)
     value = GObject.Property(type=str, default="...")
+    marginb = GObject.Property(type=int, default=24)
 
     @GObject.Property(type=float, minimum = 0.0, maximum = 1.0)
     def fill(self):

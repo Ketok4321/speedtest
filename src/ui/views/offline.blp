@@ -1,22 +1,29 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $OfflineView : Box {
-    orientation: vertical;
-    valign: center;
-    
-    Adw.StatusPage {
-        title: _("Couldn't connect to the speedtest servers");
-        description: _("Make sure you are connected to the internet");
-        icon-name: "network-offline-symbolic";
-        styles [ "compact" ]
+template $OfflineView: Box {
+  orientation: vertical;
+  valign: center;
+  margin-bottom: 48;
 
-        Button {
-            halign: center;
+  Adw.StatusPage {
+    title: _("Could Not Reach Internet");
+    description: _("Speedtest does not work without an internet connection.");
+    icon-name: "network-offline-symbolic";
 
-            label: _("Retry");
-            action-name: "app.retry_connect";
-            styles [ "pill", "suggested-action" ]
-        }
+    styles [
+      "compact"
+    ]
+
+    Button {
+      halign: center;
+      label: _("Retry Connection");
+      action-name: "app.retry_connect";
+
+      styles [
+        "pill",
+        "suggested-action"
+      ]
     }
+  }
 }

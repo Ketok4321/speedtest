@@ -28,16 +28,15 @@ class FetchWorker(threading.Thread):
             await asyncio.sleep(0)
 
     async def do_run(self):
-        GLib.idle_add(self.app.win.set_view, self.app.win.loading_view)
-
         try:
             self.app.servers = []
             while len(self.app.servers) == 0:
                 print("Trying to fetch servers...")
-                self.app.servers = await self.app.backend.get_servers()
+                self.app.servers = await self.app.backend.get_servers(self.app.win.start_view.start_button)
 
             GLib.idle_add(self.app.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.app.servers))))
             GLib.idle_add(self.app.win.set_view, self.app.win.start_view)
+
         except Exception as e:
             print(e)
             GLib.idle_add(self.app.win.set_view, self.app.win.offline_view)

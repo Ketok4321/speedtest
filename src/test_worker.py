@@ -29,9 +29,11 @@ class TestWorker(threading.Thread):
     def run(self):
         event_loop = asyncio.new_event_loop()
 
+        self.win.test_view.in_progress = True
         event_loop.run_until_complete(self.run_async())
 
         event_loop.close()
+        self.win.test_view.in_progress = False
 
     async def run_async(self):
         task = asyncio.create_task(self.do_run())

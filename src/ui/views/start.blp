@@ -1,35 +1,45 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $StartView : Box {
-    orientation: vertical;
+template $StartView: Box {
+  orientation: vertical;
+  valign: center;
+  vexpand: true;
+  margin-bottom: 48;
 
-    Adw.ToastOverlay {
-        Adw.StatusPage {
-            title: _("Speedtest");
-            description: _("Measure your internet connection speed");
-        
-            Box {
-                orientation: vertical;
-                halign: center;
+  Adw.StatusPage {
+    title: _("Start Session");
 
-                DropDown server_selector {
-                    model: StringList {
-                        strings [ ]
-                    };
-                    
-                    margin-bottom: 24;
-                }
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 12;
 
-                Button {
-                    halign: center;
-                    width-request: 240;
+      Adw.PreferencesGroup {
+        hexpand: true;
+        Adw.ComboRow server_selector {
+          title: _("Server");
+          width-request: 300;
 
-                    label: _("Start");
-                    action-name: "app.start";
-                    styles [ "pill", "suggested-action" ]
-                }
-            }
+          model: StringList {
+            strings [
+              "Atlanta"
+            ]
+          };
         }
+      }
+
+      Button start_button {
+        halign: center;
+        sensitive: false;
+        label: _("Start");
+        action-name: "app.start";
+
+        styles [
+          "pill",
+          "suggested-action"
+        ]
+      }
     }
+  }
 }

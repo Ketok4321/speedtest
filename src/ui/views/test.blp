@@ -1,81 +1,129 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $TestView : Box {
+template $TestView: Adw.BreakpointBin {
+  height-request: 360;
+  width-request: 385;
+
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
+    setters {
+      thing_box.orientation: vertical;
+      thing_box.spacing: 0;
+      vclamp.maximum-size: 600;
+      vclamp.tightening-threshold: 550;
+      download.margin-start: 0;
+      upload.margin-end: 0;
+      download.marginb: 48;
+      upload.marginb: 48;
+      hclamp.maximum-size: 550;
+    }
+  }
+
+  child: Box {
     orientation: vertical;
 
     Overlay {
-        [overlay]
-        ProgressBar progress {
-            styles [ "osd" ]
-        }
+      [overlay]
+      ProgressBar progress {
+        styles [
+          "osd"
+        ]
+      }
 
-        [overlay]
-        Box {
-            orientation: vertical;
-            spacing: 16;
-            halign: center;
-            valign: end;
-            margin-bottom: 24;
+      ScrolledWindow {
+        hscrollbar-policy: never;
+        Adw.Clamp vclamp {
+          orientation: vertical;
+          maximum-size: 300;
+          tightening-threshold: 250;
 
-            Box {
-                orientation: vertical;
-
-                Label {
-                    label: _("Ping:");
-                    styles [ "title-2" ]
-                }
-
-                Label {
-                    label: bind template.ping;
-                    styles [ "title-3" ]
-                }
-            }
+          Adw.Clamp hclamp {
+            orientation: horizontal;
+            maximum-size: 600;
+            tightening-threshold: 500;
 
             Box {
-                orientation: vertical;
+              margin-top: 0;
+              orientation: vertical;
 
-                Label {
-                    label: _("Jitter:");
-                    styles [ "title-2" ]
-                }
-
-                Label {
-                    label: bind template.jitter;
-                    styles [ "title-3" ]
-                }
-            }
-        }
-
-        Box {
-            orientation: vertical;
-
-            Label title {
-                label: bind template.server;
-                margin-top: 8;
-                styles [ "title-2" ]
-            }
-
-            Box {
+              Box thing_box {
                 orientation: horizontal;
-                spacing: 80;
-                margin-start: 8;
-                margin-end: 8;
-                
+                spacing: 48;
+
                 $Gauge download {
-                    label: _("Download:");
-                    vexpand: true;
-                    hexpand: true;
-                    styles [ "dl" ]
+                  label: _("Download");
+                  margin-start: 48;
+                  marginb: 24;
+
+                  styles [
+                    "dl"
+                  ]
                 }
 
                 $Gauge upload {
-                    label: _("Upload:");
-                    vexpand: true;
-                    hexpand: true;
-                    styles [ "up" ]
+                  label: _("Upload");
+                  margin-end: 48;
+                  marginb: 24;
+
+                  styles [
+                    "up"
+                  ]
                 }
+              }
+
+              Box {
+                orientation: horizontal;
+                spacing: 12;
+                halign: center;
+                margin-bottom: 12;
+
+                Box {
+                  orientation: vertical;
+
+                  Label {
+                    label: _("Ping");
+
+                    styles [
+                      "title-2"
+                    ]
+                  }
+
+                  Label {
+                    label: bind template.ping;
+
+                    styles [
+                      "title-3",
+                      "numeric"
+                    ]
+                  }
+                }
+
+                Box {
+                  orientation: vertical;
+
+                  Label {
+                    label: _("Jitter");
+
+                    styles [
+                      "title-2",
+                      "numeric"
+                    ]
+                  }
+
+                  Label {
+                    label: bind template.jitter;
+
+                    styles [
+                      "title-3"
+                    ]
+                  }
+                }
+              }
             }
+          }
         }
+      }
     }
+  };
 }

@@ -11,16 +11,20 @@ from .window import SpeedtestWindow, SpeedtestPreferencesWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
 from .fetch_worker import FetchWorker
 from .test_worker import TestWorker
+from .const import Config
 
 from .backends.librespeed import LibrespeedBackend
 
 class SpeedtestApplication(Adw.Application):
+
+    troubleshooting = "OS: {os}\nApplication version: {wv}\nGTK: {gtk}\nlibadwaita: {adw}\nApp ID: {app_id}\nProfile: {profile}\nLanguage: {lang}"
+
     def __init__(self, version):
         super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
         self.servers = None
         self.win = None
-        self.version = version
+        self.version = Config.VERSION
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
         self.fetch_worker = None
         self.test_worker = None
@@ -32,19 +36,21 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
 
-    def do_activate(self):
-        self.load_theme()
+        gtk_version = str(Gtk.MAJOR_VERSION) + "." + str(Gtk.MINOR_VERSION) + "." + str(Gtk.MICRO_VERSION)
+        adw_version = str(Adw.MAJOR_VERSION) + "." + str(Adw.MINOR_VERSION) + "." + str(Adw.MICRO_VERSION)
+        os_string = GLib.get_os_info("NAME") + " " + GLib.get_os_info("VERSION")
+        lang = GLib.environ_getenv(GLib.get_environ(), "LANG")
 
+        self.troubleshooting = self.troubleshooting.format( os = os_string, wv = Config.VERSION, gtk = gtk_version, adw = adw_version, profile = Config.PROFILE, app_id = "xyz.ketok.Speedtest", lang = lang )
+
+    def do_activate(self):
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
         self.win.present()
+        self.create_action("push-thing", self.win.push_thing)
 
         self.load_backend()
-
-    def load_theme(self):
-        THEMES = [Adw.ColorScheme.DEFAULT, Adw.ColorScheme.FORCE_LIGHT, Adw.ColorScheme.FORCE_DARK]
-        Adw.StyleManager.get_default().set_color_scheme(THEMES[self.settings.get_int("theme")])
 
     def load_backend(self):
         if self.fetch_worker:
@@ -61,13 +67,21 @@ class SpeedtestApplication(Adw.Application):
                                 application_name=_("Speedtest"),
                                 application_icon="xyz.ketok.Speedtest",
                                 developer_name="Ketok",
-                                version=self.version,
+                                version=Config.VERSION,
                                 issue_url="https://github.com/Ketok4321/speedtest/issues",
                                 developers=["Ketok"],
+                                # Translators: do one of the following, one per line: Your Name, Your Name <email@email.org>, Your Name https://websi.te
+                                translator_credits=_("translator-credits"),
                                 copyright="© 2023 Ketok",
-                                license_type=Gtk.License.GPL_3_0)
+                                license_type=Gtk.License.GPL_3_0,
+                                debug_info=self.troubleshooting)
+
+        about.add_credit_section(_("Contributors"), [
+            # Contributors: do one of the following, one per line: Your Name, Your Name <email@email.org>, Your Name https://websi.te
+            "skøldis <speedtest@turtle.garden>"
+        ])
         
-        about.add_credit_section(_("Backend by"), ["Librespeed"])
+        about.add_acknowledgement_section(_("Backend by"), ["Librespeed"])
 
         about.present()
     
@@ -76,8 +90,14 @@ class SpeedtestApplication(Adw.Application):
             return
         SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
 
-    def on_start_action(self, widget, _):
+    def on_start_action(self, widget, _1):
         self.win.set_view(self.win.test_view)
+
+        if self.win.test_view.in_progress:
+            stri = _("Session already in progress")
+            toast = Adw.Toast.new(stri)
+            self.win.new_toast_overlay.add_toast(toast)
+            return
 
         server = self.servers[self.win.start_view.server_selector.get_selected()]
 
