@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 20:38+0100\n"
+"POT-Creation-Date: 2023-11-16 14:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ketok <ketok@ketok.xyz>\n"
 "Language-Team: \n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:61
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/window.blp:9
+#: src/ui/window.blp:16 src/main.py:69
 msgid "Speedtest"
 msgstr "Speedtest"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:6
 msgid "Measure your internet connection speed"
 msgstr "Zmierz swoją prędkość internetu"
 
@@ -31,70 +31,144 @@ msgstr "Zmierz swoją prędkość internetu"
 msgid "Desktop client for librespeed using gtk4+libadwaita"
 msgstr "Klient do librespeed używający gtk4+libadwaita"
 
-#: src/ui/views/offline.blp:9
-msgid "Couldn't connect to the speedtest servers"
-msgstr "Nie można połączyć się z serwerami"
-
 #: src/ui/views/offline.blp:10
-msgid "Make sure you are connected to the internet"
-msgstr "Upewnij się, że masz połączenie z internetem"
+msgid "Could Not Reach Internet"
+msgstr ""
 
-#: src/ui/views/offline.blp:17
-msgid "Retry"
-msgstr "Spróbuj ponownie"
+#: src/ui/views/offline.blp:11
+msgid "Speedtest does not work without an internet connection."
+msgstr ""
 
-#: src/ui/views/start.blp:28
+#: src/ui/views/offline.blp:20
+msgid "Retry Connection"
+msgstr ""
+
+#: src/ui/views/start.blp:11
+msgid "Start Session"
+msgstr ""
+
+#: src/ui/views/start.blp:21
+msgid "Server"
+msgstr ""
+
+#: src/ui/views/start.blp:35
 msgid "Start"
 msgstr "Rozpocznij"
 
-#: src/ui/views/test.blp:25
-msgid "Ping:"
-msgstr "Ping:"
-
-#: src/ui/views/test.blp:39
-msgid "Jitter:"
-msgstr "Jitter:"
-
-#: src/ui/views/test.blp:66
-msgid "Download:"
+#: src/ui/views/test.blp:55
+#, fuzzy
+msgid "Download"
 msgstr "Pobieranie:"
 
-#: src/ui/views/test.blp:73
-msgid "Upload:"
+#: src/ui/views/test.blp:65
+#, fuzzy
+msgid "Upload"
 msgstr "Wysyłanie:"
 
-#: src/ui/window.blp:51
-msgid "Preferences"
+#: src/ui/views/test.blp:85
+#, fuzzy
+msgid "Ping"
+msgstr "Ping:"
+
+#: src/ui/views/test.blp:106
+#, fuzzy
+msgid "Jitter"
+msgstr "Jitter:"
+
+#: src/ui/help-overlay.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr ""
+
+#: src/ui/help-overlay.blp:14
+msgctxt "shortcut window"
+msgid "Start Session"
+msgstr ""
+
+#: src/ui/help-overlay.blp:19
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: src/ui/help-overlay.blp:24
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/ui/window.blp:62
+#, fuzzy
+msgid "_Preferences"
 msgstr "Preferencje"
 
-#: src/ui/window.blp:55
-msgid "About Speedtest"
+#: src/ui/window.blp:67
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/ui/window.blp:72
+#, fuzzy
+msgid "_About Speedtest"
 msgstr "O Speedtest"
 
-#: src/ui/preferences.blp:11
-msgid "Visual"
-msgstr "Wizualne"
+#: src/ui/preferences.blp:19
+msgid ""
+"This option controls the maximum visible point on the gauge scales. Adjust "
+"this if the bar consistently reaches full."
+msgstr ""
 
-#: src/ui/preferences.blp:14
-msgid "Theme"
-msgstr "Motyw"
-
-#: src/ui/preferences.blp:16
-msgid "System"
-msgstr "System"
-
-#: src/ui/preferences.blp:16
-msgid "Light"
-msgstr "Jasny"
-
-#: src/ui/preferences.blp:16
-msgid "Dark"
-msgstr "Ciemny"
-
-#: src/ui/preferences.blp:21
-msgid "Gauge scale"
+#: src/ui/preferences.blp:28
+#, fuzzy
+msgid "Gauge Scale"
 msgstr "Skala wskaźników"
 
-#: src/main.py:70
+#. Translators: do one of the following, one per line: Your Name, Your Name <email@email.org>, Your Name https://websi.te
+#: src/main.py:76
+msgid "translator-credits"
+msgstr "Ketok <ketok@ketok.xyz>"
+
+#: src/main.py:81
+msgid "Contributors"
+msgstr ""
+
+#: src/main.py:86
 msgid "Backend by"
 msgstr "Backend"
+
+#: src/main.py:95 src/main.py:107
+msgid "Session already in progress"
+msgstr ""
+
+#: src/main.py:100
+msgid "Cannot start new session"
+msgstr ""
+
+#: src/window.py:38
+msgid "Discarded session"
+msgstr ""
+
+#: src/window.py:39
+msgid "Undo"
+msgstr ""
+
+#~ msgid "Couldn't connect to the speedtest servers"
+#~ msgstr "Nie można połączyć się z serwerami"
+
+#~ msgid "Make sure you are connected to the internet"
+#~ msgstr "Upewnij się, że masz połączenie z internetem"
+
+#~ msgid "Retry"
+#~ msgstr "Spróbuj ponownie"
+
+#~ msgid "Visual"
+#~ msgstr "Wizualne"
+
+#~ msgid "Theme"
+#~ msgstr "Motyw"
+
+#~ msgid "System"
+#~ msgstr "System"
+
+#~ msgid "Light"
+#~ msgstr "Jasny"
+
+#~ msgid "Dark"
+#~ msgstr "Ciemny"

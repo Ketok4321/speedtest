@@ -27,6 +27,12 @@ class SpeedtestWindow(Adw.ApplicationWindow):
 
         self.test_page.connect("hidden", self.go_back)
 
+        try:
+            builder = Gtk.Builder.new_from_resource("/xyz/ketok/Speedtest/ui/help-overlay.ui")
+            self.set_help_overlay(builder.get_object("help_overlay"))
+        except:
+            print("Error")
+
     def go_back(self, new):
         if self.test_view.in_progress:
             toast = Adw.Toast.new(_("Discarded session"))

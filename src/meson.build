@@ -6,6 +6,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'ui/window.blp',
     'ui/gauge.blp',
+    'ui/help-overlay.blp',
     'ui/preferences.blp',
     'ui/views/start.blp',
     'ui/views/test.blp',

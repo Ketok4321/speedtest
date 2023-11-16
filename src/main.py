@@ -36,6 +36,8 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
 
+        self.set_accels_for_action("win.show-help-overlay", ["<Primary>question"])
+
         gtk_version = str(Gtk.MAJOR_VERSION) + "." + str(Gtk.MINOR_VERSION) + "." + str(Gtk.MICRO_VERSION)
         adw_version = str(Adw.MAJOR_VERSION) + "." + str(Adw.MINOR_VERSION) + "." + str(Adw.MICRO_VERSION)
         os_string = GLib.get_os_info("NAME") + " " + GLib.get_os_info("VERSION")

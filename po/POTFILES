@@ -4,6 +4,7 @@ data/xyz.ketok.Speedtest.gschema.xml
 src/ui/views/offline.blp
 src/ui/views/start.blp
 src/ui/views/test.blp
+src/ui/help-overlay.blp
 src/ui/window.blp
 src/ui/preferences.blp
 src/backends/librespeed.py
