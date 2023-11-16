@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 14:13+0100\n"
+"POT-Creation-Date: 2023-11-16 15:30+0100\n"
 "PO-Revision-Date: 2023-10-01 03:38+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
@@ -27,12 +27,16 @@ msgid "Speedtest"
 msgstr "Hız Testi"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:6
-msgid "Measure your internet connection speed"
+#, fuzzy
+msgid "Measure your internet speeds"
 msgstr "İnternet bağlantı hızınızı ölçün"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:24
-msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr "librespeed için GTK4 ve libadwaita kullanan masaüstü istemcisi"
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:22
+msgid ""
+"Speedtest is a beautiful desktop client for LibreSpeed. It lets you measure "
+"your upload and download speeds against a wide variaty of servers around the "
+"globe."
+msgstr ""
 
 #: src/ui/views/offline.blp:10
 msgid "Could Not Reach Internet"
@@ -149,6 +153,9 @@ msgstr ""
 #: src/window.py:39
 msgid "Undo"
 msgstr ""
+
+#~ msgid "Desktop client for librespeed using gtk4+libadwaita"
+#~ msgstr "librespeed için GTK4 ve libadwaita kullanan masaüstü istemcisi"
 
 #~ msgid "Couldn't connect to the speedtest servers"
 #~ msgstr "Hız testi sunucularına bağlanılamıyor"

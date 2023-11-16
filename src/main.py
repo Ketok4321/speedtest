@@ -80,10 +80,11 @@ class SpeedtestApplication(Adw.Application):
 
         about.add_credit_section(_("Contributors"), [
             # Contributors: do one of the following, one per line: Your Name, Your Name <email@email.org>, Your Name https://websi.te
+            "kramo https://kramo.hu",
             "skøldis <speedtest@turtle.garden>"
         ])
         
-        about.add_acknowledgement_section(_("Backend by"), ["Librespeed"])
+        about.add_acknowledgement_section(_("Backend by"), ["Librespeed https://librespeed.org/"])
 
         about.present()
     

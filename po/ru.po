@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 14:13+0100\n"
+"POT-Creation-Date: 2023-11-16 15:30+0100\n"
 "PO-Revision-Date: 2023-10-02 00:34+0300\n"
 "Last-Translator: Сергей Ворон <voron@duck.com>\n"
 "Language-Team: \n"
@@ -24,12 +24,16 @@ msgid "Speedtest"
 msgstr "Тест скорости"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:6
-msgid "Measure your internet connection speed"
+#, fuzzy
+msgid "Measure your internet speeds"
 msgstr "Измерьте скорость вашего интернет соединения"
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:24
-msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr "Десктопный клиент для librespeed с использованием gtk4+libadwaita"
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:22
+msgid ""
+"Speedtest is a beautiful desktop client for LibreSpeed. It lets you measure "
+"your upload and download speeds against a wide variaty of servers around the "
+"globe."
+msgstr ""
 
 #: src/ui/views/offline.blp:10
 msgid "Could Not Reach Internet"
@@ -146,6 +150,9 @@ msgstr ""
 #: src/window.py:39
 msgid "Undo"
 msgstr ""
+
+#~ msgid "Desktop client for librespeed using gtk4+libadwaita"
+#~ msgstr "Десктопный клиент для librespeed с использованием gtk4+libadwaita"
 
 #~ msgid "Couldn't connect to the speedtest servers"
 #~ msgstr "Не удалось подключиться к серверам speedtest"

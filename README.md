@@ -3,7 +3,7 @@
 # Speedtest
 A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita
 
-<img src="https://raw.githubusercontent.com/Ketok4321/speedtest/main/screenshots/speedtest.png">
+<img src="https://raw.githubusercontent.com/Ketok4321/speedtest/main/screenshots/speedtest.png" alt="Main UI of Speedtest">
 
 ## Instalation
 ### Flatpak
@@ -16,3 +16,6 @@ A graphical [librespeed](https://librespeed.org) client written using gtk4 + lib
 2. Build
 `flatpak run org.flatpak.Builder --force-clean --user --install builddir xyz.ketok.Speedtest.yml`
 3. Speedtest is now installed on your system, you can run it by running `flatpak run xyz.ketok.Speedtest`
+
+### GNOME Builder
+Clone into GNOME Builder and run.
