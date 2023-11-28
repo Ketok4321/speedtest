@@ -3,8 +3,15 @@ using Adw 1;
 
 template $OfflineView : Box {
     orientation: vertical;
-    valign: center;
     
+    Adw.HeaderBar {
+        decoration-layout: ":close"; // We don't want the maximize button, even if someone has it enabled.
+
+        styles [
+            "flat"
+        ]
+    }
+
     Adw.StatusPage {
         title: _("Couldn't connect to the speedtest servers");
         description: _("Make sure you are connected to the internet");

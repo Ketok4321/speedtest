@@ -1,79 +1,88 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $TestView : Box {
-    orientation: vertical;
+template $TestView : Adw.NavigationPage {
+    Box {
+        orientation: vertical;
+        Adw.HeaderBar {
+            decoration-layout: ":close"; // We don't want the maximize button, even if someone has it enabled.
 
-    Overlay {
-        [overlay]
-        ProgressBar progress {
-            styles [ "osd" ]
+            styles [
+                "flat"
+            ]
         }
 
-        [overlay]
-        Box {
-            orientation: vertical;
-            spacing: 16;
-            halign: center;
-            valign: end;
-            margin-bottom: 24;
+        Overlay {
+            [overlay]
+            ProgressBar progress {
+                styles [ "osd" ]
+            }
+
+            [overlay]
+            Box {
+                orientation: vertical;
+                spacing: 16;
+                halign: center;
+                valign: end;
+                margin-bottom: 24;
+
+                Box {
+                    orientation: vertical;
+
+                    Label {
+                        label: _("Ping:");
+                        styles [ "title-2" ]
+                    }
+
+                    Label {
+                        label: bind template.ping;
+                        styles [ "title-3" ]
+                    }
+                }
+
+                Box {
+                    orientation: vertical;
+
+                    Label {
+                        label: _("Jitter:");
+                        styles [ "title-2" ]
+                    }
+
+                    Label {
+                        label: bind template.jitter;
+                        styles [ "title-3" ]
+                    }
+                }
+            }
 
             Box {
                 orientation: vertical;
 
-                Label {
-                    label: _("Ping:");
+                Label title {
+                    label: bind template.server;
+                    margin-top: 8;
                     styles [ "title-2" ]
                 }
 
-                Label {
-                    label: bind template.ping;
-                    styles [ "title-3" ]
-                }
-            }
+                Box {
+                    orientation: horizontal;
+                    spacing: 80;
+                    margin-start: 8;
+                    margin-end: 8;
+                    
+                    $Gauge download {
+                        label: _("Download:");
+                        vexpand: true;
+                        hexpand: true;
+                        styles [ "dl" ]
+                    }
 
-            Box {
-                orientation: vertical;
-
-                Label {
-                    label: _("Jitter:");
-                    styles [ "title-2" ]
-                }
-
-                Label {
-                    label: bind template.jitter;
-                    styles [ "title-3" ]
-                }
-            }
-        }
-
-        Box {
-            orientation: vertical;
-
-            Label title {
-                label: bind template.server;
-                margin-top: 8;
-                styles [ "title-2" ]
-            }
-
-            Box {
-                orientation: horizontal;
-                spacing: 80;
-                margin-start: 8;
-                margin-end: 8;
-                
-                $Gauge download {
-                    label: _("Download:");
-                    vexpand: true;
-                    hexpand: true;
-                    styles [ "dl" ]
-                }
-
-                $Gauge upload {
-                    label: _("Upload:");
-                    vexpand: true;
-                    hexpand: true;
-                    styles [ "up" ]
+                    $Gauge upload {
+                        label: _("Upload:");
+                        vexpand: true;
+                        hexpand: true;
+                        styles [ "up" ]
+                    }
                 }
             }
         }
