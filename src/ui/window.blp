@@ -2,14 +2,11 @@ using Gtk 4.0;
 using Adw 1;
 
 template $SpeedtestWindow : Adw.ApplicationWindow {
-  width-request: 360;
-  height-request: 294;
-  default-width: 650;
-  default-height: 400;
-  title: _("Speedtest");
-
-  Box {
-    orientation: vertical;
+    width-request: 360;
+    height-request: 294;
+    default-width: 650;
+    default-height: 400;
+    title: _("Speedtest");
 
     Stack view_switcher {
         transition-type: crossfade;
@@ -35,5 +32,4 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
             }
         }
     }
-  }
 }
