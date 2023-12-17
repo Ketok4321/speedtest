@@ -85,7 +85,7 @@ class TestView(Adw.NavigationPage):
         self.progress.set_fraction(0.0)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/offline.ui")
-class OfflineView(Gtk.Box):
+class OfflineView(Adw.Bin):
     __gtype_name__ = "OfflineView"
     
     def __init__(self, **kwargs):

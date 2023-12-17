@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $StartView : Adw.NavigationPage {
-    Box {
-        orientation: vertical;
+    Adw.ToolbarView {
+        [top]
         Adw.HeaderBar {
             decoration-layout: ":close"; // We don't want the maximize button, even if someone has it enabled.
 
@@ -12,10 +12,6 @@ template $StartView : Adw.NavigationPage {
                 icon-name: "open-menu-symbolic";
                 menu-model: primary_menu;
             }
-
-            styles [
-                "flat"
-            ]
         }
 
         Adw.StatusPage {
