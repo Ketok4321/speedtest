@@ -21,7 +21,8 @@ template $StartView : Adw.NavigationPage {
         Adw.StatusPage {
             title: _("Speedtest");
             description: _("Measure your internet connection speed");
-        
+            vexpand: true;
+
             Box {
                 orientation: vertical;
                 halign: center;
@@ -31,7 +32,7 @@ template $StartView : Adw.NavigationPage {
                         strings [ ]
                     };
                     
-                    margin-bottom: 32;
+                    margin-bottom: 24;
                 }
 
                 Button {
