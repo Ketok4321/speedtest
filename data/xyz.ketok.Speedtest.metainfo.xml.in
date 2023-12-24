@@ -31,6 +31,15 @@
 	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
 
     <releases>
+        <release version="1.2.1" date="2023-12-24">
+            <description translatable="no">
+                <ul>
+                    <li>Occitan translation</li>
+                    <li>Update French translation</li>
+                </ul>
+            </description>
+        </release>
+
         <release version="1.2.0" date="2023-11-07">
             <description translatable="no">
                 <ul>
