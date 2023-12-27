@@ -21,109 +21,119 @@ template $TestView : Adw.NavigationPage {
                         styles [ "osd" ]
                     }
                 
-                    Box {
-                        orientation: vertical;
-                        margin-bottom: 8;
+                    Adw.Clamp {
+                        orientation: horizontal;
+                        maximum-size: 975;
 
-                        Label title {
-                            label: bind template.server;
-                            margin-top: 8;
-                            margin-bottom: 8;
-                            styles [ "title-2" ]
-                            ellipsize: end;
-                        }
-
-                        Box gauge_box {
-                            orientation: horizontal;
-                            margin-start: 8;
-                            margin-end: 8;
-                            margin-bottom: 8;
-                            
-                            [start]
-                            $Gauge download {
-                                label: _("Download:");
-                                vexpand: true;
-                                hexpand: true;
-                                styles [ "dl" ]
-                            }
-
-                            Box ping_box_1 {
-                                orientation: vertical;
-                                spacing: 16;
-                                halign: center;
-                                valign: end;
-                                width-request: 96;
-
-                                Box {
-                                    orientation: vertical;
-
-                                    Label {
-                                        label: _("Ping:");
-                                        styles [ "title-2" ]
-                                    }
-
-                                    Label {
-                                        label: bind template.ping;
-                                        styles [ "title-3" ]
-                                    }
-                                }
-
-                                Box {
-                                    orientation: vertical;
-
-                                    Label {
-                                        label: _("Jitter:");
-                                        styles [ "title-2" ]
-                                    }
-
-                                    Label {
-                                        label: bind template.jitter;
-                                        styles [ "title-3" ]
-                                    }
-                                }
-                            }
-
-                            [end]
-                            $Gauge upload {
-                                label: _("Upload:");
-                                vexpand: true;
-                                hexpand: true;
-                                styles [ "up" ]
-                            }
-                        }
-
-                        Box ping_box_2 {
-                            orientation: horizontal;
-                            spacing: 24;
-                            halign: center;
-                            valign: end;
-                            visible: false;
+                        Adw.Clamp {
+                            orientation: vertical;
+                            maximum-size: 600;
 
                             Box {
                                 orientation: vertical;
+                                margin-bottom: 8;
 
-                                Label {
-                                    label: _("Ping:");
+                                Label title {
+                                    label: bind template.server;
+                                    margin-top: 8;
+                                    margin-bottom: 8;
                                     styles [ "title-2" ]
+                                    ellipsize: end;
                                 }
 
-                                Label {
-                                    label: bind template.ping;
-                                    styles [ "title-3" ]
+                                Box gauge_box {
+                                    orientation: horizontal;
+                                    margin-start: 8;
+                                    margin-end: 8;
+                                    margin-bottom: 8;
+                                    
+                                    [start]
+                                    $Gauge download {
+                                        label: _("Download:");
+                                        vexpand: true;
+                                        hexpand: true;
+                                        styles [ "dl" ]
+                                    }
+
+                                    Box ping_box_1 {
+                                        orientation: vertical;
+                                        spacing: 16;
+                                        halign: center;
+                                        valign: end;
+                                        width-request: 96;
+
+                                        Box {
+                                            orientation: vertical;
+
+                                            Label {
+                                                label: _("Ping:");
+                                                styles [ "title-2" ]
+                                            }
+
+                                            Label {
+                                                label: bind template.ping;
+                                                styles [ "title-3" ]
+                                            }
+                                        }
+
+                                        Box {
+                                            orientation: vertical;
+
+                                            Label {
+                                                label: _("Jitter:");
+                                                styles [ "title-2" ]
+                                            }
+
+                                            Label {
+                                                label: bind template.jitter;
+                                                styles [ "title-3" ]
+                                            }
+                                        }
+                                    }
+
+                                    [end]
+                                    $Gauge upload {
+                                        label: _("Upload:");
+                                        vexpand: true;
+                                        hexpand: true;
+                                        styles [ "up" ]
+                                    }
                                 }
-                            }
 
-                            Box {
-                                orientation: vertical;
+                                Box ping_box_2 {
+                                    orientation: horizontal;
+                                    spacing: 24;
+                                    halign: center;
+                                    valign: end;
+                                    visible: false;
 
-                                Label {
-                                    label: _("Jitter:");
-                                    styles [ "title-2" ]
-                                }
+                                    Box {
+                                        orientation: vertical;
 
-                                Label {
-                                    label: bind template.jitter;
-                                    styles [ "title-3" ]
+                                        Label {
+                                            label: _("Ping:");
+                                            styles [ "title-2" ]
+                                        }
+
+                                        Label {
+                                            label: bind template.ping;
+                                            styles [ "title-3" ]
+                                        }
+                                    }
+
+                                    Box {
+                                        orientation: vertical;
+
+                                        Label {
+                                            label: _("Jitter:");
+                                            styles [ "title-2" ]
+                                        }
+
+                                        Label {
+                                            label: bind template.jitter;
+                                            styles [ "title-3" ]
+                                        }
+                                    }
                                 }
                             }
                         }
