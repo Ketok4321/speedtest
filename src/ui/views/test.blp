@@ -21,13 +21,13 @@ template $TestView : Adw.NavigationPage {
                         styles [ "osd" ]
                     }
                 
-                    Adw.Clamp {
+                    Adw.Clamp horizontal_clamp {
                         orientation: horizontal;
-                        maximum-size: 975;
+                        maximum-size: 1300;
 
-                        Adw.Clamp {
+                        Adw.Clamp vertical_clamp {
                             orientation: vertical;
-                            maximum-size: 600;
+                            maximum-size: 800;
 
                             Box {
                                 orientation: vertical;
@@ -143,11 +143,12 @@ template $TestView : Adw.NavigationPage {
         }
 
         Adw.Breakpoint {
-            condition ("max-width: 400")
+            condition ("max-width: 500")
             setters {
                 gauge_box.orientation: vertical;
                 ping_box_1.visible: false;
                 ping_box_2.visible: true;
+                vertical_clamp.maximum-size: 1600;
             }
         }
     }
