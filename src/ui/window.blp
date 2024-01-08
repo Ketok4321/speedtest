@@ -28,7 +28,7 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
                 title: bind template.title;
             }
             $TestView test_view {
-                title: _("Testing…");
+                title: bind template.title;
             }
         }
     }
