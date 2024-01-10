@@ -3,11 +3,12 @@ using Adw 1;
 
 template $StartView : Box {
     orientation: vertical;
+    valign: center;
 
     Adw.ToastOverlay {
         Adw.StatusPage {
             title: _("Speedtest");
-            description: _("Measure your internet connection speed");
+            description: _("Measure your internet connection speed.");
         
             Box {
                 orientation: vertical;
@@ -23,7 +24,7 @@ template $StartView : Box {
 
                 Button {
                     halign: center;
-                    width-request: 240;
+                    margin-bottom: 32;
 
                     label: _("Start");
                     action-name: "app.start";

@@ -3,7 +3,7 @@
 	<id>xyz.ketok.Speedtest</id>
 
 	<name>Speedtest</name>
-	<summary>Measure your internet connection speed</summary>
+	<summary>Measure your internet speeds</summary>
 
     <url type="homepage">https://github.com/Ketok4321/speedtest</url>
     <url type="bugtracker">https://github.com/Ketok4321/speedtest/issues</url>
@@ -21,9 +21,9 @@
 	</screenshots>
 
 	<description>
-        <p>
-            Desktop client for librespeed using gtk4+libadwaita
-        </p>
+    <p>
+      Speedtest is a beautiful desktop client for LibreSpeed. It lets you measure your upload and download speeds against a wide variaty of servers around the globe.
+    </p>
 	</description>
     
     <content_rating type="oars-1.1" />
