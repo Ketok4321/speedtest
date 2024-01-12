@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="speedtest">
 	<schema id="xyz.ketok.Speedtest" path="/xyz/ketok/Speedtest/">
+        <key name="width" type="i">
+          <default>650</default>
+        </key>
+        <key name="height" type="i">
+          <default>400</default>
+        </key>
         <key name="theme" type="i">
             <default>0</default>
         </key>

@@ -39,6 +39,9 @@ class SpeedtestApplication(Adw.Application):
             self.win = SpeedtestWindow(application=self)
         self.win.on_test_end = lambda: self.test_worker.stop_event.set()
 
+        self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
+        self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
+
         self.win.present()
 
         self.load_backend()
