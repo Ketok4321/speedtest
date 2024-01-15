@@ -18,10 +18,10 @@ from .backends.librespeed import LibrespeedBackend
 class SpeedtestApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
-        
-        self.servers = None
+
         self.win = None
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
+        self.backend = None
         self.fetch_worker = None
         self.test_worker = None
 
@@ -37,12 +37,12 @@ class SpeedtestApplication(Adw.Application):
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
-        self.win.on_test_end = lambda: self.test_worker.stop_event.set()
+            self.win.on_test_end = lambda: self.test_worker.stop_event.set()
 
-        self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
-        self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
+            self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
+            self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
 
-        self.win.present()
+            self.win.present()
 
         self.load_backend()
 
@@ -83,12 +83,12 @@ class SpeedtestApplication(Adw.Application):
     def on_start_action(self, widget, _):
         self.win.start_test()
 
-        server = self.servers[self.win.start_view.server_selector.get_selected()]
+        server = self.fetch_worker.servers[self.win.start_view.server_selector.get_selected()]
 
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.test_worker = TestWorker(self.backend, self.win, server, self.settings)
+        self.test_worker = TestWorker(self, server)
         self.test_worker.start()
     
     def on_retry_connect_action(self, widget, _):

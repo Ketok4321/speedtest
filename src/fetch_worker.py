@@ -5,10 +5,11 @@ from gi.repository import GLib, Gtk
 
 class FetchWorker(threading.Thread):
     def __init__(self, app):
-        super().__init__(name="SpeedtestWorker", daemon=True)
+        super().__init__(name="FetchWorker", daemon=True)
 
         self.stop_event = threading.Event()
         self.app = app
+        self.servers = []
 
     def run(self):
         event_loop = asyncio.new_event_loop()
@@ -31,12 +32,12 @@ class FetchWorker(threading.Thread):
         GLib.idle_add(self.app.win.set_view, self.app.win.loading_view)
 
         try:
-            self.app.servers = []
-            while len(self.app.servers) == 0:
+            self.servers = []
+            while len(self.servers) == 0:
                 print("Trying to fetch servers...")
-                self.app.servers = await self.app.backend.get_servers()
+                self.servers = await self.app.backend.get_servers()
 
-            GLib.idle_add(self.app.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.app.servers))))
+            GLib.idle_add(self.app.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.servers))))
             GLib.idle_add(self.app.win.main_view.pop)
             GLib.idle_add(self.app.win.set_view, self.app.win.main_view)
         except Exception as e:
