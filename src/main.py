@@ -7,6 +7,7 @@ gi.require_foreign("cairo")
 
 from gi.repository import GLib, Gio, Gtk, Adw
 
+from .conf import *
 from .window import SpeedtestWindow, SpeedtestPreferencesWindow
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
 from .fetch_worker import FetchWorker
@@ -15,12 +16,11 @@ from .test_worker import TestWorker
 from .backends.librespeed import LibrespeedBackend
 
 class SpeedtestApplication(Adw.Application):
-    def __init__(self, version):
-        super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+    def __init__(self):
+        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         
         self.servers = None
         self.win = None
-        self.version = version
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
         self.fetch_worker = None
         self.test_worker = None
@@ -55,7 +55,7 @@ class SpeedtestApplication(Adw.Application):
             self.fetch_worker.stop_event.set()
             self.fetch_worker.join()
 
-        self.backend = LibrespeedBackend(f"KetokSpeedtest/{self.version}")
+        self.backend = LibrespeedBackend(f"KetokSpeedtest/{VERSION}")
 
         self.fetch_worker = FetchWorker(self)
         self.fetch_worker.start()
@@ -63,9 +63,9 @@ class SpeedtestApplication(Adw.Application):
     def on_about_action(self, widget, __):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name=_("Speedtest"),
-                                application_icon="xyz.ketok.Speedtest",
+                                application_icon=APP_ID,
                                 developer_name="Ketok",
-                                version=self.version,
+                                version=VERSION,
                                 issue_url="https://github.com/Ketok4321/speedtest/issues",
                                 developers=["Ketok"],
                                 copyright="© 2023 Ketok",
@@ -103,6 +103,6 @@ class SpeedtestApplication(Adw.Application):
         
         return action
 
-def main(version):
-    app = SpeedtestApplication(version)
+def main():
+    app = SpeedtestApplication()
     return app.run(sys.argv)

@@ -1,4 +1,4 @@
-app-id: xyz.ketok.Speedtest
+app-id: xyz.ketok.Speedtest.Devel
 runtime: org.gnome.Platform
 runtime-version: '45'
 sdk: org.gnome.Sdk
@@ -37,6 +37,8 @@ modules:
   - name: speedtest
     builddir: true
     buildsystem: meson
+    config-opts:
+      - -Ddevelopment=true
     sources:
       - type: dir
         path: .
