@@ -10,4 +10,8 @@
     <file preprocess="xml-stripblanks">ui/views/test.ui</file>
     <file preprocess="xml-stripblanks">ui/views/offline.ui</file>
   </gresource>
+
+  <gresource prefix="/xyz/ketok/Speedtest/Devel">
+    <file alias="style.css">ui/style.css</file>
+  </gresource>
 </gresources>
