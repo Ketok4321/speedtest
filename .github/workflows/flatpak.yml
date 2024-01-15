@@ -19,8 +19,8 @@ jobs:
     - uses: actions/checkout@v3
     - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.2
       with:
-        bundle: xyz.ketok.Speedtest.flatpak
-        manifest-path: xyz.ketok.Speedtest.yml
+        bundle: xyz.ketok.Speedtest.Devel.flatpak
+        manifest-path: xyz.ketok.Speedtest.Devel.yml
         cache-key: flatpak-builder-${{ github.sha }}
     # - uses: flatpak/flatpak-github-actions/flat-manager@v6.1
     #   with:
