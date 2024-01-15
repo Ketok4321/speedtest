@@ -37,7 +37,8 @@ class FetchWorker(threading.Thread):
                 self.app.servers = await self.app.backend.get_servers()
 
             GLib.idle_add(self.app.win.start_view.server_selector.set_model, Gtk.StringList.new(list(map(lambda s: s.name, self.app.servers))))
-            GLib.idle_add(self.app.win.set_view, self.app.win.start_view)
+            GLib.idle_add(self.app.win.main_view.pop)
+            GLib.idle_add(self.app.win.set_view, self.app.win.main_view)
         except Exception as e:
             print(e)
             GLib.idle_add(self.app.win.set_view, self.app.win.offline_view)

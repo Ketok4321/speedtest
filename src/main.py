@@ -29,7 +29,6 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action, ["<primary>comma"])
         self.create_action("start", self.on_start_action)
-        self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
 
     def do_activate(self):
@@ -38,6 +37,11 @@ class SpeedtestApplication(Adw.Application):
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
+        self.win.on_test_end = lambda: self.test_worker.stop_event.set()
+
+        self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
+        self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
+
         self.win.present()
 
         self.load_backend()
@@ -72,12 +76,12 @@ class SpeedtestApplication(Adw.Application):
         about.present()
     
     def on_preferences_action(self, widget, _):
-        if self.win.view_switcher.get_visible_child() == self.win.test_view:
+        if self.win.main_view.get_visible_page() == self.win.test_view: # TODO: deactivate this action insead of disabling it
             return
         SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
 
     def on_start_action(self, widget, _):
-        self.win.set_view(self.win.test_view)
+        self.win.start_test()
 
         server = self.servers[self.win.start_view.server_selector.get_selected()]
 
@@ -86,11 +90,6 @@ class SpeedtestApplication(Adw.Application):
 
         self.test_worker = TestWorker(self.backend, self.win, server, self.settings)
         self.test_worker.start()
-    
-    def on_back_action(self, widget, _):
-        self.test_worker.stop_event.set()
-
-        self.win.set_view(self.win.start_view)
     
     def on_retry_connect_action(self, widget, _):
         self.load_backend()

@@ -6,26 +6,30 @@ from .util import bind_with_mapping
 class SpeedtestWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SpeedtestWindow"
 
-    back_button = Gtk.Template.Child()
-    menu_button = Gtk.Template.Child()
-
     view_switcher = Gtk.Template.Child()
 
     loading_view = Gtk.Template.Child()
+    offline_view = Gtk.Template.Child()
+    main_view = Gtk.Template.Child()
+    
     start_view = Gtk.Template.Child()
     test_view = Gtk.Template.Child()
-    offline_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.on_test_end = None
     
     def set_view(self, view):
-        self.view_switcher.set_transition_type(Gtk.StackTransitionType.SLIDE_UP_DOWN if view == self.test_view or self.view_switcher.get_visible_child() == self.test_view else Gtk.StackTransitionType.CROSSFADE)
-
         self.view_switcher.set_visible_child(view)
 
-        self.back_button.set_visible(view == self.test_view)
-        self.menu_button.set_visible(view != self.test_view)
+    def start_test(self):
+        self.main_view.push(self.test_view)
+
+    @Gtk.Template.Callback()
+    def end_test(self, *_):
+        if self.on_test_end:
+            self.on_test_end()
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/preferences.ui")
 class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
@@ -49,7 +53,7 @@ class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
         self.theme.connect("notify::selected", lambda *_: app.load_theme())
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/start.ui")
-class StartView(Gtk.Box):
+class StartView(Adw.NavigationPage):
     __gtype_name__ = "StartView"
 
     server_selector = Gtk.Template.Child()
@@ -58,7 +62,7 @@ class StartView(Gtk.Box):
         super().__init__(**kwargs)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/test.ui")
-class TestView(Gtk.Box):
+class TestView(Adw.NavigationPage):
     __gtype_name__ = "TestView"
 
     download = Gtk.Template.Child()
@@ -81,7 +85,7 @@ class TestView(Gtk.Box):
         self.progress.set_fraction(0.0)
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/views/offline.ui")
-class OfflineView(Gtk.Box):
+class OfflineView(Adw.Bin):
     __gtype_name__ = "OfflineView"
     
     def __init__(self, **kwargs):
