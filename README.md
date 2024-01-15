@@ -14,5 +14,5 @@ A graphical [librespeed](https://librespeed.org) client written using gtk4 + lib
 1. Install flatpak builder
 `flatpak install flathub org.flatpak.Builder -y`
 2. Build
-`flatpak run org.flatpak.Builder --force-clean --user --install builddir xyz.ketok.Speedtest.yml`
-3. Speedtest is now installed on your system, you can run it by running `flatpak run xyz.ketok.Speedtest`
+`flatpak run org.flatpak.Builder --force-clean --user --install builddir xyz.ketok.Speedtest.Devel.yml`
+3. Speedtest is now installed on your system, you can run it by running `flatpak run xyz.ketok.Speedtest.Devel`
