@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 03:37+0300\n"
-"PO-Revision-Date: 2023-10-08 08:12+0100\n"
+"PO-Revision-Date: 2023-12-25 14:12+0100\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <LL@li.org>\n"
 "Language: it\n"
@@ -62,10 +62,38 @@ msgstr "Download:"
 msgid "Upload:"
 msgstr "Upload:"
 
-#: src/ui/window.blp:50
+#: src/ui/window.blp:51
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: src/ui/window.blp:55
 msgid "About Speedtest"
 msgstr "Informazioni su Speedtest"
 
-#: src/main.py:71
+#: src/ui/preferences.blp:11
+msgid "Visual"
+msgstr "Visuale"
+
+#: src/ui/preferences.blp:14
+msgid "Theme"
+msgstr "Tema"
+
+#: src/ui/preferences.blp:16
+msgid "System"
+msgstr "Sistema"
+
+#: src/ui/preferences.blp:16
+msgid "Light"
+msgstr "Chiaro"
+
+#: src/ui/preferences.blp:16
+msgid "Dark"
+msgstr "Scuro"
+
+#: src/ui/preferences.blp:21
+msgid "Gauge scale"
+msgstr "Scala di misura"
+
+#: src/main.py:70
 msgid "Backend by"
 msgstr "Backend di"
