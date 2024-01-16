@@ -17,7 +17,7 @@ from .backends.librespeed import LibrespeedBackend
 
 class SpeedtestApplication(Adw.Application):
     def __init__(self):
-        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+        super().__init__(application_id=APP_ID, resource_base_path="/xyz/ketok/Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
 
         self.win = None
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
