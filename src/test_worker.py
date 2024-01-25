@@ -26,6 +26,7 @@ class TestWorker(threading.Thread):
         
         self.start_time = 0
         self.last_label_update = 0
+        self.unsignal = None
 
     def run(self):
         event_loop = asyncio.new_event_loop()
@@ -39,6 +40,7 @@ class TestWorker(threading.Thread):
 
         while not task.done():
             if self.stop_event.is_set():
+                if self.unsignal: GLib.idle_add(self.unsignal)
                 task.cancel()
                 break
             
@@ -55,16 +57,13 @@ class TestWorker(threading.Thread):
         try:
             view = self.app.win.test_view
 
-            timeout = None
-
             def on_event(type):
-                nonlocal timeout
-
                 if type == "ping":
                     view.ping = f"{self.results.ping:.1f}ms"
                     view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
-                    timeout = view.download.get_frame_clock().connect("before-paint", lambda *_: self.update(view.download, self.results.total_dl, False))
+                    signal = view.download.get_frame_clock().connect("before-paint", lambda *_: self.update(view.download, self.results.total_dl, False))
+                    self.unsignal = lambda: view.download.get_frame_clock().disconnect(signal)
                     
                     view.progress.remove_css_class("up")
                     view.progress.add_css_class("dl")
@@ -72,10 +71,11 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "download_end":
-                    view.download.get_frame_clock().disconnect(timeout)
+                    self.unsignal()
                     view.download.remove_css_class("active")
                 elif type == "upload_start":
-                    timeout = view.upload.get_frame_clock().connect("before-paint", lambda *_: self.update(view.upload, self.results.total_up, True))
+                    signal = view.upload.get_frame_clock().connect("before-paint", lambda *_: self.update(view.upload, self.results.total_up, True))
+                    self.unsignal = lambda: view.upload.get_frame_clock().disconnect(signal)
                     
                     view.progress.remove_css_class("dl")
                     view.progress.add_css_class("up")
@@ -83,7 +83,7 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "upload_end":
-                    view.upload.get_frame_clock().disconnect(timeout)
+                    self.unsignal()
                     view.upload.remove_css_class("active")
 
             GLib.idle_add(self.app.win.test_view.progress.set_visible, True)
@@ -108,12 +108,3 @@ class TestWorker(threading.Thread):
             gauge.fill = min(speedMb / self.app.settings.get_int("gauge-scale"), 1.0)
 
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
-
-        return not self.stop_event.is_set()
-    
-    async def perform_test(self, test, streams):
-        GLib.idle_add(self.app.win.test_view.progress.set_visible, True)
-
-        self.start_time = time.time()
-
-        GLib.idle_add(self.app.win.test_view.progress.set_visible, False)
