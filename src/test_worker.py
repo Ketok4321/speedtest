@@ -23,6 +23,9 @@ class TestWorker(threading.Thread):
         self.stop_event = threading.Event()
         self.app = app
         self.server = server
+        
+        self.start_time = 0
+        self.last_label_update = 0
 
     def run(self):
         event_loop = asyncio.new_event_loop()
@@ -61,7 +64,7 @@ class TestWorker(threading.Thread):
                     view.ping = f"{self.results.ping:.1f}ms"
                     view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
-                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, self.results.total_dl, False))
+                    timeout = view.download.get_frame_clock().connect("before-paint", lambda *_: self.update(view.download, self.results.total_dl, False))
                     
                     view.progress.remove_css_class("up")
                     view.progress.add_css_class("dl")
@@ -69,10 +72,10 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "download_end":
-                    GLib.source_remove(timeout)
+                    view.download.get_frame_clock().disconnect(timeout)
                     view.download.remove_css_class("active")
                 elif type == "upload_start":
-                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, self.results.total_up, True))
+                    timeout = view.upload.get_frame_clock().connect("before-paint", lambda *_: self.update(view.upload, self.results.total_up, True))
                     
                     view.progress.remove_css_class("dl")
                     view.progress.add_css_class("up")
@@ -80,7 +83,7 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "upload_end":
-                    GLib.source_remove(timeout)
+                    view.upload.get_frame_clock().disconnect(timeout)
                     view.upload.remove_css_class("active")
 
             GLib.idle_add(self.app.win.test_view.progress.set_visible, True)
@@ -99,7 +102,9 @@ class TestWorker(threading.Thread):
 
         if current_duration > 1:
             speedMb = round(value / 125_000, 1)
-            gauge.value = str(speedMb) + "Mbps"
+            if time.time() - self.last_label_update >= 0.075:
+                gauge.value = str(speedMb) + "Mbps"
+                self.last_label_update = time.time()
             gauge.fill = min(speedMb / self.app.settings.get_int("gauge-scale"), 1.0)
 
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
