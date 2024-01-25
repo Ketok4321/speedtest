@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 from gi.repository import GLib
 
-DURATION = 15 #TODO: This constant is in two places now
+DURATION = 15
 OVERHEAD_COMPENSATION = 1.06
 
 @dataclass
@@ -88,7 +88,7 @@ class TestWorker(threading.Thread):
 
             GLib.idle_add(self.app.win.test_view.progress.set_visible, True)
             self.results = TestResults()
-            await self.app.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
+            await self.app.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type), DURATION)
             GLib.idle_add(self.app.win.test_view.progress.set_visible, False)
         except Exception as e:
             print(e)

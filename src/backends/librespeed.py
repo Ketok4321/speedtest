@@ -8,7 +8,6 @@ from ..garbage import GarbageReader
 
 DOWNLOAD_SIZE = 100
 
-DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
 
@@ -52,11 +51,11 @@ class LibrespeedBackend:
 
                 return results
     
-    async def start(self, server, res, notify):
+    async def start(self, server, res, notify, duration):
         async def perform_test(test, streams, res):
             tasks = []
 
-            timeout = asyncio.create_task(asyncio.sleep(DURATION))
+            timeout = asyncio.create_task(asyncio.sleep(duration))
 
             for _ in range(streams):
                 tasks.append(asyncio.create_task(test(server, res)))
