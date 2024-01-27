@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 20:38+0100\n"
+"POT-Creation-Date: 2024-01-27 14:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:9
-#: src/ui/window.blp:8 src/main.py:61
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:18
+#: src/ui/window.blp:9 src/main.py:65
 msgid "Speedtest"
 msgstr ""
 
-#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:10
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:19
 msgid "Measure your internet connection speed"
 msgstr ""
 
@@ -31,44 +31,44 @@ msgstr ""
 msgid "Desktop client for librespeed using gtk4+libadwaita"
 msgstr ""
 
-#: src/ui/views/offline.blp:9
+#: src/ui/views/offline.blp:12
 msgid "Couldn't connect to the speedtest servers"
 msgstr ""
 
-#: src/ui/views/offline.blp:10
+#: src/ui/views/offline.blp:13
 msgid "Make sure you are connected to the internet"
 msgstr ""
 
-#: src/ui/views/offline.blp:17
+#: src/ui/views/offline.blp:21
 msgid "Retry"
 msgstr ""
 
-#: src/ui/views/start.blp:28
+#: src/ui/views/start.blp:38
 msgid "Start"
 msgstr ""
 
-#: src/ui/views/test.blp:25
-msgid "Ping:"
-msgstr ""
-
-#: src/ui/views/test.blp:39
-msgid "Jitter:"
-msgstr ""
-
-#: src/ui/views/test.blp:66
-msgid "Download:"
-msgstr ""
-
-#: src/ui/views/test.blp:73
-msgid "Upload:"
-msgstr ""
-
-#: src/ui/window.blp:51
+#: src/ui/views/start.blp:50
 msgid "Preferences"
 msgstr ""
 
-#: src/ui/window.blp:55
+#: src/ui/views/start.blp:54
 msgid "About Speedtest"
+msgstr ""
+
+#: src/ui/views/test.blp:52
+msgid "Download:"
+msgstr ""
+
+#: src/ui/views/test.blp:69 src/ui/views/test.blp:114
+msgid "Ping:"
+msgstr ""
+
+#: src/ui/views/test.blp:83 src/ui/views/test.blp:128
+msgid "Jitter:"
+msgstr ""
+
+#: src/ui/views/test.blp:96
+msgid "Upload:"
 msgstr ""
 
 #: src/ui/preferences.blp:11
@@ -95,6 +95,6 @@ msgstr ""
 msgid "Gauge scale"
 msgstr ""
 
-#: src/main.py:70
+#: src/main.py:74
 msgid "Backend by"
 msgstr ""
