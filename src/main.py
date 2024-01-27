@@ -38,6 +38,8 @@ class SpeedtestApplication(Adw.Application):
         if not self.win:
             self.win = SpeedtestWindow(application=self)
             self.win.on_test_end = lambda: self.test_worker.stop_event.set()
+            if DEVEL:
+                self.win.add_css_class("devel")
 
             self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
             self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
