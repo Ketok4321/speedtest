@@ -18,8 +18,14 @@ if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
 endif
 
+appstream_file_in = configure_file(
+          input: 'xyz.ketok.Speedtest.metainfo.xml.in',
+         output: '@app_id@.metainfo.xml.in',
+  configuration: conf,
+)
+
 appstream_file = i18n.merge_file(
-        input: 'xyz.ketok.Speedtest.metainfo.xml.in',
+        input: appstream_file_in,
        output: f'@app_id@.metainfo.xml',
        po_dir: '../po',
       install: true,

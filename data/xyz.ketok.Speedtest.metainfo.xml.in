@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>xyz.ketok.Speedtest</id>
+	<id>@APP_ID@</id>
 
 	<name>Speedtest</name>
 	<summary>Measure your internet connection speed</summary>
@@ -13,10 +13,10 @@
 
 	<screenshots>
 		<screenshot type="default">
-			<image>https://gowno.ketok.xyz/screenshots/speedtest/1.png</image>
+            <image>https://raw.githubusercontent.com/Ketok4321/speedtest/main/screenshots/1.png</image>
 		</screenshot>
 		<screenshot>
-			<image>https://gowno.ketok.xyz/screenshots/speedtest/2.png</image>
+            <image>https://raw.githubusercontent.com/Ketok4321/speedtest/main/screenshots/2.png</image>
 		</screenshot>
 	</screenshots>
 
@@ -28,7 +28,7 @@
     
     <content_rating type="oars-1.1" />
     
-	<launchable type="desktop-id">xyz.ketok.Speedtest.desktop</launchable>
+	<launchable type="desktop-id">@APP_ID@.desktop</launchable>
 
     <releases>
         <release version="1.2.1" date="2023-12-24">

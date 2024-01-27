@@ -3,7 +3,7 @@
 # Speedtest
 A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita
 
-<img src="https://gowno.ketok.xyz/screenshots/speedtest/2.png?" width="722">
+<img src="screenshots/2.png" width="772">
 
 ## Instalation
 ### Flatpak
