@@ -32,8 +32,8 @@ class SpeedtestWindow(Adw.ApplicationWindow):
             self.on_test_end()
 
 @Gtk.Template(resource_path="/xyz/ketok/Speedtest/ui/preferences.ui")
-class SpeedtestPreferencesWindow(Adw.PreferencesWindow):
-    __gtype_name__ = "SpeedtestPreferencesWindow"
+class SpeedtestPreferencesDialog(Adw.PreferencesDialog):
+    __gtype_name__ = "SpeedtestPreferencesDialog"
 
     theme = Gtk.Template.Child()
     gauge_scale = Gtk.Template.Child()
