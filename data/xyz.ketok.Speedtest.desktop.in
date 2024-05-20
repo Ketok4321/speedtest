@@ -4,5 +4,5 @@ Exec=speedtest
 Icon=@APP_ID@
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=GTK;Network;
 StartupNotify=true
