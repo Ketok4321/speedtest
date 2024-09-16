@@ -8,7 +8,7 @@ gi.require_foreign("cairo")
 from gi.repository import GLib, Gio, Gtk, Adw
 
 from .conf import *
-from .window import SpeedtestWindow, SpeedtestPreferencesWindow
+from .window import SpeedtestWindow, SpeedtestPreferencesDialog
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
 from .fetch_worker import FetchWorker
 from .test_worker import TestWorker
@@ -63,8 +63,7 @@ class SpeedtestApplication(Adw.Application):
         self.fetch_worker.start()
 
     def on_about_action(self, widget, __):
-        about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name=_("Speedtest"),
+        about = Adw.AboutDialog(application_name=_("Speedtest"),
                                 application_icon=APP_ID,
                                 developer_name="Ketok",
                                 version=VERSION,
@@ -75,12 +74,12 @@ class SpeedtestApplication(Adw.Application):
         
         about.add_credit_section(_("Backend by"), ["Librespeed"])
 
-        about.present()
+        about.present(self.win)
     
     def on_preferences_action(self, widget, _):
         if self.win.main_view.get_visible_page() == self.win.test_view: # TODO: deactivate this action insead of disabling it
             return
-        SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
+        SpeedtestPreferencesDialog(self).present(self.win)
 
     def on_start_action(self, widget, _):
         self.win.start_test()
