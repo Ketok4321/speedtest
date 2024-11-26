@@ -11,12 +11,7 @@ template $SpeedtestWindow : Adw.ApplicationWindow {
     Stack view_switcher {
         transition-type: crossfade;
         Box loading_view {
-            Spinner {
-                spinning: true;
-                width-request: 32;
-                height-request: 32;
-                valign: center;
-                halign: center;
+            Adw.Spinner {
                 vexpand: true;
                 hexpand: true;
             }
