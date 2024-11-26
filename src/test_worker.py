@@ -30,6 +30,7 @@ class TestWorker(threading.Thread):
 
     def run(self):
         event_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(event_loop)
 
         event_loop.run_until_complete(self.run_async())
 
@@ -47,11 +48,12 @@ class TestWorker(threading.Thread):
             await asyncio.sleep(0)
         
         for task in asyncio.all_tasks():
-            task.cancel()
-            try:
-                await task
-            except asyncio.CancelledError:
-                pass
+            if task != asyncio.current_task():
+                task.cancel()
+                try:
+                    await task
+                except asyncio.CancelledError:
+                    pass
 
     async def do_run(self):
         try:
@@ -62,8 +64,8 @@ class TestWorker(threading.Thread):
                     view.ping = f"{self.results.ping:.1f}ms"
                     view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
-                    signal = view.download.get_frame_clock().connect("before-paint", lambda *_: self.update(view.download, self.results.total_dl, False))
-                    self.unsignal = lambda: view.download.get_frame_clock().disconnect(signal)
+                    signal = view.download.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_dl, False), None)
+                    self.unsignal = lambda: view.download.remove_tick_callback(signal)
                     
                     view.progress.remove_css_class("up")
                     view.progress.add_css_class("dl")
@@ -74,8 +76,8 @@ class TestWorker(threading.Thread):
                     self.unsignal()
                     view.download.remove_css_class("active")
                 elif type == "upload_start":
-                    signal = view.upload.get_frame_clock().connect("before-paint", lambda *_: self.update(view.upload, self.results.total_up, True))
-                    self.unsignal = lambda: view.upload.get_frame_clock().disconnect(signal)
+                    signal = view.upload.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_up, True), None)
+                    self.unsignal = lambda: view.upload.remove_tick_callback(signal)
                     
                     view.progress.remove_css_class("dl")
                     view.progress.add_css_class("up")
@@ -93,7 +95,7 @@ class TestWorker(threading.Thread):
         except Exception as e:
             print(e)
             GLib.idle_add(self.app.win.set_view, self.app.win.offline_view)
-    
+
     def update(self, gauge, total, part_two):
         view = self.app.win.test_view
 
@@ -108,3 +110,5 @@ class TestWorker(threading.Thread):
             gauge.fill = min(speedMb / self.app.settings.get_int("gauge-scale"), 1.0)
 
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
+
+        return True # continue running the tick updates

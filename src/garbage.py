@@ -13,7 +13,7 @@ class GarbageReader(io.IOBase):
         self.pos = 0
 
     def seekable(self):
-        return True
+        return False
 
     def writable(self):
         return False

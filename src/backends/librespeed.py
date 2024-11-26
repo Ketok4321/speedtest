@@ -55,16 +55,14 @@ class LibrespeedBackend:
         async def perform_test(test, streams, res):
             tasks = []
 
-            timeout = asyncio.create_task(asyncio.sleep(duration))
-
             for _ in range(streams):
                 tasks.append(asyncio.create_task(test(server, res)))
                 await asyncio.sleep(0.3)
 
-            await timeout
-
-            for t in tasks:
-                t.cancel()
+            try:
+                await asyncio.wait_for(asyncio.gather(*tasks), timeout=duration)
+            except asyncio.TimeoutError:
+                pass
 
         res.ping, res.jitter = await self.ping(server)
         notify("ping")
@@ -105,4 +103,4 @@ class LibrespeedBackend:
             while True:
                 reader = GarbageReader(callback)
                 async with session.post(server.uploadURL, headers=self.headers, data=reader) as response:
-                    await response.read()
+                    _ = await response.read()
