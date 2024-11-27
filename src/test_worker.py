@@ -26,7 +26,6 @@ class TestWorker(threading.Thread):
         
         self.start_time = 0
         self.last_label_update = 0
-        self.unsignal = None
 
     def run(self):
         event_loop = asyncio.new_event_loop()
@@ -41,7 +40,6 @@ class TestWorker(threading.Thread):
 
         while not task.done():
             if self.stop_event.is_set():
-                if self.unsignal: GLib.idle_add(self.unsignal)
                 task.cancel()
                 break
             
@@ -64,8 +62,7 @@ class TestWorker(threading.Thread):
                     view.ping = f"{self.results.ping:.1f}ms"
                     view.jitter = f"{self.results.jitter:.1f}ms"
                 elif type == "download_start":
-                    signal = view.download.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_dl, False), None)
-                    self.unsignal = lambda: view.download.remove_tick_callback(signal)
+                    view.download.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_dl, False), None)
                     
                     view.progress.remove_css_class("up")
                     view.progress.add_css_class("dl")
@@ -73,11 +70,9 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "download_end":
-                    self.unsignal()
                     view.download.remove_css_class("active")
                 elif type == "upload_start":
-                    signal = view.upload.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_up, True), None)
-                    self.unsignal = lambda: view.upload.remove_tick_callback(signal)
+                    view.upload.add_tick_callback(lambda widget, *_: self.update(widget, self.results.total_up, True), None)
                     
                     view.progress.remove_css_class("dl")
                     view.progress.add_css_class("up")
@@ -85,7 +80,6 @@ class TestWorker(threading.Thread):
                     
                     self.start_time = time.time()
                 elif type == "upload_end":
-                    self.unsignal()
                     view.upload.remove_css_class("active")
 
             GLib.idle_add(self.app.win.test_view.progress.set_visible, True)
@@ -111,4 +105,7 @@ class TestWorker(threading.Thread):
 
         view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
 
-        return True # continue running the tick updates
+        if current_duration >= DURATION or self.stop_event.is_set():
+            return GLib.SOURCE_REMOVE
+
+        return GLib.SOURCE_CONTINUE
