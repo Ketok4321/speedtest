@@ -38,6 +38,17 @@
 	<launchable type="desktop-id">@APP_ID@.desktop</launchable>
 
     <releases>
+        <release version="1.4.0" date="2025-03-12">
+            <description translate="no">
+                <ul>
+                    <li>Use new libadwaita dialogs and spinners</li>
+                    <li>Add 10Gbps gauge scale to preferences</li>
+                    <li>Spanish, Brazilian Portugese and Czech translations</li>
+                    <li>A lot of fixes</li>
+                </ul>
+            </description>
+        </release>
+
         <release version="1.3.0" date="2024-01-27">
             <description translate="no">
                 <ul>
