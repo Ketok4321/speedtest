@@ -142,7 +142,7 @@ template $TestView : Adw.NavigationPage {
             }
         }
 
-        Adw.Breakpoint {
+        Adw.Breakpoint { // TODO: Consider using Adw.MultiLayoutView
             condition ("max-width: 500")
             setters {
                 gauge_box.orientation: vertical;

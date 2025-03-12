@@ -1,6 +1,6 @@
 app-id: xyz.ketok.Speedtest.Devel
 runtime: org.gnome.Platform
-runtime-version: '46'
+runtime-version: '47'
 sdk: org.gnome.Sdk
 command: speedtest
 
@@ -23,6 +23,7 @@ cleanup:
   - '*.a'
 
 modules:
+  - python3-expandvars.json
   - python3-aiohttp.json
 
   - name: blueprint-compiler
