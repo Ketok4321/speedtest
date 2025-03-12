@@ -2,7 +2,10 @@
 <component type="desktop-application">
 	<id>@APP_ID@</id>
 
-	<name>Speedtest</name>
+    <name>Speedtest</name>
+    <developer id="xyz.ketok">
+        <name translate="no">Ketok</name>
+    </developer>
 	<summary>Measure your internet connection speed</summary>
 
     <url type="homepage">https://github.com/Ketok4321/speedtest</url>
