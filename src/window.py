@@ -38,7 +38,7 @@ class SpeedtestPreferencesDialog(Adw.PreferencesDialog):
     theme = Gtk.Template.Child()
     gauge_scale = Gtk.Template.Child()
 
-    SCALES = [100, 250, 500, 1000]
+    SCALES = [100, 250, 500, 1000, 10000]
 
     def __init__(self, app, **kwargs):
         super().__init__(**kwargs)
