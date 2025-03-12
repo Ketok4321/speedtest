@@ -51,7 +51,7 @@ class LibrespeedBackend:
 
                 return results
     
-    async def start(self, server, res, notify, duration):
+    async def start(self, server, res, duration):
         async def perform_test(test, streams, res):
             tasks = []
 
@@ -60,20 +60,17 @@ class LibrespeedBackend:
                 await asyncio.sleep(0.3)
 
             try:
-                await asyncio.wait_for(asyncio.gather(*tasks), timeout=duration)
+                await asyncio.wait_for(asyncio.gather(*tasks), timeout=duration - 0.3 * streams)
             except asyncio.TimeoutError:
                 pass
 
         res.ping, res.jitter = await self.ping(server)
-        notify("ping")
-
-        notify("download_start")
+        res.start_time = time.time()
+        res.stage = 1
         await perform_test(self.download, DL_STREAMS, res)
-        notify("download_end")
-
-        notify("upload_start")
+        res.stage = 2
         await perform_test(self.upload, UP_STREAMS, res)
-        notify("upload_end")
+        res.stage = 3
 
     async def ping(self, server):
         async with aiohttp.ClientSession() as session:
