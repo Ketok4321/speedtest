@@ -2,21 +2,25 @@ name: Flatpak
 
 on:
   push:
+    paths-ignore:
+      - '**/README.md'
   pull_request:
+    paths-ignore:
+      - '**/README.md'
 
 jobs:
   flatpak:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-45
+      image: bilelmoussaoui/flatpak-github-actions:gnome-47
       options: --privileged
     steps:
     - uses: actions/checkout@v3
-    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.2
+    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.4
       with:
-        bundle: xyz.ketok.Speedtest.flatpak
-        manifest-path: xyz.ketok.Speedtest.yml
+        bundle: xyz.ketok.Speedtest.Devel.flatpak
+        manifest-path: xyz.ketok.Speedtest.Devel.yml
         cache-key: flatpak-builder-${{ github.sha }}
     # - uses: flatpak/flatpak-github-actions/flat-manager@v6.1
     #   with:

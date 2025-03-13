@@ -24,6 +24,14 @@ class GarbageReader(io.IOBase):
     def tell(self):
         return self.pos
 
+    def seek(self, offset, whence=io.SEEK_SET):
+        if whence == io.SEEK_SET:
+            self.pos = offset
+        elif whence == io.SEEK_CUR:
+            self.pos += offset
+        elif whence == io.SEEK_END:
+            self.pos = self.length - 1 - offset
+
     def read(self, size=None):
         if not size:
             size = self.length - self.tell()

@@ -8,7 +8,6 @@ from ..garbage import GarbageReader
 
 DOWNLOAD_SIZE = 100
 
-DURATION = 15
 DL_STREAMS = 6
 UP_STREAMS = 3
 
@@ -52,31 +51,26 @@ class LibrespeedBackend:
 
                 return results
     
-    async def start(self, server, res, notify):
+    async def start(self, server, res, duration):
         async def perform_test(test, streams, res):
             tasks = []
-
-            timeout = asyncio.create_task(asyncio.sleep(DURATION))
 
             for _ in range(streams):
                 tasks.append(asyncio.create_task(test(server, res)))
                 await asyncio.sleep(0.3)
 
-            await timeout
-
-            for t in tasks:
-                t.cancel()
+            try:
+                await asyncio.wait_for(asyncio.gather(*tasks), timeout=duration - 0.3 * streams)
+            except asyncio.TimeoutError:
+                pass
 
         res.ping, res.jitter = await self.ping(server)
-        notify("ping")
-
-        notify("download_start")
+        res.start_time = time.time()
+        res.stage = 1
         await perform_test(self.download, DL_STREAMS, res)
-        notify("download_end")
-
-        notify("upload_start")
+        res.stage = 2
         await perform_test(self.upload, UP_STREAMS, res)
-        notify("upload_end")
+        res.stage = 3
 
     async def ping(self, server):
         async with aiohttp.ClientSession() as session:
@@ -106,4 +100,4 @@ class LibrespeedBackend:
             while True:
                 reader = GarbageReader(callback)
                 async with session.post(server.uploadURL, headers=self.headers, data=reader) as response:
-                    await response.read()
+                    _ = await response.read()

@@ -1,6 +1,6 @@
-app-id: xyz.ketok.Speedtest
+app-id: xyz.ketok.Speedtest.Devel
 runtime: org.gnome.Platform
-runtime-version: '45'
+runtime-version: '47'
 sdk: org.gnome.Sdk
 command: speedtest
 
@@ -23,6 +23,7 @@ cleanup:
   - '*.a'
 
 modules:
+  - python3-expandvars.json
   - python3-aiohttp.json
   - python3-websockets.json
 
@@ -32,12 +33,15 @@ modules:
       - type: git
         url: https://gitlab.gnome.org/jwestman/blueprint-compiler
         tag: v0.10.0
+        commit: 2a39a16391122af2f3d812e478c1c1398c98b972
     cleanup:
       - '*'
 
   - name: speedtest
     builddir: true
     buildsystem: meson
+    config-opts:
+      - -Ddevelopment=true
     sources:
       - type: dir
         path: .

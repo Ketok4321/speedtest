@@ -2,58 +2,29 @@ using Gtk 4.0;
 using Adw 1;
 
 template $SpeedtestWindow : Adw.ApplicationWindow {
-  width-request: 600;
-  height-request: 300;
-  resizable: false;
-  title: _("Speedtest");
+    width-request: 360;
+    height-request: 294;
+    default-width: 650;
+    default-height: 400;
+    title: _("Speedtest");
 
-  Box {
-    orientation: vertical;
-
-    HeaderBar header_bar {
-      Button back_button {
-        visible: false;
-        icon-name: "go-previous-symbolic";
-        action-name: "app.back";
-      }
-
-      [end]
-      MenuButton menu_button {
-        icon-name: "open-menu-symbolic";
-        menu-model: primary_menu;
-      }
-    }
-
-    Stack view_switcher { //TODO: Consider using Adw.Leaflet/Adw.NavigationView
-      //transition-type: slide_up_down;
-
-      Box loading_view {
-        Spinner {
-          spinning: true;
-          width-request: 32;
-          height-request: 32;
-          valign: center;
-          halign: center;
-          vexpand: true;
-          hexpand: true;
+    Stack view_switcher {
+        transition-type: crossfade;
+        Box loading_view {
+            Adw.Spinner {
+                vexpand: true;
+                hexpand: true;
+            }
         }
-      }
-      $StartView start_view { }
-      $TestView test_view { }
-      $OfflineView offline_view { }
+        $OfflineView offline_view { }
+        Adw.NavigationView main_view {
+            popped => $end_test();
+            $StartView start_view {
+                title: bind template.title;
+            }
+            $TestView test_view {
+                title: bind template.title;
+            }
+        }
     }
-  }
-}
-
-menu primary_menu {
-  section {
-    item {
-      label: _("Preferences");
-      action: "app.preferences";
-    }
-    item {
-      label: _("About Speedtest");
-      action: "app.about";
-    }  
-  }
 }

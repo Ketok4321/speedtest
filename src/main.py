@@ -7,7 +7,8 @@ gi.require_foreign("cairo")
 
 from gi.repository import GLib, Gio, Gtk, Adw
 
-from .window import SpeedtestWindow, SpeedtestPreferencesWindow
+from .conf import *
+from .window import SpeedtestWindow, SpeedtestPreferencesDialog
 from .gauge import Gauge # This class isn't used there but it the widget needs to be registered
 from .fetch_worker import FetchWorker
 from .test_worker import TestWorker
@@ -16,13 +17,12 @@ from .backends.librespeed import LibrespeedBackend
 from .backends.ookla import OoklaBackend
 
 class SpeedtestApplication(Adw.Application):
-    def __init__(self, version):
-        super().__init__(application_id="xyz.ketok.Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
-        
-        self.servers = None
+    def __init__(self):
+        super().__init__(application_id=APP_ID, resource_base_path="/xyz/ketok/Speedtest", flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+
         self.win = None
-        self.version = version
         self.settings = Gio.Settings("xyz.ketok.Speedtest")
+        self.backend = None
         self.fetch_worker = None
         self.test_worker = None
 
@@ -30,7 +30,6 @@ class SpeedtestApplication(Adw.Application):
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action, ["<primary>comma"])
         self.create_action("start", self.on_start_action)
-        self.create_action("back", self.on_back_action)
         self.create_action("retry_connect", self.on_retry_connect_action)
 
     def do_activate(self):
@@ -39,7 +38,14 @@ class SpeedtestApplication(Adw.Application):
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
-        self.win.present()
+            self.win.on_test_end = lambda: self.test_worker.stop_event.set()
+            if DEVEL:
+                self.win.add_css_class("devel")
+
+            self.settings.bind("width", self.win, "default-width", Gio.SettingsBindFlags.DEFAULT)
+            self.settings.bind("height", self.win, "default-height", Gio.SettingsBindFlags.DEFAULT)
+
+            self.win.present()
 
         self.load_backend()
 
@@ -52,17 +58,16 @@ class SpeedtestApplication(Adw.Application):
             self.fetch_worker.stop_event.set()
             self.fetch_worker.join()
 
-        self.backend = (OoklaBackend if self.settings.get_string("backend") == "speedtest.net" else LibrespeedBackend)(f"KetokSpeedtest/{self.version}")
+        self.backend = (OoklaBackend if self.settings.get_string("backend") == "speedtest.net" else LibrespeedBackend)(f"KetokSpeedtest/{VERSION}")
 
         self.fetch_worker = FetchWorker(self)
         self.fetch_worker.start()
 
     def on_about_action(self, widget, __):
-        about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name=_("Speedtest"),
-                                application_icon="xyz.ketok.Speedtest",
+        about = Adw.AboutDialog(application_name=_("Speedtest"),
+                                application_icon=APP_ID,
                                 developer_name="Ketok",
-                                version=self.version,
+                                version=VERSION,
                                 issue_url="https://github.com/Ketok4321/speedtest/issues",
                                 developers=["Ketok"],
                                 copyright="© 2023 Ketok",
@@ -70,28 +75,23 @@ class SpeedtestApplication(Adw.Application):
         
         about.add_credit_section(_("Backend by"), ["Librespeed"])
 
-        about.present()
+        about.present(self.win)
     
     def on_preferences_action(self, widget, _):
-        if self.win.view_switcher.get_visible_child() == self.win.test_view:
+        if self.win.main_view.get_visible_page() == self.win.test_view: # TODO: deactivate this action insead of disabling it
             return
-        SpeedtestPreferencesWindow(self, transient_for=self.props.active_window).present()
+        SpeedtestPreferencesDialog(self).present(self.win)
 
     def on_start_action(self, widget, _):
-        self.win.set_view(self.win.test_view)
+        self.win.start_test()
 
-        server = self.servers[self.win.start_view.server_selector.get_selected()]
+        server = self.fetch_worker.servers[self.win.start_view.server_selector.get_selected()]
 
         self.win.test_view.reset()
         self.win.test_view.server = server.name
 
-        self.test_worker = TestWorker(self.backend, self.win, server, self.settings)
+        self.test_worker = TestWorker(self, server)
         self.test_worker.start()
-    
-    def on_back_action(self, widget, _):
-        self.test_worker.stop_event.set()
-
-        self.win.set_view(self.win.start_view)
     
     def on_retry_connect_action(self, widget, _):
         self.load_backend()
@@ -105,6 +105,6 @@ class SpeedtestApplication(Adw.Application):
         
         return action
 
-def main(version):
-    app = SpeedtestApplication(version)
+def main():
+    app = SpeedtestApplication()
     return app.run(sys.argv)

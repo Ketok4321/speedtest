@@ -1,6 +1,12 @@
+desktop_file_in = configure_file(
+          input: 'xyz.ketok.Speedtest.desktop.in',
+         output: '@app_id@.desktop.in',
+  configuration: conf,
+)
+
 desktop_file = i18n.merge_file(
-        input: 'xyz.ketok.Speedtest.desktop.in',
-       output: 'xyz.ketok.Speedtest.desktop',
+        input: desktop_file_in,
+       output: f'@app_id@.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -12,9 +18,15 @@ if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
 endif
 
+appstream_file_in = configure_file(
+          input: 'xyz.ketok.Speedtest.metainfo.xml.in',
+         output: '@app_id@.metainfo.xml.in',
+  configuration: conf,
+)
+
 appstream_file = i18n.merge_file(
-        input: 'xyz.ketok.Speedtest.metainfo.xml.in',
-       output: 'xyz.ketok.Speedtest.metainfo.xml',
+        input: appstream_file_in,
+       output: f'@app_id@.metainfo.xml',
        po_dir: '../po',
       install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo')
@@ -25,7 +37,7 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-install_data('xyz.ketok.Speedtest.gschema.xml',
+install_data(f'xyz.ketok.Speedtest.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 

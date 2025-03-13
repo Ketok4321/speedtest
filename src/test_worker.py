@@ -6,28 +6,32 @@ from dataclasses import dataclass
 
 from gi.repository import GLib
 
-DURATION = 15 #TODO: This constant is in two places now
+DURATION = 15
 OVERHEAD_COMPENSATION = 1.06
 
 @dataclass
 class TestResults:
+    stage: int = 0
+    start_time: float = 0
+
     ping: float = 0
     jitter: float = 0
     total_dl: int = 0
     total_up: int = 0
 
 class TestWorker(threading.Thread):
-    def __init__(self, backend, win, server, settings):
-        super().__init__(name="SpeedtestWorker", daemon=True)
+    def __init__(self, app, server):
+        super().__init__(name="TestWorker", daemon=True)
 
         self.stop_event = threading.Event()
-        self.backend = backend
-        self.win = win
+        self.app = app
         self.server = server
-        self.settings = settings
+        
+        self.last_label_update = 0
 
     def run(self):
         event_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(event_loop)
 
         event_loop.run_until_complete(self.run_async())
 
@@ -44,73 +48,66 @@ class TestWorker(threading.Thread):
             await asyncio.sleep(0)
         
         for task in asyncio.all_tasks():
-            task.cancel()
-            try:
-                await task
-            except asyncio.CancelledError:
-                pass
+            if task != asyncio.current_task():
+                task.cancel()
+                try:
+                    await task
+                except asyncio.CancelledError:
+                    pass
 
     async def do_run(self):
         try:
-            view = self.win.test_view
+            view = self.app.win.test_view
 
-            timeout = None
-
-            def on_event(type):
-                nonlocal timeout
-
-                if type == "ping":
-                    view.ping = f"{self.results.ping:.1f}ms"
-                    view.jitter = f"{self.results.jitter:.1f}ms"
-                elif type == "download_start":
-                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.download, self.results.total_dl, False))
-                    
-                    view.progress.remove_css_class("up")
-                    view.progress.add_css_class("dl")
-                    view.download.add_css_class("active")
-                    
-                    self.start_time = time.time()
-                elif type == "download_end":
-                    GLib.source_remove(timeout)
-                    view.download.remove_css_class("active")
-                elif type == "upload_start":
-                    timeout = GLib.timeout_add(1000 / 30, lambda: self.update(view.upload, self.results.total_up, True))
-                    
-                    view.progress.remove_css_class("dl")
-                    view.progress.add_css_class("up")
-                    view.upload.add_css_class("active")
-                    
-                    self.start_time = time.time()
-                elif type == "upload_end":
-                    GLib.source_remove(timeout)
-                    view.upload.remove_css_class("active")
-
-            GLib.idle_add(self.win.test_view.progress.set_visible, True)
+            view.add_tick_callback(lambda *_: self.update(), None)
             self.results = TestResults()
-            await self.backend.start(self.server, self.results, lambda type: GLib.idle_add(on_event, type))
-            GLib.idle_add(self.win.test_view.progress.set_visible, False)
+            await self.app.backend.start(self.server, self.results, DURATION)
         except Exception as e:
             print(e)
-            GLib.idle_add(self.win.set_view, self.win.offline_view)
-    
-    def update(self, gauge, total, part_two):
-        view = self.win.test_view
+            GLib.idle_add(self.app.win.set_view, self.app.win.offline_view)
 
-        current_duration = time.time() - self.start_time
-        value = total * OVERHEAD_COMPENSATION / current_duration
+    def update(self):
+        view = self.app.win.test_view
 
-        if current_duration > 1:
+        total_duration = time.time() - self.results.start_time
+
+        self.app.win.test_view.progress.set_visible(True)
+
+        if self.results.stage == 1:
+            view.ping = f"{self.results.ping:.1f}ms"
+            view.jitter = f"{self.results.jitter:.1f}ms"
+
+            view.progress.remove_css_class("up")
+            view.progress.add_css_class("dl")
+            view.download.add_css_class("active")
+
+            self.update_gauge(view.download, self.results.total_dl, total_duration)
+        elif self.results.stage == 2:
+            view.download.remove_css_class("active")
+
+            view.progress.remove_css_class("dl")
+            view.progress.add_css_class("up")
+            view.upload.add_css_class("active")
+
+            self.update_gauge(view.upload, self.results.total_up, total_duration - DURATION)
+        elif self.results.stage == 3:
+            view.upload.remove_css_class("active")
+            self.app.win.test_view.progress.set_visible(False)
+            return GLib.SOURCE_REMOVE
+
+        view.progress.set_fraction(total_duration / (DURATION * 2))
+
+        if self.stop_event.is_set():
+            return GLib.SOURCE_REMOVE
+
+        return GLib.SOURCE_CONTINUE
+
+    def update_gauge(self, gauge, total, test_duration):
+        value = total * OVERHEAD_COMPENSATION / test_duration
+
+        if test_duration > 1:
             speedMb = round(value / 125_000, 1)
-            gauge.value = str(speedMb) + "Mbps"
-            gauge.fill = min(speedMb / self.settings.get_int("gauge-scale"), 1.0)
-
-        view.progress.set_fraction(current_duration / DURATION * 0.5 + (0.5 if part_two else 0.0))
-
-        return not self.stop_event.is_set()
-    
-    async def perform_test(self, test, streams):
-        GLib.idle_add(self.win.test_view.progress.set_visible, True)
-
-        self.start_time = time.time()
-
-        GLib.idle_add(self.win.test_view.progress.set_visible, False)
+            if time.time() - self.last_label_update >= 0.075:
+                gauge.value = str(speedMb) + "Mbps"
+                self.last_label_update = time.time()
+            gauge.fill = min(speedMb / self.app.settings.get_int("gauge-scale"), 1.0)

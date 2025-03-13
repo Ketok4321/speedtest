@@ -1,100 +1,101 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the speedtest package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Filipe Motta <luizfilipemotta@gmail.com>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: speedtest\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-27 14:19+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-01-31 15:44-0300\n"
+"Last-Translator: Filipe Motta <luizfilipemotta@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 45.3\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: data/xyz.ketok.Speedtest.desktop.in:3
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:18
 #: src/ui/window.blp:9 src/main.py:65
 msgid "Speedtest"
-msgstr ""
+msgstr "Speedtest"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:19
 msgid "Measure your internet connection speed"
-msgstr ""
+msgstr "Meça a velocidade da sua conexão de internet"
 
 #: data/xyz.ketok.Speedtest.metainfo.xml.in:24
 msgid "Desktop client for librespeed using gtk4+libadwaita"
-msgstr ""
+msgstr "Cliente de desktop para o librespeed usando GTK4 e Libadwaita"
 
 #: src/ui/views/offline.blp:12
 msgid "Couldn't connect to the speedtest servers"
-msgstr ""
+msgstr "Não foi possível se conectar aos servidores do speedtest"
 
 #: src/ui/views/offline.blp:13
 msgid "Make sure you are connected to the internet"
-msgstr ""
+msgstr "Certifique-se de que você tem uma conexão com a internet"
 
 #: src/ui/views/offline.blp:21
 msgid "Retry"
-msgstr ""
+msgstr "Tentar novamente"
 
 #: src/ui/views/start.blp:38
 msgid "Start"
-msgstr ""
+msgstr "Iniciar"
 
 #: src/ui/views/start.blp:50
 msgid "Preferences"
-msgstr ""
+msgstr "Preferências"
 
 #: src/ui/views/start.blp:54
 msgid "About Speedtest"
-msgstr ""
+msgstr "Sobre o Speedtest"
 
 #: src/ui/views/test.blp:52
 msgid "Download:"
-msgstr ""
+msgstr "Download:"
 
 #: src/ui/views/test.blp:69 src/ui/views/test.blp:114
 msgid "Ping:"
-msgstr ""
+msgstr "Ping:"
 
 #: src/ui/views/test.blp:83 src/ui/views/test.blp:128
 msgid "Jitter:"
-msgstr ""
+msgstr "Jitter:"
 
 #: src/ui/views/test.blp:96
 msgid "Upload:"
-msgstr ""
+msgstr "Upload:"
 
 #: src/ui/preferences.blp:11
 msgid "Visual"
-msgstr ""
+msgstr "Visual"
 
 #: src/ui/preferences.blp:14
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: src/ui/preferences.blp:16
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: src/ui/preferences.blp:16
 msgid "Light"
-msgstr ""
+msgstr "Claro"
 
 #: src/ui/preferences.blp:16
 msgid "Dark"
-msgstr ""
+msgstr "Escuro"
 
 #: src/ui/preferences.blp:21
 msgid "Gauge scale"
-msgstr ""
+msgstr "Escala do Medidor"
 
 #: src/main.py:74
 msgid "Backend by"
-msgstr ""
+msgstr "Backend por"

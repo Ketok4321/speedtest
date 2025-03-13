@@ -1,14 +1,24 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $StartView : Box {
-    orientation: vertical;
+template $StartView : Adw.NavigationPage {
+    Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            decoration-layout: ":close"; // We don't want the maximize button, even if someone has it enabled.
 
-    Adw.ToastOverlay {
+            [start]
+            MenuButton menu_button {
+                icon-name: "open-menu-symbolic";
+                menu-model: primary_menu;
+            }
+        }
+
         Adw.StatusPage {
             title: _("Speedtest");
             description: _("Measure your internet connection speed");
-        
+            vexpand: true;
+
             Box {
                 orientation: vertical;
                 halign: center;
@@ -32,4 +42,17 @@ template $StartView : Box {
             }
         }
     }
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _("Preferences");
+      action: "app.preferences";
+    }
+    item {
+      label: _("About Speedtest");
+      action: "app.about";
+    }  
+  }
 }
