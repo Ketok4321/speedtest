@@ -1,7 +1,8 @@
 <img src="data/icons/hicolor/scalable/apps/xyz.ketok.Speedtest.svg" align="left"/>
 
 # Speedtest
-A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita
+A graphical [librespeed](https://librespeed.org) client written using gtk4 + libadwaita.
+Network info provided by ipify, ipwho.is, and edns.ip-api.com
 
 <img src="screenshots/2.png" width="772">
 

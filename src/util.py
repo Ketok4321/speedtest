@@ -1,4 +1,11 @@
+import urllib.request
+import json
+
 from gi.repository import Gio
+
+_IPWHO_URL = "https://ipwho.is/"
+_EDNS_URL = "https://edns.ip-api.com/json"
+_IP6_URL = "https://api6.ipify.org?format=json"
 
 # I have shamelessly stole it from https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
 def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
@@ -35,3 +42,35 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
         widget.connect('notify::' + prop, prop_changed)
     if not (flags & Gio.SettingsBindFlags.NO_SENSITIVITY):
         self.bind_writable(key, widget, "sensitive", False)
+
+def fetch_connection_details():
+    result = {"ipv4": None, "ipv6": None, "isp": None, "dns": None}
+
+    try:
+        with urllib.request.urlopen(_IPWHO_URL, timeout=10) as resp:
+            data = json.loads(resp.read())
+            if data.get("success") is not False:
+                result["ipv4"] = data.get("ip")
+                result["isp"] = data.get("connection", {}).get("org")
+    except Exception:
+        pass
+
+    try:
+        with urllib.request.urlopen(_IP6_URL, timeout=10) as resp:
+            result["ipv6"] = json.loads(resp.read()).get("ip")
+    except Exception:
+        pass
+
+    try:
+        with urllib.request.urlopen(_EDNS_URL, timeout=10) as resp:
+            data = json.loads(resp.read())
+            dns = data.get("dns", {})
+            if isinstance(dns, dict):
+                ip = dns.get("ip")
+                geo = dns.get("geo")
+                if ip:
+                    result["dns"] = f"{ip} ({geo})" if geo else ip
+    except Exception:
+        pass
+
+    return result

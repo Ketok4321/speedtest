@@ -1,0 +1,95 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ConnectionDetailsView : Adw.NavigationPage {
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      decoration-layout: ":close";
+    }
+
+    ScrolledWindow {
+      vexpand: true;
+      hscrollbar-policy: never;
+      
+      Viewport {
+        Box {
+          orientation: vertical;
+          spacing: 16;
+          margin-start: 24;
+          margin-end: 24;
+          margin-top: 24;
+          margin-bottom: 24;
+
+          Box {
+            orientation: vertical;
+            spacing: 4;
+            halign: center;
+
+            Label {
+              label: _("IPv4 Address");
+              css-classes: ["caption", "dim-label"];
+            }
+            Label ipv4_label {
+              label: bind template.ipv4;
+              css-classes: ["title-3", "numeric"];
+              selectable: true;
+            }
+          }
+
+          Box {
+            orientation: vertical;
+            spacing: 4;
+            halign: center;
+
+            Label {
+              label: _("IPv6 Address");
+              css-classes: ["caption", "dim-label"];
+            }
+            Label ipv6_label {
+              label: bind template.ipv6;
+              css-classes: ["title-3", "numeric"];
+              selectable: true;
+            }
+          }
+
+          Box {
+            orientation: vertical;
+            spacing: 4;
+            halign: center;
+
+            Label {
+              label: _("ISP Provider");
+              css-classes: ["caption", "dim-label"];
+            }
+            Label isp_label {
+              label: bind template.isp;
+              css-classes: ["title-3"];
+              selectable: true;
+              max-width-chars: 40;
+              wrap: true;
+              wrap-mode: word_char;
+              justify: center;
+            }
+          }
+
+          Box {
+            orientation: vertical;
+            spacing: 4;
+            halign: center;
+
+            Label {
+              label: _("DNS Resolver");
+              css-classes: ["caption", "dim-label"];
+            }
+            Label dns_label {
+              label: bind template.dns;
+              css-classes: ["title-3", "numeric"];
+              selectable: true;
+            }
+          }
+        }
+      }
+    }
+  }
+}
