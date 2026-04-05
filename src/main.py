@@ -37,7 +37,10 @@ class SpeedtestApplication(Adw.Application):
         self.win = self.props.active_window
         if not self.win:
             self.win = SpeedtestWindow(application=self)
-            self.win.on_test_end = lambda: self.test_worker.stop_event.set()
+            def _stop_test():
+                if self.test_worker and hasattr(self.test_worker, "stop_event"):
+                    self.test_worker.stop_event.set()
+            self.win.on_test_end = _stop_test
             if DEVEL:
                 self.win.add_css_class("devel")
 
