@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=Speedtest
+Name[uk]=Тест швидкості
 Exec=speedtest
+Keywords[uk]=speedtest;тест;швидкості;затримка;пінг;
 Icon=@APP_ID@
 Terminal=false
 Type=Application

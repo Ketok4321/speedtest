@@ -3,11 +3,13 @@
 	<id>@APP_ID@</id>
 
     <name>Speedtest</name>
+    <name xml:lang="uk">Тест швидкості</name>
     <developer id="xyz.ketok">
         <name translate="no">Ketok</name>
     </developer>
 	<summary>Measure your internet connection speed</summary>
-
+	<summary xml:lang="uk">Виміряйте швидкість інтернет-з'єднання</summary>
+	
     <url type="homepage">https://github.com/Ketok4321/speedtest</url>
     <url type="bugtracker">https://github.com/Ketok4321/speedtest/issues</url>
     <url type="vcs-browser">https://github.com/Ketok4321/speedtest</url>
@@ -28,6 +30,9 @@
 	<description>
         <p>
             Desktop client for librespeed using gtk4+libadwaita
+        </p>
+        <p xml:lang="uk">
+            Обгортка librespeed на базі GTK4+Libadwaita
         </p>
 	</description>
     

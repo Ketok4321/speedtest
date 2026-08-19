@@ -1,0 +1,102 @@
+# Ukrainian translation.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the speedtest package.
+# Dymko <Dymkovych@proton.me>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: speedtest\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-19 11:28+0100\n"
+"PO-Revision-Date: 2026-08-19 15:52+0300\n"
+"Last-Translator: Dymko <Dymkovych@proton.me>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Gtranslator 50.0\n"
+
+#: data/xyz.ketok.Speedtest.desktop.in:3
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:5 src/ui/views/start.blp:18
+#: src/ui/window.blp:9 src/main.py:65
+msgid "Speedtest"
+msgstr "Тест швидкості"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:6 src/ui/views/start.blp:19
+msgid "Measure your internet connection speed"
+msgstr "Виміряйте швидкість інтернет-з'єднання"
+
+#: data/xyz.ketok.Speedtest.metainfo.xml.in:24
+msgid "Desktop client for librespeed using gtk4+libadwaita"
+msgstr "Обгортка librespeed на базі GTK4+Libadwaita"
+
+#: src/ui/views/offline.blp:12
+msgid "Couldn't connect to the speedtest servers"
+msgstr "Не вдалося з'єднатися із серверами тестування"
+
+#: src/ui/views/offline.blp:13
+msgid "Make sure you are connected to the internet"
+msgstr "Переконайтеся, що ви підключені до інтернету"
+
+#: src/ui/views/offline.blp:21
+msgid "Retry"
+msgstr "Повторити"
+
+#: src/ui/views/start.blp:38
+msgid "Start"
+msgstr "Тестувати"
+
+#: src/ui/views/start.blp:50
+msgid "Preferences"
+msgstr "Налаштування"
+
+#: src/ui/views/start.blp:54
+msgid "About Speedtest"
+msgstr "Про програму"
+
+#: src/ui/views/test.blp:52
+msgid "Download:"
+msgstr "Отримання:"
+
+#: src/ui/views/test.blp:69 src/ui/views/test.blp:114
+msgid "Ping:"
+msgstr "Відгук:"
+
+#: src/ui/views/test.blp:83 src/ui/views/test.blp:128
+msgid "Jitter:"
+msgstr "Коливання:"
+
+#: src/ui/views/test.blp:96
+msgid "Upload:"
+msgstr "Надсилання:"
+
+#: src/ui/preferences.blp:11
+msgid "Visual"
+msgstr "Вигляд"
+
+#: src/ui/preferences.blp:14
+msgid "Theme"
+msgstr "Тема"
+
+#: src/ui/preferences.blp:16
+msgid "System"
+msgstr "Системна"
+
+#: src/ui/preferences.blp:16
+msgid "Light"
+msgstr "Світла"
+
+#: src/ui/preferences.blp:16
+msgid "Dark"
+msgstr "Темна"
+
+#: src/ui/preferences.blp:21
+msgid "Gauge scale"
+msgstr "Межа шкали"
+
+#: src/main.py:74
+msgid "Backend by"
+msgstr "На базі"
